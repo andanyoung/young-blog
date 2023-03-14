@@ -109,4 +109,4 @@ npm run dev # or yarn dev
 
 [MIT](https://github.com/andanyang/vuepress-theme-vdoing/blob/master/LICENSE)
 
-Copyright (c) 2019-present Evan Xu
+Copyright (c) 2019-present Young
