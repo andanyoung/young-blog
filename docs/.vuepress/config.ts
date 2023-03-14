@@ -174,7 +174,7 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
     blogger: {
       avatar: "/img/logo.png",
       name: "Young",
-      slogan: "前端界的小学生",
+      slogan: "",
     },
 
     // 社交图标 (显示于博主信息栏和页脚栏。内置图标：https://doc.andanyang.com/pages/a20ce8/#social)
