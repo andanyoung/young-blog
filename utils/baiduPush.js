@@ -14,7 +14,7 @@ if (DOMAIN) {
 } else {
   console.log(
     chalk.red(
-      "请在运行此文件时指定一个你要进行百度推送的域名参数，例：node utils/baiduPush.js https://andanyang.com"
+      "请在运行此文件时指定一个你要进行百度推送的域名参数，例：node utils/baiduPush.js https://blog.admin4j.com"
     )
   );
 }
