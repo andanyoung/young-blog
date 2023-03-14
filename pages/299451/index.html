@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>第5章 Spring之DAO | Young&#39;s blog</title>
+    <meta name="generator" content="VuePress 1.9.5">
+    <link rel="icon" href="/img/favicon.ico">
+    <meta name="description" content="Young丶java后端技术博客,专注后端学习与总结。擅长spring boot,JAVA基础总结,等方面的知识,关注spring,架构,elasticsearch,mysql领域.">
+    <meta name="keywords" content="前端博客,个人技术博客,前端,前端开发,前端框架,web前端,前端面试题,技术文档,学习,面试,JavaScript,js,ES6,TypeScript,vue,python,css3,html5,Node,git,github,markdown">
+    <meta name="baidu-site-verification" content="7F55weZDDc">
+    <meta name="theme-color" content="#11a8cd">
+    
+    <link rel="preload" href="/assets/css/0.styles.2ceecd60.css" as="style"><link rel="preload" href="/assets/js/app.92d06dcb.js" as="script"><link rel="preload" href="/assets/js/2.8f044b90.js" as="script"><link rel="preload" href="/assets/js/12.837ce4da.js" as="script"><link rel="prefetch" href="/assets/js/10.f4e55b90.js"><link rel="prefetch" href="/assets/js/11.798cf5f0.js"><link rel="prefetch" href="/assets/js/13.9cf27680.js"><link rel="prefetch" href="/assets/js/14.9bad6e3a.js"><link rel="prefetch" href="/assets/js/15.41efc3f5.js"><link rel="prefetch" href="/assets/js/16.0d9d01ec.js"><link rel="prefetch" href="/assets/js/17.9479a7ec.js"><link rel="prefetch" href="/assets/js/3.605f900c.js"><link rel="prefetch" href="/assets/js/4.94dce7a4.js"><link rel="prefetch" href="/assets/js/5.a9b7859a.js"><link rel="prefetch" href="/assets/js/6.3eb722f5.js"><link rel="prefetch" href="/assets/js/7.4b580c9e.js"><link rel="prefetch" href="/assets/js/8.6a4b62d4.js"><link rel="prefetch" href="/assets/js/9.5cd661cf.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.2ceecd60.css">
+  </head>
+  <body class="theme-mode-light">
+    <div id="app" data-server-rendered="true"><div class="theme-container sidebar-open have-rightmenu"><header class="navbar blur"><div title="目录" class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/img/logo.png" alt="Young's blog" class="logo"> <span class="site-name can-hide">Young's blog</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><a href="/Spring/" class="nav-link">Spring</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="前端" class="dropdown-title"><a href="/web/" class="link-title">前端</a> <span class="title" style="display:none;">前端</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>前端文章1</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/pages/8143cc480faf9a11/" class="nav-link">JavaScript</a></li></ul></li><li class="dropdown-item"><h4>学习笔记</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/note/javascript/" class="nav-link">《JavaScript教程》</a></li><li class="dropdown-subitem"><a href="/note/js/" class="nav-link">《JavaScript高级程序设计》</a></li><li class="dropdown-subitem"><a href="/note/es6/" class="nav-link">《ES6 教程》</a></li><li class="dropdown-subitem"><a href="/note/vue/" class="nav-link">《Vue》</a></li><li class="dropdown-subitem"><a href="/note/react/" class="nav-link">《React》</a></li><li class="dropdown-subitem"><a href="/note/typescript-axios/" class="nav-link">《TypeScript 从零实现 axios》</a></li><li class="dropdown-subitem"><a href="/note/git/" class="nav-link">《Git》</a></li><li class="dropdown-subitem"><a href="/pages/51afd6/" class="nav-link">TypeScript</a></li><li class="dropdown-subitem"><a href="/pages/4643cd/" class="nav-link">JS设计模式总结</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="页面" class="dropdown-title"><a href="/ui/" class="link-title">页面</a> <span class="title" style="display:none;">页面</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/8309a5b876fc95e3/" class="nav-link">HTML</a></li><li class="dropdown-item"><!----> <a href="/pages/0a83b083bdf257cb/" class="nav-link">CSS</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="技术" class="dropdown-title"><a href="/technology/" class="link-title">技术</a> <span class="title" style="display:none;">技术</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/9a7ee40fc232253e/" class="nav-link">技术文档</a></li><li class="dropdown-item"><!----> <a href="/pages/4c778760be26d8b3/" class="nav-link">GitHub技巧</a></li><li class="dropdown-item"><!----> <a href="/pages/117708e0af7f0bd9/" class="nav-link">Nodejs</a></li><li class="dropdown-item"><!----> <a href="/pages/41f87d890d0a02af/" class="nav-link">博客搭建</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="更多" class="dropdown-title"><a href="/more/" class="link-title">更多</a> <span class="title" style="display:none;">更多</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/f2a556/" class="nav-link">学习</a></li><li class="dropdown-item"><!----> <a href="/pages/aea6571b7a8bae86/" class="nav-link">面试</a></li><li class="dropdown-item"><!----> <a href="/pages/2d615df9a36a98ed/" class="nav-link">心情杂货</a></li><li class="dropdown-item"><!----> <a href="/pages/baaa02/" class="nav-link">实用技巧</a></li><li class="dropdown-item"><!----> <a href="/friends/" class="nav-link">友情链接</a></li></ul></div></div><div class="nav-item"><a href="/about/" class="nav-link">关于</a></div><div class="nav-item"><a href="/pages/beb6c0bd8a66cea6/" class="nav-link">收藏</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="索引" class="dropdown-title"><a href="/archives/" class="link-title">索引</a> <span class="title" style="display:none;">索引</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/" class="nav-link">分类</a></li><li class="dropdown-item"><!----> <a href="/tags/" class="nav-link">标签</a></li><li class="dropdown-item"><!----> <a href="/archives/" class="nav-link">归档</a></li></ul></div></div> <a href="https://github.com/andanyang/vuepress-theme-vdoing" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <div class="sidebar-hover-trigger"></div> <aside class="sidebar" style="display:none;"><div class="blogger"><img src="/img/logo.png"> <div class="blogger-info"><h3>Young</h3> <span></span></div></div> <nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><a href="/Spring/" class="nav-link">Spring</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="前端" class="dropdown-title"><a href="/web/" class="link-title">前端</a> <span class="title" style="display:none;">前端</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>前端文章1</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/pages/8143cc480faf9a11/" class="nav-link">JavaScript</a></li></ul></li><li class="dropdown-item"><h4>学习笔记</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/note/javascript/" class="nav-link">《JavaScript教程》</a></li><li class="dropdown-subitem"><a href="/note/js/" class="nav-link">《JavaScript高级程序设计》</a></li><li class="dropdown-subitem"><a href="/note/es6/" class="nav-link">《ES6 教程》</a></li><li class="dropdown-subitem"><a href="/note/vue/" class="nav-link">《Vue》</a></li><li class="dropdown-subitem"><a href="/note/react/" class="nav-link">《React》</a></li><li class="dropdown-subitem"><a href="/note/typescript-axios/" class="nav-link">《TypeScript 从零实现 axios》</a></li><li class="dropdown-subitem"><a href="/note/git/" class="nav-link">《Git》</a></li><li class="dropdown-subitem"><a href="/pages/51afd6/" class="nav-link">TypeScript</a></li><li class="dropdown-subitem"><a href="/pages/4643cd/" class="nav-link">JS设计模式总结</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="页面" class="dropdown-title"><a href="/ui/" class="link-title">页面</a> <span class="title" style="display:none;">页面</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/8309a5b876fc95e3/" class="nav-link">HTML</a></li><li class="dropdown-item"><!----> <a href="/pages/0a83b083bdf257cb/" class="nav-link">CSS</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="技术" class="dropdown-title"><a href="/technology/" class="link-title">技术</a> <span class="title" style="display:none;">技术</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/9a7ee40fc232253e/" class="nav-link">技术文档</a></li><li class="dropdown-item"><!----> <a href="/pages/4c778760be26d8b3/" class="nav-link">GitHub技巧</a></li><li class="dropdown-item"><!----> <a href="/pages/117708e0af7f0bd9/" class="nav-link">Nodejs</a></li><li class="dropdown-item"><!----> <a href="/pages/41f87d890d0a02af/" class="nav-link">博客搭建</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="更多" class="dropdown-title"><a href="/more/" class="link-title">更多</a> <span class="title" style="display:none;">更多</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/f2a556/" class="nav-link">学习</a></li><li class="dropdown-item"><!----> <a href="/pages/aea6571b7a8bae86/" class="nav-link">面试</a></li><li class="dropdown-item"><!----> <a href="/pages/2d615df9a36a98ed/" class="nav-link">心情杂货</a></li><li class="dropdown-item"><!----> <a href="/pages/baaa02/" class="nav-link">实用技巧</a></li><li class="dropdown-item"><!----> <a href="/friends/" class="nav-link">友情链接</a></li></ul></div></div><div class="nav-item"><a href="/about/" class="nav-link">关于</a></div><div class="nav-item"><a href="/pages/beb6c0bd8a66cea6/" class="nav-link">收藏</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="索引" class="dropdown-title"><a href="/archives/" class="link-title">索引</a> <span class="title" style="display:none;">索引</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/" class="nav-link">分类</a></li><li class="dropdown-item"><!----> <a href="/tags/" class="nav-link">标签</a></li><li class="dropdown-item"><!----> <a href="/archives/" class="nav-link">归档</a></li></ul></div></div> <a href="https://github.com/andanyang/vuepress-theme-vdoing" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><a href="/spring/java/" class="sidebar-link">第 1 章 Java 基础</a></li><li><a href="/pages/base/" class="sidebar-link">第2章 Spring基础</a></li><li><a href="/pages/ioc/" class="sidebar-link">第3章 Spring IOC 核心容器</a></li><li><a href="/pages/e7599c/" class="sidebar-link">第4章 Spring之AOP</a></li><li><a href="/pages/299451/" aria-current="page" class="active sidebar-link">第5章 Spring之DAO</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level2"><a href="/pages/299451/#_5-1-jdbc-详解" class="sidebar-link">5.1 JDBC 详解</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/pages/299451/#_5-1-1-jdbc-介绍" class="sidebar-link">5.1.1 JDBC 介绍</a></li><li class="sidebar-sub-header level3"><a href="/pages/299451/#_5-1-2-操作步骤" class="sidebar-link">5.1.2 操作步骤</a></li><li class="sidebar-sub-header level3"><a href="/pages/299451/#_1-驱动引入" class="sidebar-link">1．驱动引入</a></li><li class="sidebar-sub-header level3"><a href="/pages/299451/#_2-注册驱动" class="sidebar-link">2．注册驱动</a></li><li class="sidebar-sub-header level4"><a href="/pages/299451/#_3-创建连接" class="sidebar-link">3．创建连接</a></li><li class="sidebar-sub-header level4"><a href="/pages/299451/#_4-执行操作" class="sidebar-link">4．执行操作</a></li><li class="sidebar-sub-header level4"><a href="/pages/299451/#_5-返回结果" class="sidebar-link">5．返回结果</a></li><li class="sidebar-sub-header level4"><a href="/pages/299451/#_6-释放资源" class="sidebar-link">6．释放资源</a></li><li class="sidebar-sub-header level3"><a href="/pages/299451/#_5-1-3-statement-的使用" class="sidebar-link">5.1.3 Statement 的使用</a></li><li class="sidebar-sub-header level3"><a href="/pages/299451/#_5-1-4-使用-preparedstatement-返回自增主键" class="sidebar-link">5.1.4 使用 PreparedStatement 返回自增主键</a></li><li class="sidebar-sub-header level3"><a href="/pages/299451/#_5-1-5-使用-callablestatement-调用存储过程" class="sidebar-link">5.1.5 使用 CallableStatement 调用存储过程</a></li><li class="sidebar-sub-header level3"><a href="/pages/299451/#_5-1-6-批处理" class="sidebar-link">5.1.6 批处理</a></li><li class="sidebar-sub-header level3"><a href="/pages/299451/#_5-1-7-事务处理" class="sidebar-link">5.1.7 事务处理</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/pages/299451/#_5-2-spring-dao-模块" class="sidebar-link">5.2 Spring DAO 模块</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/pages/299451/#_5-2-1-jdbcdaosupport-的使用" class="sidebar-link">5.2.1 JdbcDaoSupport 的使用</a></li></ul></li></ul></li><li><a href="/pages/923052/" class="sidebar-link">第 6 章 Spring的IoC容器系列</a></li></ul> </aside> <div><main class="page"><div class="theme-vdoing-wrapper "><div class="articleInfo-wrap" data-v-06225672><div class="articleInfo" data-v-06225672><ul class="breadcrumbs" data-v-06225672><li data-v-06225672><a href="/" title="首页" class="iconfont icon-home router-link-active" data-v-06225672></a></li> <li data-v-06225672><a href="/categories/?category=Spring" title="分类" data-v-06225672>Spring</a></li></ul> <div class="info" data-v-06225672><div title="作者" class="author iconfont icon-touxiang" data-v-06225672><a href="https://github.com/andanyang" target="_blank" title="作者" class="beLink" data-v-06225672>andanyang</a></div> <div title="创建时间" class="date iconfont icon-riqi" data-v-06225672><a href="javascript:;" data-v-06225672>2023-02-27</a></div> <!----></div></div></div> <!----> <div class="content-wrapper"><div class="right-menu-wrapper"><div class="right-menu-margin"><div class="right-menu-title">目录</div> <div class="right-menu-content"></div></div></div> <h1><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAABKFJREFUSA3tVl1oFVcQnrMbrak3QUgkya1akpJYcrUtIqW1JvFBE9LiQ5v6JmJpolbMg32rVrhgoYK0QiMY6i9Y6EMaW5D+xFJaTYItIuK2Kr3+BJNwkxBj05sQY3b3nM6cs2dv9t7NT/vQJw/sndk5M/PNzJkzewGerP+pAmy+ON8lLzUJgA8ZYxYIYZmGYRnctDaWvJJAmTtfP1pvXsBCCPP8QFcCaRkZYACgDZFO4stNIcBCajEOlmmC9XpJ9bAGCaPaPmzPl32dvLSVu3BWCTQs0XQQ6g0DYgwLIoAZbBCdW/i+781o1VVlm/410mw4h06Y7bIPHNyWDyL4FHkX03Q8SrzNhZTZriieckWt7cL6MM85YcLpsi/7O9/iXFT6MswI0DmmpkSaJ0qLxFIm3+i1THHB3zmBH3PYx9CcykcLOeQVVa7QtdxTgQgEleX2AjHYfwA+2ddV77ruGoJUbhGDI09YSNXyMpUt5ylOzxgbUmtOp7NmbNt8v3arjTBfYELmLUV+M+nSawNNAUqpT3ClJWg5I3BLT+cGW/DXNGCa6tx1aakCGEigArTn4TDIPdrXXYKCZNrHLMCOEPvHBlLQ99s9eHB7EB6NTki73CVPQ2F5MSx/uRQixfmq7rK0wYD8w8E905bnPDfwoWs/rfv93NWN/ZfvwsLIU7A09gxECyISeGJkHAau98L97tuw7NXnoPyNF8FcYGLGKsOs0mN3OEyec9esGW/ZEl945dTP34wlR2FZVQWU1q0Cw8Tr7p+hgLLNL0FPxx/Q35mA8aEUrH6nCgwEl0tn7wUiZYJnNRh6DK4UH/k0lfyrsBKdPVv/AriGIQcEDQZ65LBAGe2Rzui9Ybjz7XUppz1/uKBbyVPGkN3ZAeC6hr0x7Nr38N5+EqkoOm17xpoqR9ohQF55ERSvr4Dkr3chNfC3DMzGJlNBElW8w9nsGQvhNGIzDkXzCg8cLK951xHsFBlTJspJNi3ZFIMF2AeDV3q8DNOB+YHi6QTrChDIWDBRi5U5f+ZMfJLu3ccrqxtdxk4SKH336LFxSmkqefwU5T8fhdSdQf9IVKD6aNiwI/hnmcAZ91isYMJIaCUCx9W098+LgruikeTqzqqxKPUwqJyCPJiyemVVZBOijDGjD38Os0jOiSPL1z3SPjXNANbiNPXAdzTfukjjuknNBbyz3nwgTd3AVFqUJ5hpHlq9MveLnWwttUfoygBmvVjuikxND3znrhsELnZk7k+OjIGxeNEkomyLVta0xxn+HZhjBc4YZ/AFjHjz9u3xRZl2BN4aq9nFwWh16IrQ1aHHEd3j1+4/dB9OtH4e29A2H1DyHQRmOSfQZ1Fy7MHBTGB6J/Djq6p3OxyO2cB+4Car7v/o3GXgfAkj23+x9ID1Teoamo/SXcbvSf2PX7Vc8DdCmE1vN9di+32P9/5YR3vLnhCVGUWBjEkr3yh4H8v9CzmsbdhzOKzsJKM90iFdaTMjRPhGVsakRvOaRidljo6H6G7j+ctrJpsP+4COhDIl0La2+FS4+5mlocBaXY5QnGZysIBYoeSsl5qQzrSj/cgNrfuEzlWBfwA+EjrZyWUvpAAAAABJRU5ErkJggg==">第5章 Spring之DAO<!----></h1>  <div class="theme-vdoing-content content__default"><h1 id="第-5-章-spring-之-dao"><a href="#第-5-章-spring-之-dao" class="header-anchor">#</a> 第 5 章 Spring 之 DAO</h1> <p>在上一章节中，我们了解了 Spring 框架中的 AOP 模块，这一章节我们开始学习 Spring 框架中的 DAO 模块。
+本章主要涉及的知识点：</p> <ul><li>JDBC 基本用法：Statement、PreparedStatement、CallableStatement 的使用。</li> <li>JDBC 高级用法：批处理、事务处理。</li> <li>Spring DAO 模块：JdbcDaoSupport、MappingSqlQuery 等对象的使用。</li> <li>Spring 事务管理：TransactionProxyFactoryBean、DataSourceTransactionManager 的配置与使用。</li></ul> <h2 id="_5-1-jdbc-详解"><a href="#_5-1-jdbc-详解" class="header-anchor">#</a> 5.1 JDBC 详解</h2> <p>在了解 Spring 的 DAO 模块时需要有一定的数据库基础，Java 语言与数据库连接使用的是 JDBC，所以有必要学习一下 JDBC 的内容。</p> <h3 id="_5-1-1-jdbc-介绍"><a href="#_5-1-1-jdbc-介绍" class="header-anchor">#</a> 5.1.1 JDBC 介绍</h3> <p>JDBC（Java DB Connection，Java 数据库连接）是一种可用于执行 SQL 语句的 Java API（Application Programming Interface，应用程序设计接口）。它由一些 Java 语言编写的类和界面组成。JDBC 为数据库应用开发人员和数据库前台工具开发人员提供了一种标准的应用程序设计接口，使开发人员可以用纯 Java 语言编写完整的数据库应用程序。JDBC 代表 Java 数据库连接。它是一个软件层，允许开发者在 Java 中编写客户端／服务器应用。
+通过使用 JDBC，开发人员可以很方便地将 SQL 语句传送给几乎任何一种数据库。也就是说，开发人员可以不必写一个程序访问 Sybase，写另一个程序访问 Oracle，再写一个程序访问 Microsoft 的 SQL Server。用 JDBC 写的程序能够自动将 SQL 语句传送给相应的数据库管理系统（DBMS）。不但如此，使用 Java 编写的应用程序可以在任何支持 Java 的平台上运行，不必在不同的平台上编写不同的应用。Java 和 JDBC 的结合可以让开发人员在开发数据库应用时真正实现“Write Once，Run Everywhere！”。</p> <h3 id="_5-1-2-操作步骤"><a href="#_5-1-2-操作步骤" class="header-anchor">#</a> 5.1.2 操作步骤</h3> <p>JDBC 可以连接不同的数据库，不同的数据库也可以被不同的工具连接，但在连接时基本都是固定的几个步骤。</p> <h3 id="_1-驱动引入"><a href="#_1-驱动引入" class="header-anchor">#</a> 1．驱动引入</h3> <p>JDBC 是对外开放的接口，数据库提供商实现了这些接口，这些接口的组合就是驱动。数据库有好多种，例如 MySQL、Oracle 等，需要注册不同的驱动来操作对应的数据库，注册驱动也得要有驱动才是，所以首先要将驱动引入项目。</p> <h3 id="_2-注册驱动"><a href="#_2-注册驱动" class="header-anchor">#</a> 2．注册驱动</h3> <p>引入驱动之后应用程序也不知道是用的什么数据库，只是把驱动下载了下来放到项目中，所以得注册一下才知道是谁，注册之后会返回对应的驱动管理对象。就和入职一样，你到公司了但不报到，那也不知道来了没来，报到了才会有针对个人的流程。</p> <h4 id="_3-创建连接"><a href="#_3-创建连接" class="header-anchor">#</a> 3．创建连接</h4> <p>数据库和应用程序是分隔开来的，数据库可能存放在远程，那怎么和数据库搭上呢？这就需要连接了。</p> <h4 id="_4-执行操作"><a href="#_4-执行操作" class="header-anchor">#</a> 4．执行操作</h4> <p>连接上之后要干什么呢，不能一直连着不干事情啊，这也是资源的一种浪费，所以连接之后执行数据库的操作增、删、改、查等。</p> <h4 id="_5-返回结果"><a href="#_5-返回结果" class="header-anchor">#</a> 5．返回结果</h4> <p>增、删、改、查操作结束之后，总要有一个结果，不然怎么知道成功与否，查询的话会返回查询的数据，增加、删除、修改会返回影响的行数。</p> <h4 id="_6-释放资源"><a href="#_6-释放资源" class="header-anchor">#</a> 6．释放资源</h4> <p>把结果也返回了，但不能老连着数据库，这样占用资源，创建的对象也没有释放，还占空间，所以用完了就把它关掉。</p> <h3 id="_5-1-3-statement-的使用"><a href="#_5-1-3-statement-的使用" class="header-anchor">#</a> 5.1.3 Statement 的使用</h3> <p>Statement 是 Java 执行数据库操作的一个重要接口，用于在已经建立数据库连接的基础上，向数据库发送要执行的 SQL 语句。Statement 对象用于执行静态 SQL 语句，并返回它所生成结果的对象。
+默认情况下，同一时间每个 Statement 对象只能打开一个 ResultSet 对象。因此，如果读取一个 ResultSet 对象与读取另一个交叉，那么这两个对象必须是由不同的 Statement 对象生成的。如果存在某个语句打开的当前 ResultSet 对象，那么 Statement 接口中的所有执行方法都会隐式关闭它。
+在使用 Statement 之前先进行数据准备，这里在本地 MySQL 中创建了一个数据库 daodemodb 和一张表 t_user，并在表中增加了几条数据用来测试。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>/* 数据库创建 */
+CREATE DATABASE `daodemodb` /*!40100 DEFAULT CHARACTER SET utf8 */;
+/*创建测试表*/
+CREATE TABLE `t_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  `age` int(11) DEFAULT NULL,
+  `money` decimal(10,2) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*数据准备*/
+insert into t_user(name,age,money)
+values
+('张三','24',666.66),
+('李四','25',888.88),
+('王二','26',999.99),
+('小明','27',555.55),
+('小赵','28',333.33)
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br></div></div><p>按照上面的操作步骤，需要引入驱动，这里使用 pom.xml 引入 mysql 的 jdbc 驱动。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>&lt;dependency&gt;
+    &lt;groupId&gt;mysql&lt;/groupId&gt;
+    &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+    &lt;version&gt;8.0.12&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p>然后就是在代码中依次注册驱动、创建连接、执行操作、返回结果、释放资源步骤，下面代码演示的就是这个过程，从 t_user 表中查询数据并打印到日志中。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>import java.sql.*;
+
+public class StatementDemo {
+
+  public static void main(String[] args) throws SQLException {
+    // TODO Auto-generated method stub
+    Connection conn = null;
+    Statement stmt = null;
+    ResultSet rs = null;
+    try {
+      // 注册驱动
+      DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+      // 通过注册的驱动获得连接对象Connection
+      conn =
+          DriverManager.getConnection(
+              &quot;jdbc:mysql://127.0.0.1:3306/daodemodb?useUnicode=true&amp;characterEncoding=UTF-8&quot;
+                  + &quot;&amp;serverTimezone=UTC&amp;useSSL=false&quot;,
+              &quot;root&quot;,
+              &quot;123456&quot;);
+      // 通过Statement对象执行操作 返回结果ResultSet
+      stmt = conn.createStatement();
+      // 返回结果
+      rs = stmt.executeQuery(&quot;select * from t_user&quot;);
+      while (rs.next()) {
+        System.out.println(
+            &quot;姓名:&quot;
+                + rs.getString(&quot;name&quot;)
+                + &quot;  年龄:&quot;
+                + rs.getInt(&quot;age&quot;)
+                + &quot;  余额:&quot;
+                + rs.getDouble(&quot;money&quot;));
+      }
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+      e.printStackTrace();
+    } finally {
+      // 释放资源
+      if (conn != null) {
+        conn.close();
+      }
+      if (stmt != null) {
+        stmt.close();
+      }
+      if (rs != null) {
+        rs.close();
+      }
+    }
+  }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br></div></div><blockquote><p>输出结果：</p></blockquote> <div class="language- line-numbers-mode"><pre class="language-text"><code>姓名:张三  年龄:24  余额:666.66
+姓名:李四  年龄:25  余额:888.88
+姓名:王二  年龄:26  余额:999.99
+姓名:小明  年龄:27  余额:555.55
+姓名:小赵  年龄:28  余额:333.33
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><h3 id="_5-1-4-使用-preparedstatement-返回自增主键"><a href="#_5-1-4-使用-preparedstatement-返回自增主键" class="header-anchor">#</a> 5.1.4 使用 PreparedStatement 返回自增主键</h3> <p>实际上有三种 Statement 对象，它们都作为在给定连接上执行 SQL 语句的包容器：Statement、PreparedStatement（从 Statement 继承而来）和 CallableStatement（从 PreparedStatement 继承而来）。它们都专用于发送特定类型的 SQL 语句：Statement 对象用于执行不带参数的简单 SQL 语句；PreparedStatement 对象用于执行带或不带 IN 参数的预编译 SQL 语句；CallableStatement 对象用于执行对数据库已存在的存储过程的调用。Statement 接口提供了执行语句和获取结果的基本方法。PreparedStatement 接口添加了处理 IN 参数的方法；而 CallableStatement 添加了处理 OUT 参数的方法。
+这里向 t_user 表中插入一条数据，并返回自增主键 id 的值。在准备 SQL 时使用？来做参数的占位符，在实例化 PreparedStatement 对象之后对 SQL 进行传参，这样也能防止注入式攻击。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>package spring.tutorial.chapter5.jdbc;
+
+import java.sql.*;
+
+public class PreparedStatementDemo {
+  public static void main(String[] args) throws SQLException {
+    // TODO Auto-generated method stub
+    Connection conn = null;
+    PreparedStatement prestmt = null;
+    ResultSet rs = null;
+    try {
+      // 注册驱动
+      DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+      // 通过注册的驱动获得连接对象Connection
+      conn =
+          DriverManager.getConnection(
+              &quot;jdbc:mysql://127.0.0.1:3306/daodemodb?useUnicode=true&amp;characterEncoding=UTF-8&quot;
+                  + &quot;&amp;serverTimezone=UTC&amp;useSSL=false&quot;,
+              &quot;root&quot;,
+              &quot;123456&quot;);
+      // PreparedStatement对象
+      String sql = &quot;insert into t_user (name,age,money) values(?,?,?)&quot;;
+      prestmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+      prestmt.setString(1, &quot;小李&quot;);
+      prestmt.setInt(2, 25);
+      prestmt.setDouble(3, 222.22);
+      // 返回结果
+      int result = prestmt.executeUpdate();
+      if (result &gt; 0) {
+        System.out.println(&quot;新增成功&quot;);
+        rs = prestmt.getGeneratedKeys();
+        while (rs.next()) {
+          System.out.println(&quot;生成的主键ID为:&quot; + rs.getInt(1));
+        }
+      }
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+      e.printStackTrace();
+    } finally {
+      // 释放资源
+      if (conn != null) {
+        conn.close();
+      }
+      if (prestmt != null) {
+        prestmt.close();
+      }
+      if (rs != null) {
+        rs.close();
+      }
+    }
+  }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br></div></div><blockquote><p>输出结果：</p></blockquote> <div class="language- line-numbers-mode"><pre class="language-text"><code>新增成功
+生成的主键ID为:6
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><h3 id="_5-1-5-使用-callablestatement-调用存储过程"><a href="#_5-1-5-使用-callablestatement-调用存储过程" class="header-anchor">#</a> 5.1.5 使用 CallableStatement 调用存储过程</h3> <p>在使用数据库的过程中，可能会调用存储过程，可以使用 CallableStatement 来调用存储过程。</p> <ul><li>调用存储函数：<code>{?= call &lt;procedure-name&gt;[(&lt;arg1&gt;,&lt;arg2&gt;, ...)]}</code>。</li> <li>调用存储过程：<code>{call &lt;procedure-name&gt;[(&lt;arg1&gt;,&lt;arg2&gt;, ...)]}</code>。
+通过 CallableStatement 对象的 registerOutParameter()方法注册 Out 参数。通过 CallableStatement 对象的 setXxx()方法设定 IN 或 In out 参数，若想将参数设为 null，可以使用 setNull()。如果所调用的是带返回参数的存储过程，还需要通过 CallableStatement 对象的 getXxx()获取输出参数。
+在数据库中创建了存储过程 p_selectUserByAge，根据用户年龄查找用户，存储过程一个传入参数 age，一个传出参数 count，参数 count 存放根据年龄查找的用户个数。</li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>CREATE  PROCEDURE `p_selectUserByAge`(age int, out count int)
+BEGIN
+  set count=(select count(1) from t_user t where t.age =age);
+  select * from  t_user t where t.age =age;
+END
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p>在下面的代码中先使用 Connection 的 prepareCall 方法来实例化 CallableStatement，再使用 CallableStatement 对象的 registerOutParameter 方法设置传入参数，最后执行存储过程返回结果。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>package spring.tutorial.chapter5.jdbc;
+
+import java.sql.*;
+
+public class CallableStatementDemo {
+
+  public static void main(String[] args) throws SQLException {
+    // TODO Auto-generated method stub
+    Connection conn = null;
+    CallableStatement callstmt = null;
+    ResultSet rs = null;
+    try {
+      // 注册驱动
+      DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+      // 通过注册的驱动获得连接对象Connection
+      conn =
+          DriverManager.getConnection(
+              &quot;jdbc:mysql://127.0.0.1:3306/daodemodb?useUnicode=true&amp;characterEncoding=UTF-8&quot;
+                  + &quot;&amp;serverTimezone=UTC&amp;useSSL=false&quot;,
+              &quot;root&quot;,
+              &quot;123456&quot;);
+      // CallableStatement对象
+      callstmt = conn.prepareCall(&quot;{call p_selectUserByAge(?,?)}&quot;);
+      callstmt.setInt(1, 25);
+      // 设置传入参数
+      callstmt.registerOutParameter(2, Types.INTEGER);
+      rs = callstmt.executeQuery();
+      while (rs.next()) {
+        System.out.println(
+            &quot;姓名:&quot;
+                + rs.getString(&quot;name&quot;)
+                + &quot;  年龄:&quot;
+                + rs.getInt(&quot;age&quot;)
+                + &quot;  出生日期:&quot;
+                + rs.getDouble(&quot;money&quot;));
+      }
+      System.out.println(&quot;存储过程返回值:&quot; + callstmt.getInt(2));
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+      e.printStackTrace();
+    } finally {
+      // 释放资源
+      if (conn != null) {
+        conn.close();
+      }
+      if (callstmt != null) {
+        callstmt.close();
+      }
+      if (rs != null) {
+        rs.close();
+      }
+    }
+  }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br></div></div><blockquote><p>输出结果：</p></blockquote> <div class="language- line-numbers-mode"><pre class="language-text"><code>姓名:李四  年龄:25  出生日期:888.88
+姓名:小李  年龄:25  出生日期:222.22
+存储过程返回值:2
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><h3 id="_5-1-6-批处理"><a href="#_5-1-6-批处理" class="header-anchor">#</a> 5.1.6 批处理</h3> <p>在实际开发中往往会批量执行 SQL，Statement 和 PreparedStatement 都支持批量执行 SQL 语句，但这些 SQL 必须是 Insert、Update、Delete 这种执行后返回一个 Int 类型的数，表示影响的行数。Statement 和 PreparedStatement 都是通过 addBatch()方法添加一条 SQL 语句，通过 executeBatch()方法批量执行 SQL 语句，返回一个 Int 类型的数组，表示各 SQL 的返回值，这样就减少了注入驱动、创建连接这些步骤，提升了效率。首先看一下 Statement 批处理的例子：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>package spring.tutorial.chapter5.jdbc;
+
+import java.sql.*;
+
+public class StatementSQLBatch {
+  public static void main(String[] args) throws SQLException {
+    // TODO Auto-generated method stub
+    Connection conn = null;
+
+    ResultSet rs = null;
+    Statement stmt = null;
+    try {
+      // 注册驱动
+      DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+      // 通过注册的驱动获得连接对象Connection
+      conn =
+          DriverManager.getConnection(
+              &quot;jdbc:mysql://127.0.0.1:3306/daodemodb?useUnicode=true&amp;characterEncoding=UTF-8&quot;
+                  + &quot;&amp;serverTimezone=UTC&amp;useSSL=false&quot;,
+              &quot;root&quot;,
+              &quot;123456&quot;);
+
+      stmt = conn.createStatement();
+      for (int i = 0; i &lt; 2; i++) {
+        String sql =
+            &quot;insert into t_user (name,age,money) values('StatementTest&quot;
+                + i
+                + &quot;',&quot;
+                + 25
+                + i
+                + &quot;,222.22)&quot;;
+        stmt.addBatch(sql);
+      }
+      // 批处理
+      int[] result = stmt.executeBatch();
+      System.out.println(&quot;影响的行数分别为:&quot;);
+      for (int i = 0; i &lt; result.length; i++) {
+        System.out.print(result[i] + &quot;  &quot;);
+      }
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+      e.printStackTrace();
+    } finally {
+      // 释放资源
+      if (conn != null) {
+        conn.close();
+      }
+      if (stmt != null) {
+        stmt.close();
+      }
+      if (rs != null) {
+        rs.close();
+      }
+    }
+  }
+}
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br></div></div><p>由于 Statement 无法传递参数，必须是完整的 SQL 语句，因此先将 SQL 拼接之后通过 addBatch(sql)方法加入到批处理中，然后通过 executeBatch 方法执行批处理返回影响行数的数组。
+PreparedStatement 既可以是完整的 SQL，也可以用带参数的不完整的 SQL。我们看一下使用 PreparedStatement 进行批处理的例子。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>package spring.tutorial.chapter5.jdbc;
+
+import java.sql.*;
+
+public class PreparedStatementSQLBatch {
+  public static void main(String[] args) throws SQLException {
+    Connection conn = null;
+
+    ResultSet rs = null;
+    PreparedStatement prestmt = null;
+    try {
+      // 注册驱动
+      DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+      // 通过注册的驱动获得连接对象Connection
+      conn =
+          DriverManager.getConnection(
+              &quot;jdbc:mysql://127.0.0.1:3306/daodemodb?useUnicode=true&amp;characterEncoding=UTF-8&quot;
+                  + &quot;&amp;serverTimezone=UTC&amp;useSSL=false&quot;,
+              &quot;root&quot;,
+              &quot;123456&quot;);
+      String sql = &quot;insert into t_user (name,age,money) values(?,?,?)&quot;;
+      prestmt = conn.prepareStatement(sql);
+      for (int i = 0; i &lt; 2; i++) {
+        prestmt.setString(1, &quot;PreparedStatementTest&quot; + i);
+        prestmt.setInt(2, 25 + i);
+        prestmt.setDouble(3, 222.22);
+        prestmt.addBatch();
+      }
+      // 批处理
+      int[] result = prestmt.executeBatch();
+      System.out.println(&quot;影响的行数分别为:&quot;);
+      for (int i = 0; i &lt; result.length; i++) {
+        System.out.print(result[i] + &quot;  &quot;);
+      }
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+      e.printStackTrace();
+    } finally {
+      // 释放资源
+      if (conn != null) {
+        conn.close();
+      }
+      if (prestmt != null) {
+        prestmt.close();
+      }
+      if (rs != null) {
+        rs.close();
+      }
+    }
+  }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br></div></div><p>这里使用占位符？来初始化 SQL，然后通过不带参数的 addBatch 加入批处理中，最后还是通过 executeBatch 执行批处理操作。</p> <p>上面演示了 Statement、PreparedStatement 批处理的使用，这里还要说明一下，批量执行 SQL 需要数据库的支持，有些数据库可能不支持。批量处理将多条 SQL 语句提交给数据库一块执行，效率高一些，但如果数据比较多，比如几万条 SQL，就需要分批次执行，例如 200 条执行一次，如果为了增加一致性，可以在批量处理的基础上增加事务。</p> <h3 id="_5-1-7-事务处理"><a href="#_5-1-7-事务处理" class="header-anchor">#</a> 5.1.7 事务处理</h3> <p>关系型数据库一般都支持事务。事务有四大特性：原子性、一致性、隔离性、持久性。</p> <ul><li>原子性：原子性是指事务包含的所有操作要么全部成功，要么全部失败回滚。例如转账，A 账户转给 B 账户，包含两个操作，将 A 账户的钱减去，然后将 B 账户加上对应的钱数，不可能 A 账户减了 B 账户没加上，也不可能 A 账户没减就给 B 账户加上了。两个操作要么都成功，要么都失败。</li> <li>一致性：一致性是指事务必须使数据库从一个一致性状态变换到另一个一致性状态，也就是说一个事务执行之前和执行之后都必须处于一致性状态。假设账户 A 和账户 B 两者的钱加起来一共是 5000，那么不管 A 和 B 之间如何转账、转几次账，事务结束后两个用户的钱相加起来应该还得是 5000，这就是事务的一致性。这个就涉及隔离级别的问题了。</li> <li>隔离性：隔离性是当多个用户并发访问数据库时，比如操作同一张表时，数据库为每一个用户开启的事务，不能被其他事务的操作所干扰，多个并发事务之间要相互隔离。</li> <li>持久性：持久性是指一个事务一旦被提交了，那么对数据库中的数据的改变就是永久性的，即便是在数据库系统遇到故障的情况下也不会丢失提交事务的操作。
+本例中使用 t_user 表的两个用户来模拟转账操作。目前李四账户有 888.88 元、张三账户有 666.66 元，让用户李四给用户张三转账 111.11 元，使两个账户都有 777.77 元。</li></ul> <p><img src="https://img-blog.csdnimg.cn/img_convert/d454eb852f4ec5dc154ddb078e33a88b.png" alt="image-20201126224722717"></p> <p>事务有两个结果：一是成功，二是回滚。在事务中，任何一个操作发生异常都会回滚。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>package spring.tutorial.chapter5.jdbc;
+
+import java.sql.*;
+
+public class TransactionDemo {
+  public static void main(String[] args) throws SQLException {
+
+    Connection conn = null;
+
+    ResultSet rs = null;
+    PreparedStatement prestmt = null;
+    try {
+      // 注册驱动
+      DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+      // 通过注册的驱动获得连接对象Connection
+      conn =
+          DriverManager.getConnection(
+              &quot;jdbc:mysql://127.0.0.1:3306/daodemodb?useUnicode=true&amp;characterEncoding=UTF-8&quot;
+                  + &quot;&amp;serverTimezone=UTC&amp;useSSL=false&quot;,
+              &quot;root&quot;,
+              &quot;123456&quot;);
+      // 手动开启事务
+      conn.setAutoCommit(false);
+      String sql = &quot;update  t_user set money=money-? where id=?&quot;;
+      prestmt = conn.prepareStatement(sql);
+
+      prestmt.setDouble(1, -111.11);
+      prestmt.setInt(2, 2);
+      prestmt.addBatch();
+
+      prestmt.setDouble(1, 111.11);
+      prestmt.setInt(2, 1);
+      prestmt.addBatch();
+
+      // 批处理
+      prestmt.executeBatch();
+
+      // 提交事务
+      conn.commit();
+
+    } catch (SQLException e) {
+      // 事务回滚
+      conn.rollback();
+      System.out.println(e.getMessage());
+      e.printStackTrace();
+    } finally {
+      // 释放资源
+      if (conn != null) {
+        conn.close();
+      }
+      if (prestmt != null) {
+        prestmt.close();
+      }
+      if (rs != null) {
+        rs.close();
+      }
+    }
+  }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br></div></div><p>上面代码只是做测试并未做金额是否满足转账要求检查，先使用“conn.setAutoCommit(false);”将自动提交设置为手动提交，默认是自动，然后批量执行两个 SQL 语句，在“conn.commit();”提交事务之前如果没有出现错误，执行结果会保存到数据库，一旦出现异常，就会执行“conn.rollback();”回滚操作。执行上面代码转账成功的输出结果如下：</p> <p><img src="https://img-blog.csdnimg.cn/img_convert/a11e21ba76b40c150bbc6d2969f2acdc.png" alt="image-20201126225013604"></p> <p>上面是提交成功的例子。为了演示事务回滚，可以在提交事务“conn.rollback();”之前制造一个异常“inta=1/0;”，然后执行，发现数据库的值并不会改变，并抛出了异常。</p> <p><img src="https://img-blog.csdnimg.cn/img_convert/663b5e3d3d621826c179a63fc44d4f85.png" alt="image-20201126225058274"></p> <h2 id="_5-2-spring-dao-模块"><a href="#_5-2-spring-dao-模块" class="header-anchor">#</a> 5.2 Spring DAO 模块</h2> <p>Spring 的 DAO 模块提供了对 JDBC、Hibernate、MyBatis 等 DAO 层支持，本节介绍 DAO 模块对 JDBC 的支持。DAO 模块依赖 commons-dbcp.jar、commons-pool.jar。</p> <h3 id="_5-2-1-jdbcdaosupport-的使用"><a href="#_5-2-1-jdbcdaosupport-的使用" class="header-anchor">#</a> 5.2.1 JdbcDaoSupport 的使用</h3> <p>传统的 JDBC 需要创建连接、打开、执行 SQL、关闭连接这一系列步骤。Spring 框架对 JDBC 进行了封装，我们只需使用封装好的 JdbcTemplate 执行 SQL 语句。既然是 JdbcDaoSupport 的使用，为什么是使用 JdbcTemplate 呢？因为 JdbcDaoSupport 提供了 JdbcTemplate 对象，通过 JdbcTemplate 对象进行数据库操作。可以转到定义，查看 JdbcDaoSupport、JdbcTemplate 两个类的具体实现。我们通过下面的例子来了解 JdbcDaoSupport 的使用，这里还是使用 JDBC 章节的数据库 daodemodb 和表 t_user 信息。</p> <p>第一步，根据 t_user 表信息准备 Model 类 User，定义 id、name、age、money 属性，并声明两个构造函数。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>package spring.tutorial.chapter5.SpringDao.model;
+
+public class User {
+  private int Id;
+  private String Name;
+  private int Age;
+  private double Money;
+  public User() {}
+
+  public User(String name, int age, double money) {
+
+    Name = name;
+    Age = age;
+    Money = money;
+  }
+
+  @Override
+  public String toString() {
+
+    return &quot;Id:&quot;
+        + this.getId()
+        + &quot; Name:&quot;
+        + this.getName()
+        + &quot; Age:&quot;
+        + this.getAge()
+        + &quot; Money:&quot;
+        + this.getMoney();
+  }
+
+ //getter setter
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br></div></div><p>第二步，定义接口类 IUserDAO，在接口中声明两个方法：QueryAllUser 方法属于查询操作，查询所有 User；AddUser 属于更新操作，新增 User。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>public interface IUserDAO {
+  public List&lt;User&gt; QueryAllUser();
+
+  public Boolean AddUser(User user);
+
+  public Boolean transfer(int fromUserId, int toUserId, float transferMoney);
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><p>第三步，就是 JdbcDaoSupport 的使用了。在下面的 SpringDAODemo 类中首先继承 JdbcDaoSupport，同时实现 IUserDAO 接口中的方法。JdbcDaoSupport 提供了 JdbcTemplate 对象，SpringDAODemo 继承了 JdbcDaoSupport，所以也就可以直接获取到 JdbcTemplate 对象，然后执行该对象的方法进行数据库操作。</p></div></div>  <div class="page-edit"><div class="edit-link"><a href="https://github.com/andanyang/vuepress-theme-vdoing/edit/master/docs/Spring/00005.第5章 Spring之DAO.md" target="_blank" rel="noopener noreferrer">编辑</a> <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></div> <!----> <div class="last-updated"><span class="prefix">上次更新:</span> <span class="time">2023/03/13, 17:50:09</span></div></div> <div class="page-nav-wapper"><div class="page-nav-centre-wrap"><a href="/pages/e7599c/" class="page-nav-centre page-nav-centre-prev"><div class="tooltip">第4章 Spring之AOP</div></a> <a href="/pages/923052/" class="page-nav-centre page-nav-centre-next"><div class="tooltip">第 6 章 Spring的IoC容器系列</div></a></div> <div class="page-nav"><p class="inner"><span class="prev">
+        ←
+        <a href="/pages/e7599c/" class="prev">第4章 Spring之AOP</a></span> <span class="next"><a href="/pages/923052/">第 6 章 Spring的IoC容器系列</a>→
+      </span></p></div></div></div> <div class="article-list"><div class="article-title"><a href="/archives/" class="iconfont icon-bi">最近更新</a></div> <div class="article-wrapper"><dl><dd>01</dd> <dt><a href="/pages/923052/"><div>
+            第 6 章 Spring的IoC容器系列
+            <!----></div></a> <span class="date">02-27</span></dt></dl><dl><dd>02</dd> <dt><a href="/pages/e7599c/"><div>
+            第4章 Spring之AOP
+            <!----></div></a> <span class="date">02-27</span></dt></dl><dl><dd>03</dd> <dt><a href="/pages/ioc/"><div>
+            第3章 Spring IOC 核心容器
+            <!----></div></a> <span class="date">02-27</span></dt></dl> <dl><dd></dd> <dt><a href="/archives/" class="more">更多文章&gt;</a></dt></dl></div></div></main></div> <div class="footer"><div class="icons"><a href="mailto:1218853253@qq.com" title="发邮件" target="_blank" class="iconfont icon-youjian"></a><a href="https://github.com/andanyang" title="GitHub" target="_blank" class="iconfont icon-github"></a><a href="https://music.163.com/#/playlist?id=755597173" title="听音乐" target="_blank" class="iconfont icon-erji"></a></div> 
+  Theme by
+  <a href="https://github.com/xugaoyi/vuepress-theme-vdoing" target="_blank" title="本站主题">Vdoing</a> 
+    | Copyright © 2019-2023
+    <span>Young | <a href="https://github.com/andanyoung/young-blog/blob/master/LICENSE" target="_blank">MIT License</a></span></div> <div class="buttons"><div title="返回顶部" class="button blur go-to-top iconfont icon-fanhuidingbu" style="display:none;"></div> <div title="去评论" class="button blur go-to-comment iconfont icon-pinglun" style="display:none;"></div> <div title="主题模式" class="button blur theme-mode-but iconfont icon-zhuti"><ul class="select-box" style="display:none;"><li class="iconfont icon-zidong">
+          跟随系统
+        </li><li class="iconfont icon-rijianmoshi">
+          浅色模式
+        </li><li class="iconfont icon-yejianmoshi">
+          深色模式
+        </li><li class="iconfont icon-yuedu">
+          阅读模式
+        </li></ul></div></div> <!----> <!----> <!----></div><div class="global-ui"><div></div></div></div>
+    <script src="/assets/js/app.92d06dcb.js" defer></script><script src="/assets/js/2.8f044b90.js" defer></script><script src="/assets/js/12.837ce4da.js" defer></script>
+  </body>
+</html>
