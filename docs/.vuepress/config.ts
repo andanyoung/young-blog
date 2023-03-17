@@ -332,11 +332,11 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
       {
         choosen: "gitalk",
         options: {
-          clientID: "a6e1355287947096b88b",
-          clientSecret: "f0e77d070fabfcd5af95bebb82b2d574d7248d71",
+          clientID: "60e9795f00c27deea1f1",
+          clientSecret: "659d426b9e222e0e2143a3d7c83b784f2a07dd63",
           repo: "blog-gitalk-comment", // GitHub 仓库
-          owner: "andanyang", // GitHub仓库所有者
-          admin: ["andanyang"], // 对仓库有写权限的人
+          owner: "aoooooooo", // GitHub仓库所有者
+          admin: ["1218853253@qq.com"], // 对仓库有写权限的人
           // distractionFreeMode: true,
           pagerDirection: "last", // 'first'正序 | 'last'倒序
           id: "<%- (frontmatter.permalink || frontmatter.to.path).slice(-16) %>", //  页面的唯一标识,长度不能超过50
