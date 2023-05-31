@@ -6,11 +6,12 @@ categories:
   - Java
   - 集合
 tags:
-  - 
-author: 
+  -
+author:
   name: andanyang
   link: https://github.com/andanyoung
 ---
+
 Java 的 HashMap 是非线程安全的。多线程下应该用 ConcurrentHashMap。
 
 多线程下[HashMap]的问题（这里主要说死循环问题）：
@@ -126,7 +127,7 @@ Java 的 HashMap 是非线程安全的。多线程下应该用 ConcurrentHashMap
 
 最上面的是 old hash 表，其中的 Hash 表的 size=2, 所以`key = 3, 7, 5`，在 mod 2 以后都冲突在`table[1]`这里了。接下来的三个步骤是 Hash 表 resize 成 4，然后所有的`<key,value>` 重新 rehash 的过程。
 
-![图片](../../.vuepress/public/java/640.png)
+![图片](../../.vuepress/public/java/640-121adqwqw.png)
 
 并发下的 Rehash（多线程）
 
