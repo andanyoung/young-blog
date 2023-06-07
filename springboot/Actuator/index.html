@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>SpringBoot 监控神器——Actuator 保姆级教程 | Young&#39;s blog</title>
+    <meta name="generator" content="VuePress 1.9.5">
+    <link rel="icon" href="/img/favicon.ico">
+    <meta name="description" content="Young丶java后端技术博客,专注后端学习与总结。擅长spring boot,JAVA基础总结,等方面的知识,关注spring,架构,elasticsearch,mysql领域.">
+    <meta name="keywords" content="前端博客,个人技术博客,前端,前端开发,前端框架,web前端,前端面试题,技术文档,学习,面试,JavaScript,js,ES6,TypeScript,vue,python,css3,html5,Node,git,github,markdown">
+    <meta name="baidu-site-verification" content="7F55weZDDc">
+    <meta name="theme-color" content="#11a8cd">
+    
+    <link rel="preload" href="/assets/css/0.styles.d9c8cf8c.css" as="style"><link rel="preload" href="/assets/js/app.c2a0235b.js" as="script"><link rel="preload" href="/assets/js/2.2024b389.js" as="script"><link rel="preload" href="/assets/js/36.6582b7ce.js" as="script"><link rel="prefetch" href="/assets/js/10.3919bd01.js"><link rel="prefetch" href="/assets/js/11.68ae4935.js"><link rel="prefetch" href="/assets/js/12.a8c165c8.js"><link rel="prefetch" href="/assets/js/13.8cb44525.js"><link rel="prefetch" href="/assets/js/14.6fc1a0cb.js"><link rel="prefetch" href="/assets/js/15.edf8b496.js"><link rel="prefetch" href="/assets/js/16.347fa6d2.js"><link rel="prefetch" href="/assets/js/17.d3dd777f.js"><link rel="prefetch" href="/assets/js/18.b726867b.js"><link rel="prefetch" href="/assets/js/19.2bcce8ae.js"><link rel="prefetch" href="/assets/js/20.516696a2.js"><link rel="prefetch" href="/assets/js/21.d84ee819.js"><link rel="prefetch" href="/assets/js/22.d9d6dfde.js"><link rel="prefetch" href="/assets/js/23.57309a94.js"><link rel="prefetch" href="/assets/js/24.8d21be69.js"><link rel="prefetch" href="/assets/js/25.b936b397.js"><link rel="prefetch" href="/assets/js/26.ed04c63d.js"><link rel="prefetch" href="/assets/js/27.103a4337.js"><link rel="prefetch" href="/assets/js/28.93f8d7ab.js"><link rel="prefetch" href="/assets/js/29.9db4824f.js"><link rel="prefetch" href="/assets/js/3.d4f6e265.js"><link rel="prefetch" href="/assets/js/30.67292f25.js"><link rel="prefetch" href="/assets/js/31.fbf79f89.js"><link rel="prefetch" href="/assets/js/32.4c6a1426.js"><link rel="prefetch" href="/assets/js/33.57a32f7b.js"><link rel="prefetch" href="/assets/js/34.d3552049.js"><link rel="prefetch" href="/assets/js/35.e2d4e98e.js"><link rel="prefetch" href="/assets/js/37.8cec185e.js"><link rel="prefetch" href="/assets/js/38.bbd2137f.js"><link rel="prefetch" href="/assets/js/39.1c0c1f11.js"><link rel="prefetch" href="/assets/js/4.a9687f1c.js"><link rel="prefetch" href="/assets/js/40.8ce6b668.js"><link rel="prefetch" href="/assets/js/41.b2e05ad5.js"><link rel="prefetch" href="/assets/js/42.21fa7d65.js"><link rel="prefetch" href="/assets/js/43.83140ce8.js"><link rel="prefetch" href="/assets/js/44.af6248f7.js"><link rel="prefetch" href="/assets/js/45.16f3b4b2.js"><link rel="prefetch" href="/assets/js/46.954b4f9a.js"><link rel="prefetch" href="/assets/js/47.3bef2ef7.js"><link rel="prefetch" href="/assets/js/48.799388d2.js"><link rel="prefetch" href="/assets/js/49.6a0b44f7.js"><link rel="prefetch" href="/assets/js/5.7017a432.js"><link rel="prefetch" href="/assets/js/50.222f7d15.js"><link rel="prefetch" href="/assets/js/51.b95bcf24.js"><link rel="prefetch" href="/assets/js/52.999676bf.js"><link rel="prefetch" href="/assets/js/53.3ac00359.js"><link rel="prefetch" href="/assets/js/54.dbb667fb.js"><link rel="prefetch" href="/assets/js/55.fd6b4ec1.js"><link rel="prefetch" href="/assets/js/56.66f888de.js"><link rel="prefetch" href="/assets/js/57.019b6f38.js"><link rel="prefetch" href="/assets/js/58.50cc8227.js"><link rel="prefetch" href="/assets/js/59.8d36fc38.js"><link rel="prefetch" href="/assets/js/6.3add5130.js"><link rel="prefetch" href="/assets/js/60.76ed51da.js"><link rel="prefetch" href="/assets/js/61.a94b0a5f.js"><link rel="prefetch" href="/assets/js/62.35e7d614.js"><link rel="prefetch" href="/assets/js/63.4c0049f9.js"><link rel="prefetch" href="/assets/js/64.16c5f7be.js"><link rel="prefetch" href="/assets/js/65.fa8c767c.js"><link rel="prefetch" href="/assets/js/66.0d863190.js"><link rel="prefetch" href="/assets/js/67.5aaa56fd.js"><link rel="prefetch" href="/assets/js/68.95f877f6.js"><link rel="prefetch" href="/assets/js/69.88e0fc7a.js"><link rel="prefetch" href="/assets/js/7.a36e728e.js"><link rel="prefetch" href="/assets/js/70.39dc8f6a.js"><link rel="prefetch" href="/assets/js/71.4b988a40.js"><link rel="prefetch" href="/assets/js/72.1df2a377.js"><link rel="prefetch" href="/assets/js/73.5098ba52.js"><link rel="prefetch" href="/assets/js/74.d908d666.js"><link rel="prefetch" href="/assets/js/75.6ab75c7b.js"><link rel="prefetch" href="/assets/js/76.da0a93bf.js"><link rel="prefetch" href="/assets/js/77.2d6ce3bb.js"><link rel="prefetch" href="/assets/js/78.5a1d9d06.js"><link rel="prefetch" href="/assets/js/79.cb1993b9.js"><link rel="prefetch" href="/assets/js/8.b89ca333.js"><link rel="prefetch" href="/assets/js/80.a442c0e2.js"><link rel="prefetch" href="/assets/js/81.ea7add2b.js"><link rel="prefetch" href="/assets/js/82.77940a37.js"><link rel="prefetch" href="/assets/js/83.4508e951.js"><link rel="prefetch" href="/assets/js/84.2665ea1e.js"><link rel="prefetch" href="/assets/js/85.7121748e.js"><link rel="prefetch" href="/assets/js/86.ffbac392.js"><link rel="prefetch" href="/assets/js/87.f096b345.js"><link rel="prefetch" href="/assets/js/9.83c53523.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.d9c8cf8c.css">
+  </head>
+  <body class="theme-mode-light">
+    <div id="app" data-server-rendered="true"><div class="theme-container sidebar-open have-rightmenu only-sidebarItem"><header class="navbar blur"><div title="目录" class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/img/logo.png" alt="Young's blog" class="logo"> <span class="site-name can-hide">Young's blog</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><a href="/Spring/" class="nav-link">Spring</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="前端" class="dropdown-title"><a href="/web/" class="link-title">前端</a> <span class="title" style="display:none;">前端</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>前端文章1</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/pages/8143cc480faf9a11/" class="nav-link">JavaScript</a></li></ul></li><li class="dropdown-item"><h4>学习笔记</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/note/javascript/" class="nav-link">《JavaScript教程》</a></li><li class="dropdown-subitem"><a href="/note/js/" class="nav-link">《JavaScript高级程序设计》</a></li><li class="dropdown-subitem"><a href="/note/es6/" class="nav-link">《ES6 教程》</a></li><li class="dropdown-subitem"><a href="/note/vue/" class="nav-link">《Vue》</a></li><li class="dropdown-subitem"><a href="/note/react/" class="nav-link">《React》</a></li><li class="dropdown-subitem"><a href="/note/typescript-axios/" class="nav-link">《TypeScript 从零实现 axios》</a></li><li class="dropdown-subitem"><a href="/note/git/" class="nav-link">《Git》</a></li><li class="dropdown-subitem"><a href="/pages/51afd6/" class="nav-link">TypeScript</a></li><li class="dropdown-subitem"><a href="/pages/4643cd/" class="nav-link">JS设计模式总结</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="页面" class="dropdown-title"><a href="/ui/" class="link-title">页面</a> <span class="title" style="display:none;">页面</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/8309a5b876fc95e3/" class="nav-link">HTML</a></li><li class="dropdown-item"><!----> <a href="/pages/0a83b083bdf257cb/" class="nav-link">CSS</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="技术" class="dropdown-title"><a href="/technology/" class="link-title">技术</a> <span class="title" style="display:none;">技术</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/9a7ee40fc232253e/" class="nav-link">技术文档</a></li><li class="dropdown-item"><!----> <a href="/pages/4c778760be26d8b3/" class="nav-link">GitHub技巧</a></li><li class="dropdown-item"><!----> <a href="/pages/117708e0af7f0bd9/" class="nav-link">Nodejs</a></li><li class="dropdown-item"><!----> <a href="/pages/41f87d890d0a02af/" class="nav-link">博客搭建</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="更多" class="dropdown-title"><a href="/more/" class="link-title">更多</a> <span class="title" style="display:none;">更多</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/f2a556/" class="nav-link">学习</a></li><li class="dropdown-item"><!----> <a href="/pages/aea6571b7a8bae86/" class="nav-link">面试</a></li><li class="dropdown-item"><!----> <a href="/pages/2d615df9a36a98ed/" class="nav-link">心情杂货</a></li><li class="dropdown-item"><!----> <a href="/pages/baaa02/" class="nav-link">实用技巧</a></li><li class="dropdown-item"><!----> <a href="/friends/" class="nav-link">友情链接</a></li></ul></div></div><div class="nav-item"><a href="/about/" class="nav-link">关于</a></div><div class="nav-item"><a href="/pages/beb6c0bd8a66cea6/" class="nav-link">收藏</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="索引" class="dropdown-title"><a href="/archives/" class="link-title">索引</a> <span class="title" style="display:none;">索引</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/" class="nav-link">分类</a></li><li class="dropdown-item"><!----> <a href="/tags/" class="nav-link">标签</a></li><li class="dropdown-item"><!----> <a href="/archives/" class="nav-link">归档</a></li></ul></div></div> <a href="https://github.com/andanyang/vuepress-theme-vdoing" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <div class="sidebar-hover-trigger"></div> <aside class="sidebar" style="display:none;"><div class="blogger"><img src="/img/logo.png"> <div class="blogger-info"><h3>Young</h3> <span></span></div></div> <nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><a href="/Spring/" class="nav-link">Spring</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="前端" class="dropdown-title"><a href="/web/" class="link-title">前端</a> <span class="title" style="display:none;">前端</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>前端文章1</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/pages/8143cc480faf9a11/" class="nav-link">JavaScript</a></li></ul></li><li class="dropdown-item"><h4>学习笔记</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/note/javascript/" class="nav-link">《JavaScript教程》</a></li><li class="dropdown-subitem"><a href="/note/js/" class="nav-link">《JavaScript高级程序设计》</a></li><li class="dropdown-subitem"><a href="/note/es6/" class="nav-link">《ES6 教程》</a></li><li class="dropdown-subitem"><a href="/note/vue/" class="nav-link">《Vue》</a></li><li class="dropdown-subitem"><a href="/note/react/" class="nav-link">《React》</a></li><li class="dropdown-subitem"><a href="/note/typescript-axios/" class="nav-link">《TypeScript 从零实现 axios》</a></li><li class="dropdown-subitem"><a href="/note/git/" class="nav-link">《Git》</a></li><li class="dropdown-subitem"><a href="/pages/51afd6/" class="nav-link">TypeScript</a></li><li class="dropdown-subitem"><a href="/pages/4643cd/" class="nav-link">JS设计模式总结</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="页面" class="dropdown-title"><a href="/ui/" class="link-title">页面</a> <span class="title" style="display:none;">页面</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/8309a5b876fc95e3/" class="nav-link">HTML</a></li><li class="dropdown-item"><!----> <a href="/pages/0a83b083bdf257cb/" class="nav-link">CSS</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="技术" class="dropdown-title"><a href="/technology/" class="link-title">技术</a> <span class="title" style="display:none;">技术</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/9a7ee40fc232253e/" class="nav-link">技术文档</a></li><li class="dropdown-item"><!----> <a href="/pages/4c778760be26d8b3/" class="nav-link">GitHub技巧</a></li><li class="dropdown-item"><!----> <a href="/pages/117708e0af7f0bd9/" class="nav-link">Nodejs</a></li><li class="dropdown-item"><!----> <a href="/pages/41f87d890d0a02af/" class="nav-link">博客搭建</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="更多" class="dropdown-title"><a href="/more/" class="link-title">更多</a> <span class="title" style="display:none;">更多</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/f2a556/" class="nav-link">学习</a></li><li class="dropdown-item"><!----> <a href="/pages/aea6571b7a8bae86/" class="nav-link">面试</a></li><li class="dropdown-item"><!----> <a href="/pages/2d615df9a36a98ed/" class="nav-link">心情杂货</a></li><li class="dropdown-item"><!----> <a href="/pages/baaa02/" class="nav-link">实用技巧</a></li><li class="dropdown-item"><!----> <a href="/friends/" class="nav-link">友情链接</a></li></ul></div></div><div class="nav-item"><a href="/about/" class="nav-link">关于</a></div><div class="nav-item"><a href="/pages/beb6c0bd8a66cea6/" class="nav-link">收藏</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="索引" class="dropdown-title"><a href="/archives/" class="link-title">索引</a> <span class="title" style="display:none;">索引</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/" class="nav-link">分类</a></li><li class="dropdown-item"><!----> <a href="/tags/" class="nav-link">标签</a></li><li class="dropdown-item"><!----> <a href="/archives/" class="nav-link">归档</a></li></ul></div></div> <a href="https://github.com/andanyang/vuepress-theme-vdoing" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><a href="/springboot/Actuator/" aria-current="page" class="active sidebar-link">SpringBoot 监控神器——Actuator 保姆级教程</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level2"><a href="/springboot/Actuator/#配置-actuator" class="sidebar-link">配置 Actuator</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/springboot/Actuator/#pom-xml" class="sidebar-link">pom.xml</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/springboot/Actuator/#actuator-的-rest-接口" class="sidebar-link">Actuator 的 REST 接口</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/springboot/Actuator/#命令详解" class="sidebar-link">命令详解</a></li><li class="sidebar-sub-header level4"><a href="/springboot/Actuator/#health" class="sidebar-link">health</a></li><li class="sidebar-sub-header level4"><a href="/springboot/Actuator/#info" class="sidebar-link">info</a></li><li class="sidebar-sub-header level4"><a href="/springboot/Actuator/#beans" class="sidebar-link">beans</a></li><li class="sidebar-sub-header level4"><a href="/springboot/Actuator/#conditions" class="sidebar-link">conditions</a></li><li class="sidebar-sub-header level4"><a href="/springboot/Actuator/#heapdump" class="sidebar-link">heapdump</a></li><li class="sidebar-sub-header level4"><a href="/springboot/Actuator/#shutdown" class="sidebar-link">shutdown</a></li><li class="sidebar-sub-header level4"><a href="/springboot/Actuator/#mappings" class="sidebar-link">mappings</a></li><li class="sidebar-sub-header level4"><a href="/springboot/Actuator/#threaddump" class="sidebar-link">threaddump</a></li><li class="sidebar-sub-header level4"><a href="/springboot/Actuator/#loggers-端点" class="sidebar-link">loggers 端点</a></li><li class="sidebar-sub-header level4"><a href="/springboot/Actuator/#metrics-端点" class="sidebar-link">metrics 端点</a></li><li class="sidebar-sub-header level3"><a href="/springboot/Actuator/#自定义-endpoint" class="sidebar-link">自定义 Endpoint</a></li><li class="sidebar-sub-header level3"><a href="/springboot/Actuator/#自定义监控端点常用注解" class="sidebar-link">自定义监控端点常用注解</a></li><li class="sidebar-sub-header level3"><a href="/springboot/Actuator/#spring-boot-monitor-做监控页面" class="sidebar-link">Spring Boot Monitor 做监控页面</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/springboot/Actuator/#参考" class="sidebar-link">参考</a></li><li class="sidebar-sub-header level2"><a href="/springboot/Actuator/#参考-2" class="sidebar-link">参考</a></li></ul></li></ul> </aside> <div><main class="page"><div class="theme-vdoing-wrapper "><div class="articleInfo-wrap" data-v-06225672><div class="articleInfo" data-v-06225672><ul class="breadcrumbs" data-v-06225672><li data-v-06225672><a href="/" title="首页" class="iconfont icon-home router-link-active" data-v-06225672></a></li> <li data-v-06225672><a href="/categories/?category=Spring%20boot" title="分类" data-v-06225672>Spring boot</a></li></ul> <div class="info" data-v-06225672><div title="作者" class="author iconfont icon-touxiang" data-v-06225672><a href="https://github.com/andanyoung" target="_blank" title="作者" class="beLink" data-v-06225672>andanyang</a></div> <div title="创建时间" class="date iconfont icon-riqi" data-v-06225672><a href="javascript:;" data-v-06225672>2023-06-07</a></div> <!----></div></div></div> <!----> <div class="content-wrapper"><div class="right-menu-wrapper"><div class="right-menu-margin"><div class="right-menu-title">目录</div> <div class="right-menu-content"></div></div></div> <h1><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAABH1JREFUSA3tVl1oHFUUPmdmd2ltklqbpJDiNnXFmgbFktho7YMPNiJSSZM0+CAYSkUELVhM6YuwIPpgoOKDqOBDC0XE2CQoNtQXBUFTTcCi+Wlh1V2TQExsUzcltd3M9Tt3ZjZzZ2fT+OJTL8yeM+eee757fmeJbq//KQL8X3DUSFOcfr7cRsRtxNQMWueeVzOkaITIGqQHNg5y8+jNW9ldM7A6nTpAjuolUikAwq7CE3WcM2RRDz+XGVgN3FptU/aUSlvq9Pa3iZ1+sgAqJyyAFqkipd9dqiwHF3P65YycLWc/6sqGrvoEoIp6DOFaX5h6+dnfjkWprwqsPk0dUGq5vySwDImC10KxFHgGL1SWoc92O3eVht09qdXNH11I2SsTsJYqMWzihqGMi+A+Garf3BAuuLI5oGlULyNfyB/HYNujwktOfRrMr5t77NmevqaUopx0grnKAyvVpmwUDB4x6FPXuGvYLTDwWsejwgtgkYKPqRJg8SV6xaiZ3ZTppGneS4yfH5/66fZSDHv+QZci/+h5c5UHtpy67JUqGppM0sh0Nc1dW6/N1W5Yoqat8/TU/VnadmdeW2PLLSyh0cvxBs3KbqTmwYPpxN4do/mzE8nEpvX/UMu2Wbp74zUAK5q6WkHns7V0eWkdPbPzd3rxkTGybadYySumVzhcaJFbs5UrEkQ/+CK8gF5dnh/6ciIZ73gwQ927L1IitoxKLXYP3SjYdOrHHfTZhRRlFyrorafPk20B3HPD1y2G3qKZME5Jcf3t/HUC13/8tSd++vqFveMUTwAUxSUFI1QekR1+bIze3D9MF2aq6cPvG72CgnldWCFqyRw3lwH8ZMerjTD9ElRO7Gv44wNpC90aASqGfVlz/Rx17srQ57/UU26hkhQqUB7dBR71WmzQhHUnblGmVOEw0jhbV1n9OlXUDCIRGaNV5Jp43N516fN7JmnTHdfp7Hgy0luO4aMhtkLL8Bi3bUWYvzh5Mn1dTxrL6QmGuRhGL/TiTTxRoEdTszSaq9GR0NGA3KdkOz3hqSV3MIDhQ5IVX/Ivx3umBti2es2h4eZby7x8br1rkf7Mo90AqC8aQ3sJeNzqFRu+vSANAQe3PL7l0HGOAdwDCeZYvNKeoZp1Qfs6Aipndh86HmFRi0LAnEO47wsqM6cdfjh3jBPUzhZy7nvlUfFsamED1VQt6aISHVymXZ/B2aCtIG8AI8xfobj2d3en1wWVhOeHELKmLQ1s211s88comkv4UCwWyF787mJdYXtNfhKAXVqnKTq8QZvGAGGOfaTo5pGZ/PwbUCr5+DPr/1J92JNHr9aOl/F3iI5+O1nfybsGxoimvZ3ViWSluDITw3P37mypheDIPY0tw7+O/5ApbkYw+zpfaUVu32Pi98+defdUhEpZkRFq0aqyNh9FuL9hpYbEm6iwi0z2REd09ZmyENEbuhjDWzKvZXTqKYaBIr3tt5kuPtQBZFvEUwHt60vfCNu41XsksH9Ij1BMMz1Y0OOunHNShFIP5868g5zeXmuLwL9T4b6Q2+KejgAAAABJRU5ErkJggg==">SpringBoot 监控神器——Actuator 保姆级教程<!----></h1>  <div class="theme-vdoing-content content__default"><h1 id="springboot-整合-actuator"><a href="#springboot-整合-actuator" class="header-anchor">#</a> SpringBoot 整合 actuator</h1> <blockquote><p>SpringBoot 自带监控功能 Actuator，可以帮助实现对程序内部运行情况监控，比如监控状况、Bean 加载情况、环境变量、日志信息、线程信息等</p></blockquote> <h2 id="配置-actuator"><a href="#配置-actuator" class="header-anchor">#</a> 配置 Actuator</h2> <ul><li><h3 id="pom-xml"><a href="#pom-xml" class="header-anchor">#</a> <code>pom.xml</code></h3></li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>&lt;!-- web start--&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;!-- web end--&gt;
+&lt;!-- actuator start--&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;!-- actuator end--&gt;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div></div><ul><li>浏览器打开链接 http://localhost:8080/actuator/<br>
+可以看到所有支持的连接，默认只有</li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>/actuator
+/actuator/health
+/actuator/health/{component}
+/actuator/health/{component}/{instance}
+/actuator/info
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><ul><li>bean 加载情况 http://localhost:8080/actuator/beans</li></ul> <p>具体的使用方法：</p> <p>引入上述的依赖 jar</p> <p>通过下面的配置启用所有的监控端点，默认情况下，这些端点是禁用的；</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>management:
+  endpoints:
+    web:
+      exposure:
+        include: &quot;*&quot;
+“*”号代表启用所有的监控端点，可以单独启用，例如，`health`，`info`，`metrics`等
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><h2 id="actuator-的-rest-接口"><a href="#actuator-的-rest-接口" class="header-anchor">#</a> Actuator 的 REST 接口</h2> <p>Actuator 监控分成两类：原生端点和用户自定义端点；自定义端点主要是指扩展性，用户可以根据自己的实际应用，定义一些比较关心的指标，在运行期进行监控。</p> <p>原生端点是在应用程序里提供众多 Web 接口，通过它们了解应用程序运行时的内部状况。原生端点又可以分成三类：</p> <ul><li><p>应用配置类：可以查看应用在运行期的静态信息：例如自动配置信息、加载的 springbean 信息、yml 文件配置信息、环境信息、请求映射信息；</p></li> <li><p>度量指标类：主要是运行期的动态信息，例如堆栈、请求连、一些健康指标、metrics 信息等；</p></li> <li><p>操作控制类：主要是指 shutdown, 用户可以发送一个请求将应用的监控功能关闭。</p></li></ul> <p>Actuator 提供了 13 个接口，具体如下表所示。</p> <table><thead><tr><th>GET</th><th>/auditevents</th><th>显示应用暴露的审计事件 (比如认证进入、订单失败)</th></tr></thead><tbody><tr><td>GET</td><td>/beans</td><td>描述应用程序上下文里全部的 Bean，以及它们的关系</td></tr><tr><td>GET</td><td>/conditions</td><td>就是 1.0 的 /autoconfig ，提供一份自动配置生效的条件情况，记录哪些自动配置条件通过了，哪些没通过</td></tr><tr><td>GET</td><td>/configprops</td><td>描述配置属性 (包含默认值) 如何注入 Bean</td></tr><tr><td>GET</td><td>/env</td><td>获取全部环境属性</td></tr><tr><td>GET</td><td>/env/{name}</td><td>根据名称获取特定的环境属性值</td></tr><tr><td>GET</td><td>/flyway</td><td>提供一份 Flyway 数据库迁移信息</td></tr><tr><td>GET</td><td>/liquidbase</td><td>显示 Liquibase 数据库迁移的纤细信息</td></tr><tr><td>GET</td><td>/health</td><td>报告应用程序的健康指标，这些值由 HealthIndicator 的实现类提供</td></tr><tr><td>GET</td><td>/heapdump</td><td>dump 一份应用的 JVM 堆信息</td></tr><tr><td>GET</td><td>/httptrace</td><td>显示 HTTP 足迹，最近 100 个 HTTP request/repsponse</td></tr><tr><td>GET</td><td>/info</td><td>获取应用程序的定制信息，这些信息由 info 打头的属性提供</td></tr><tr><td>GET</td><td>/logfile</td><td>返回 log file 中的内容 (如果 logging.file 或者 logging.path 被设置)</td></tr><tr><td>GET</td><td>/loggers</td><td>显示和修改配置的 loggers</td></tr><tr><td>GET</td><td>/metrics</td><td>报告各种应用程序度量信息，比如内存用量和 HTTP 请求计数</td></tr><tr><td>GET</td><td>/metrics/{name}</td><td>报告指定名称的应用程序度量值</td></tr><tr><td>GET</td><td>/scheduledtasks</td><td>展示应用中的定时任务信息</td></tr><tr><td>GET</td><td>/sessions</td><td>如果我们使用了 Spring Session 展示应用中的 HTTP sessions 信息</td></tr><tr><td>POST</td><td>/shutdown</td><td>关闭应用程序，要求 endpoints.shutdown.enabled 设置为 true</td></tr><tr><td>GET</td><td>/mappings</td><td>描述全部的 URI 路径，以及它们和控制器 (包含 Actuator 端点) 的映射关系</td></tr><tr><td>GET</td><td>/threaddump</td><td>获取线程活动的快照</td></tr></tbody></table> <h3 id="命令详解"><a href="#命令详解" class="header-anchor">#</a> 命令详解</h3> <p>在 Spring Boot 2.x 中为了安全期间，Actuator 只开放了两个端点 /actuator/health 和 /actuator/info。可以在配置文件中设置打开。</p> <p>可以打开所有的监控点</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>management:
+  endpoints:
+    web:
+      exposure:
+        include: &quot;*&quot;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p>也可以选择打开部分</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>management:
+  endpoints:
+    web:
+      exposure:
+        exclude: beans,trace
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p>Actuator 默认所有的监控点路径都在 / actuator/*，当然如果有需要这个路径也支持定制。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>management:
+  endpoints:
+    web:
+      base-path: /manage #记得要加上/
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p>设置完重启后，再次访问地址就会变成 / manage/*</p> <p>Actuator 几乎监控了应用涉及的方方面面，我们重点讲述一些经常在项目中常用的命令。</p> <h4 id="health"><a href="#health" class="header-anchor">#</a> health</h4> <p>health 主要用来检查应用的运行状态，这是我们使用最高频的一个监控点。通常使用此接口提醒我们应用实例的运行状态，以及应用不” 健康 “的原因，比如数据库连接、磁盘空间不够等。</p> <p>默认情况下 health 的状态是开放的，添加依赖后启动项目，访问：http://localhost:8080/actuator/health 即可看到应用的状态。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>{
+    &quot;status&quot; : &quot;UP&quot;
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>要想查看详细的应用健康信息需要配置 management.endpoint.health.show-details 的值为 always，配置之后我们再次访问 http://localhost:8080/actuator/health，获取的信息如下：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>{
+    &quot;status&quot;: &quot;UP&quot;,
+    &quot;components&quot;: {
+        &quot;diskSpace&quot;: {
+            &quot;status&quot;: &quot;UP&quot;,
+            &quot;details&quot;: {
+                &quot;total&quot;: 236510507008,
+                &quot;free&quot;: 223361744896,
+                &quot;threshold&quot;: 10485760
+            }
+        },
+        &quot;ping&quot;: {
+            &quot;status&quot;: &quot;UP&quot;
+        }
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br></div></div><p>Spring boot 的健康信息都是从 ApplicationContext 中的各种 HealthIndicator Beans 中收集到的，Spring boot 框架中包含了大量的 HealthIndicators 的实现类，当然你也可以实现自己认为的健康状态。</p> <p>默认情况下，最终的 Spring Boot 应用的状态是由 HealthAggregator 汇总而成的，汇总的算法是：</p> <ul><li>1 设置状态码顺序：setStatusOrder(Status.DOWN, Status.OUT_OF_SERVICE, Status.UP, Status.UNKNOWN);。</li> <li>2 过滤掉不能识别的状态码。</li> <li>3 如果无任何状态码，整个 Spring Boot 应用的状态是 UNKNOWN。</li> <li>4 将所有收集到的状态码按照 1 中的顺序排序。</li> <li>5 返回有序状态码序列中的第一个状态码，作为整个 Spring Boot 应用的状态。</li></ul> <p>health 通过合并几个健康指数检查应用的健康情况。Spring boot 框架自带的 <code>HealthIndicators</code> 目前包括：</p> <table><thead><tr><th>CassandraHealthIndicator</th><th>Checks that a Cassandra database is up.</th></tr></thead><tbody><tr><td><a href="https://link.jianshu.com/?t=https%3A%2F%2Fgithub.com%2Fspring-projects%2Fspring-boot%2Ftree%2Fv2.0.1.RELEASE%2Fspring-boot-project%2Fspring-boot-actuator%2Fsrc%2Fmain%2Fjava%2Forg%2Fspringframework%2Fboot%2Factuate%2Fsystem%2FDiskSpaceHealthIndicator.java"><code>DiskSpaceHealthIndicator</code></a></td><td>Checks for low disk space.</td></tr><tr><td><a href="https://link.jianshu.com/?t=https%3A%2F%2Fgithub.com%2Fspring-projects%2Fspring-boot%2Ftree%2Fv2.0.1.RELEASE%2Fspring-boot-project%2Fspring-boot-actuator%2Fsrc%2Fmain%2Fjava%2Forg%2Fspringframework%2Fboot%2Factuate%2Fjdbc%2FDataSourceHealthIndicator.java"><code>DataSourceHealthIndicator</code></a></td><td>Checks that a connection to <code>DataSource</code> can be obtained.</td></tr><tr><td><a href="https://link.jianshu.com/?t=https%3A%2F%2Fgithub.com%2Fspring-projects%2Fspring-boot%2Ftree%2Fv2.0.1.RELEASE%2Fspring-boot-project%2Fspring-boot-actuator%2Fsrc%2Fmain%2Fjava%2Forg%2Fspringframework%2Fboot%2Factuate%2Felasticsearch%2FElasticsearchHealthIndicator.java"><code>ElasticsearchHealthIndicator</code></a></td><td>Checks that an Elasticsearch cluster is up.</td></tr><tr><td><a href="https://link.jianshu.com/?t=https%3A%2F%2Fgithub.com%2Fspring-projects%2Fspring-boot%2Ftree%2Fv2.0.1.RELEASE%2Fspring-boot-project%2Fspring-boot-actuator%2Fsrc%2Fmain%2Fjava%2Forg%2Fspringframework%2Fboot%2Factuate%2Finflux%2FInfluxDbHealthIndicator.java"><code>InfluxDbHealthIndicator</code></a></td><td>Checks that an InfluxDB server is up.</td></tr><tr><td><a href="https://link.jianshu.com/?t=https%3A%2F%2Fgithub.com%2Fspring-projects%2Fspring-boot%2Ftree%2Fv2.0.1.RELEASE%2Fspring-boot-project%2Fspring-boot-actuator%2Fsrc%2Fmain%2Fjava%2Forg%2Fspringframework%2Fboot%2Factuate%2Fjms%2FJmsHealthIndicator.java"><code>JmsHealthIndicator</code></a></td><td>Checks that a JMS broker is up.</td></tr><tr><td><a href="https://link.jianshu.com/?t=https%3A%2F%2Fgithub.com%2Fspring-projects%2Fspring-boot%2Ftree%2Fv2.0.1.RELEASE%2Fspring-boot-project%2Fspring-boot-actuator%2Fsrc%2Fmain%2Fjava%2Forg%2Fspringframework%2Fboot%2Factuate%2Fmail%2FMailHealthIndicator.java"><code>MailHealthIndicator</code></a></td><td>Checks that a mail server is up.</td></tr><tr><td><a href="https://link.jianshu.com/?t=https%3A%2F%2Fgithub.com%2Fspring-projects%2Fspring-boot%2Ftree%2Fv2.0.1.RELEASE%2Fspring-boot-project%2Fspring-boot-actuator%2Fsrc%2Fmain%2Fjava%2Forg%2Fspringframework%2Fboot%2Factuate%2Fmongo%2FMongoHealthIndicator.java"><code>MongoHealthIndicator</code></a></td><td>Checks that a Mongo database is up.</td></tr><tr><td><a href="https://link.jianshu.com/?t=https%3A%2F%2Fgithub.com%2Fspring-projects%2Fspring-boot%2Ftree%2Fv2.0.1.RELEASE%2Fspring-boot-project%2Fspring-boot-actuator%2Fsrc%2Fmain%2Fjava%2Forg%2Fspringframework%2Fboot%2Factuate%2Fneo4j%2FNeo4jHealthIndicator.java"><code>Neo4jHealthIndicator</code></a></td><td>Checks that a Neo4j server is up.</td></tr><tr><td><a href="https://link.jianshu.com/?t=https%3A%2F%2Fgithub.com%2Fspring-projects%2Fspring-boot%2Ftree%2Fv2.0.1.RELEASE%2Fspring-boot-project%2Fspring-boot-actuator%2Fsrc%2Fmain%2Fjava%2Forg%2Fspringframework%2Fboot%2Factuate%2Famqp%2FRabbitHealthIndicator.java"><code>RabbitHealthIndicator</code></a></td><td>Checks that a Neo4j server is up.</td></tr><tr><td><a href="https://link.jianshu.com/?t=https%3A%2F%2Fgithub.com%2Fspring-projects%2Fspring-boot%2Ftree%2Fv2.0.1.RELEASE%2Fspring-boot-project%2Fspring-boot-actuator%2Fsrc%2Fmain%2Fjava%2Forg%2Fspringframework%2Fboot%2Factuate%2Fredis%2FRedisHealthIndicator.java"><code>RedisHealthIndicator</code></a></td><td>Checks that a Redis server is up.</td></tr><tr><td><a href="https://link.jianshu.com/?t=https%3A%2F%2Fgithub.com%2Fspring-projects%2Fspring-boot%2Ftree%2Fv2.0.1.RELEASE%2Fspring-boot-project%2Fspring-boot-actuator%2Fsrc%2Fmain%2Fjava%2Forg%2Fspringframework%2Fboot%2Factuate%2Fsolr%2FSolrHealthIndicator.java"><code>SolrHealthIndicator</code></a></td><td>Checks that a Solr server is up.</td></tr></tbody></table> <p>举个例子，如果你的应用使用 Redis，RedisHealthindicator 将被当作检查的一部分；如果使用 MongoDB，那么 MongoHealthIndicator 将被当作检查的一部分。</p> <p>可以在配置文件中关闭特定的健康检查指标，比如关闭 redis 的健康检查：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>management:
+  health:
+    redise:
+      enabled: false
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p>默认，所有的这些健康指标被当作健康检查的一部分。<br>
+自定义 HealthIndicator 健康检查<br>
+有时候需要提供自定义的健康状态检查信息，你可以通过实现 HealthIndicator 的接口来实现，并将该实现类注册为 spring bean。你需要实现其中的 health() 方法，并返回自定义的健康状态响应信息，该响应信息应该包括一个状态码和要展示详细信息。例如，下面就是一个接口 HealthIndicator 的实现类：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>@Component
+public class MyHealthIndicator implements HealthIndicator {
+
+    @Override
+    public Health health() {
+        int errorCode = check(); // perform some specific health check
+        if (errorCode != 0) {
+            return Health.down().withDetail(&quot;Error Code&quot;, errorCode).build();
+        }
+        return Health.up().build();
+    }
+
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><p>另外，除了 Spring boot 定义的几个状态类型，我们也可以自定义状态类型，用来表示一个新的系统状态。在这种情况下，你还需要实现接口 HealthAggregator ，或者通过配置 management.health.status.order 来继续使用 HealthAggregator 的默认实现。</p> <p>例如，在你自定义的健康检查 HealthIndicator 的实现类中，使用了自定义的状态类型 FATAL，为了配置该状态类型的严重程度，你需要在 application 的配置文件中添加如下配置：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>management:
+  health:
+    status:
+      order: FATAL, DOWN, OUT_OF_SERVICE, UNKNOWN, UP
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p>在做健康检查时，响应中的 HTTP 状态码反应了整体的健康状态，（例如，UP 对应 200, 而 OUT_OF_SERVICE 和 DOWN 对应 503）。同样，你也需要为自定义的状态类型设置对应的 HTTP 状态码，例如，下面的配置可以将 FATAL 映射为 503（服务不可用）：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>management:
+  health:
+    status:
+      http-mapping:
+        FATAL: 503
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p>下面是内置健康状态类型对应的 HTTP 状态码列表：</p> <table><thead><tr><th>Status</th><th>Mapping</th></tr></thead><tbody><tr><td>OUT_OF_SERVICE</td><td>SERVICE_UNAVAILABLE (503)</td></tr><tr><td>DOWN</td><td>SERVICE_UNAVAILABLE (503)</td></tr><tr><td>UP</td><td>No mapping by default, so http status is 200</td></tr><tr><td>UNKNOWN</td><td>No mapping by default, so http status is 200</td></tr></tbody></table> <h4 id="info"><a href="#info" class="header-anchor">#</a> info</h4> <p>info 就是我们自己配置在配置文件中以 info 开头的配置信息，比如我们在示例项目中的配置是：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>info:
+  app:
+    name:
+      spring-boot-actuator
+    version: 1.0.0
+    test: test
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><p>启动示例项目，访问：http://localhost:8080/actuator/info 返回部分信息如下：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>{
+  &quot;app&quot;: {
+    &quot;name&quot;: &quot;spring-boot-actuator&quot;,
+    &quot;version&quot;: &quot;1.0.0&quot;,
+    &quot;test&quot;:&quot;test&quot;
+  }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><h4 id="beans"><a href="#beans" class="header-anchor">#</a> beans</h4> <p>根据示例就可以看出，展示了 bean 的别名、类型、是否单例、类的地址、依赖等信息。</p> <p>启动示例项目，访问：<code>http://localhost:8080/actuator/beans</code>返回部分信息如下：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>[
+  {
+    &quot;context&quot;: &quot;application:8080:management&quot;,
+    &quot;parent&quot;: &quot;application:8080&quot;,
+    &quot;beans&quot;: [
+      {
+        &quot;bean&quot;: &quot;embeddedServletContainerFactory&quot;,
+        &quot;aliases&quot;: [
+          
+        ],
+        &quot;scope&quot;: &quot;singleton&quot;,
+        &quot;type&quot;: &quot;org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory&quot;,
+        &quot;resource&quot;: &quot;null&quot;,
+        &quot;dependencies&quot;: [
+          
+        ]
+      },
+      {
+        &quot;bean&quot;: &quot;endpointWebMvcChildContextConfiguration&quot;,
+        &quot;aliases&quot;: [
+          
+        ],
+        &quot;scope&quot;: &quot;singleton&quot;,
+        &quot;type&quot;: &quot;org.springframework.boot.actuate.autoconfigure.EndpointWebMvcChildContextConfiguration$$EnhancerBySpringCGLIB$$a4a10f9d&quot;,
+        &quot;resource&quot;: &quot;null&quot;,
+        &quot;dependencies&quot;: [
+          
+        ]
+      }
+  }
+]
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br></div></div><h4 id="conditions"><a href="#conditions" class="header-anchor">#</a> conditions</h4> <p>Spring Boot 的自动配置功能非常便利，但有时候也意味着出问题比较难找出具体的原因。使用 conditions 可以在应用运行时查看代码了某个配置在什么条件下生效，或者某个自动配置为什么没有生效。</p> <p>启动示例项目，访问：http://localhost:8080/actuator/conditions 返回部分信息如下：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>{
+    &quot;positiveMatches&quot;: {
+     &quot;DevToolsDataSourceAutoConfiguration&quot;: {
+            &quot;notMatched&quot;: [
+                {
+                    &quot;condition&quot;: &quot;DevToolsDataSourceAutoConfiguration.DevToolsDataSourceCondition&quot;, 
+                    &quot;message&quot;: &quot;DevTools DataSource Condition did not find a single DataSource bean&quot;
+                }
+            ], 
+            &quot;matched&quot;: [ ]
+        }, 
+        &quot;RemoteDevToolsAutoConfiguration&quot;: {
+            &quot;notMatched&quot;: [
+                {
+                    &quot;condition&quot;: &quot;OnPropertyCondition&quot;, 
+                    &quot;message&quot;: &quot;@ConditionalOnProperty (spring.devtools.remote.secret) did not find property 'secret'&quot;
+                }
+            ], 
+            &quot;matched&quot;: [
+                {
+                    &quot;condition&quot;: &quot;OnClassCondition&quot;, 
+                    &quot;message&quot;: &quot;@ConditionalOnClass found required classes 'javax.servlet.Filter', 'org.springframework.http.server.ServerHttpRequest'; @ConditionalOnMissingClass did not find unwanted class&quot;
+                }
+            ]
+        }
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br></div></div><h4 id="heapdump"><a href="#heapdump" class="header-anchor">#</a> heapdump</h4> <p>返回一个 GZip 压缩的 JVM 堆 dump</p> <p>启动示例项目，访问：http://localhost:8080/actuator/heapdump 会自动生成一个 Jvm 的堆文件 heapdump，我们可以使用 JDK 自带的 Jvm 监控工具 VisualVM 打开此文件查看内存快照。类似如下图：<br>
+![](../.vuepress/public/Spring boot/3d227e0c83d7214283e27d3e20ce015d.png)</p> <h4 id="shutdown"><a href="#shutdown" class="header-anchor">#</a> shutdown</h4> <p>开启接口优雅关闭 Spring Boot 应用，要使用这个功能首先需要在配置文件中开启：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>management:
+  endpoint:
+    shutdown:
+      enabled: true
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p>配置完成之后，启动示例项目，使用 curl 模拟 post 请求访问 shutdown 接口。</p> <blockquote><p>shutdown 接口默认只支持 post 请求。</p></blockquote> <div class="language- line-numbers-mode"><pre class="language-text"><code>curl -X POST &quot;http://localhost:8080/actuator/shutdown&quot; 
+{
+    &quot;message&quot;: &quot;Shutting down, bye...&quot;
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p>此时你会发现应用已经被关闭。</p> <h4 id="mappings"><a href="#mappings" class="header-anchor">#</a> mappings</h4> <p>描述全部的 URI 路径，以及它们和控制器的映射关系</p> <p>启动示例项目，访问：<code>http://localhost:8080/actuator/mappings</code>返回部分信息如下：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>{
+  &quot;/**/favicon.ico&quot;: {
+    &quot;bean&quot;: &quot;faviconHandlerMapping&quot;
+  },
+  &quot;{[/hello]}&quot;: {
+    &quot;bean&quot;: &quot;requestMappingHandlerMapping&quot;,
+    &quot;method&quot;: &quot;public java.lang.String com.neo.controller.HelloController.index()&quot;
+  },
+  &quot;{[/error]}&quot;: {
+    &quot;bean&quot;: &quot;requestMappingHandlerMapping&quot;,
+    &quot;method&quot;: &quot;public org.springframework.http.ResponseEntity&lt;java.util.Map&lt;java.lang.String, java.lang.Object&gt;&gt; org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)&quot;
+  }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><h4 id="threaddump"><a href="#threaddump" class="header-anchor">#</a> threaddump</h4> <p>/threaddump 接口会生成当前线程活动的快照。这个功能非常好，方便我们在日常定位问题的时候查看线程的情况。 主要展示了线程名、线程 ID、线程的状态、是否等待锁资源等信息。</p> <p>启动示例项目，访问：http://localhost:8080/actuator/threaddump 返回部分信息如下：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>[
+  {
+    &quot;threadName&quot;: &quot;http-nio-8088-exec-6&quot;,
+    &quot;threadId&quot;: 49,
+    &quot;blockedTime&quot;: -1,
+    &quot;blockedCount&quot;: 0,
+    &quot;waitedTime&quot;: -1,
+    &quot;waitedCount&quot;: 2,
+    &quot;lockName&quot;: &quot;java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@1630a501&quot;,
+    &quot;lockOwnerId&quot;: -1,
+    &quot;lockOwnerName&quot;: null,
+    &quot;inNative&quot;: false,
+    &quot;suspended&quot;: false,
+    &quot;threadState&quot;: &quot;WAITING&quot;,
+    &quot;stackTrace&quot;: [
+      {
+        &quot;methodName&quot;: &quot;park&quot;,
+        &quot;fileName&quot;: &quot;Unsafe.java&quot;,
+        &quot;lineNumber&quot;: -2,
+        &quot;className&quot;: &quot;sun.misc.Unsafe&quot;,
+        &quot;nativeMethod&quot;: true
+      },
+      ...
+      {
+        &quot;methodName&quot;: &quot;run&quot;,
+        &quot;fileName&quot;: &quot;TaskThread.java&quot;,
+        &quot;lineNumber&quot;: 61,
+        &quot;className&quot;: &quot;org.apache.tomcat.util.threads.TaskThread$WrappingRunnable&quot;,
+        &quot;nativeMethod&quot;: false
+      }
+      ...
+    ],
+    &quot;lockInfo&quot;: {
+      &quot;className&quot;: &quot;java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject&quot;,
+      &quot;identityHashCode&quot;: 372286721
+    }
+  }
+  ...
+]
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br></div></div><p>生产出现问题的时候，可以通过应用的线程快照来检测应用正在执行的任务。</p> <h4 id="loggers-端点"><a href="#loggers-端点" class="header-anchor">#</a> loggers 端点</h4> <p>访问 <code>http://localhost:8080/actuator/loggers</code> 可以查看当前应用的日志级别等信息：</p> <p>![](../.vuepress/public/Spring boot/5b69988f044a9bd4123d431c09cf3ac7.png)</p> <p>这里面本身并不特别，但是有一个功能却非常有用，比如我们生产环境日志级别一般都是 <code>info</code>，但是现在有一个 <code>bug</code> 通过 <code>info</code> 级别无法排查，那么我们就可以临时修改 <code>log</code> 级别。</p> <p>比如上图中的 <code>ROOT</code> 节点是 <code>info</code> 级别，那么我们可以通过 <code>postman</code> 等工具来发一个 <code>post</code> 请求修改日志级别。</p> <p>![](../.vuepress/public/Spring boot/125a150ffd4c1e0c4c78ab68d916d50d.png)</p> <p>修改之后就会发现，日志由原来的 <code>info</code> 变成了 <code>debug</code>：</p> <p>![](../.vuepress/public/Spring boot/7326262f9d9f1892d0dd030fb182c691.png)</p> <h4 id="metrics-端点"><a href="#metrics-端点" class="header-anchor">#</a> metrics 端点</h4> <p><code>metrics</code> 是一个非常重要的监控端点，其监控内容覆盖了 <code>JVM</code> 内存、堆、类加载、处理器和 <code>tomcat</code> 容器等一些重要指标：</p> <p>![](../.vuepress/public/Spring boot/88780edd9c9a45dd3a8366f0c2f390da.png)</p> <p>可以看到这里面包含了非常多的指标，任意访问一个指标就可以查看对应的指标信息：</p> <p>![](../.vuepress/public/Spring boot/0b648eca193d4498a704e71f1d9e367d.png)</p> <h3 id="自定义-endpoint"><a href="#自定义-endpoint" class="header-anchor">#</a> 自定义 Endpoint</h3> <p>自定义配置来控制是否开启过滤</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>actuator:
+  filter:
+    switch: false
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><h3 id="自定义监控端点常用注解"><a href="#自定义监控端点常用注解" class="header-anchor">#</a> 自定义监控端点常用注解</h3> <p>自定义一个监控端点主要有如下常用注解：</p> <ul><li>@Endpoint：定义一个监控端点，同时支持 <code>HTTP</code> 和 <code>JMX</code> 两种方式。</li> <li>@WebEndpoint：定义一个监控端点，只支持 <code>HTTP</code> 方式。</li> <li>@JmxEndpoint：定义一个监控端点，只支持 <code>JMX</code> 方式。</li></ul> <p>以上三个注解作用在类上，表示当前类是一个监控端点，另外还有一些注解会用在方法和参数上：</p> <ul><li>@ReadOperation：作用在方法上，可用来返回端点展示的信息（通过 <code>Get</code> 方法请求）。</li> <li>@WriteOperation：作用在方法上，可用来修改端点展示的信息（通过 <code>Post</code> 方法请求）。</li> <li>@DeleteOperation：作用在方法上，可用来删除对应端点信息（通过 <code>Delete</code> 方法请求）。</li> <li>@Selector：作用在参数上，用来定位一个端点的具体指标路由。</li></ul> <p>一般情况下，是没必要自定义 Endpoint 的，但是也不排除特殊情况，我这里自定义一个 Endpoint，用来往 request 里放一个 user 对象，这个 user 是用来做测试的，用于下面突破 filter 用的（下面再说），这里先说怎么增查这个 user。</p> <p>过程如下： - 使用 @Endpoint 注解相应的类，作为 Actuator 的一个 endpoint。注解要指定 id，这个 id 作为访问路径，比如这里是 / actuator/super； - @ReadOperation 来注解查询接口，如果要根据路径做查询，要用 @Selector 注解方法参数；<strong>注意这地方是<code>@Selector String arg0</code>，这个 arg0 不能改变，改成其他的，开放出去的接口还是 /{arg0}，这就导致你的方法无法正常获取参数值。</strong> - @WriteOperation 来注解修改接口，注意请求数据必须是 json，而且参数不像 controller 中那么灵活，不能将实体作为参数，要把实体中相应的属性拿出来做参数。 - 这里在增加用户时，往 request 里放一个 user 对象。</p> <p>SuperEndPoint :</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>package com.cff.springbootwork.actuator.endpoint;
+
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.boot.actuate.endpoint.annotation.Endpoint;
+import org.springframework.boot.actuate.endpoint.annotation.ReadOperation;
+import org.springframework.boot.actuate.endpoint.annotation.Selector;
+import org.springframework.boot.actuate.endpoint.annotation.WriteOperation;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+@Endpoint(id = &quot;super&quot;)
+public class SuperEndPoint {
+    private Map&lt;String, SuperUser&gt; users = new ConcurrentHashMap&lt;&gt;();
+
+    @ReadOperation
+    public Set&lt;String&gt; users() {
+        return users.keySet();
+    }
+
+    @ReadOperation
+    public SuperUser usersIdentify(@Selector String arg0) {
+        return users.get(arg0);
+    }
+
+    @WriteOperation
+    public Set&lt;String&gt; set(String userName, String passwd) {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
+                .getRequest();
+        if (request != null) {
+            SuperUser superUser = new SuperUser();
+            superUser.setUserName(userName);
+            superUser.setPasswd(passwd);
+            request.getSession().setAttribute(&quot;superUser&quot;, superUser);
+
+            users.put(superUser.getUserName(), superUser);
+        }
+
+        return users.keySet();
+    }
+
+    public static class SuperUser {
+        private String userName;
+        private String passwd;
+
+        public String getUserName() {
+            return userName;
+        }
+
+        public void setUserName(String userName) {
+            this.userName = userName;
+        }
+
+        public String getPasswd() {
+            return passwd;
+        }
+
+        public void setPasswd(String passwd) {
+            this.passwd = passwd;
+        }
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br></div></div><p><strong>还要将 Endpoint 注册为 bean</strong></p> <p>MvcEndPointConfig:</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>package com.cff.springbootwork.actuator;
+
+import org.springframework.boot.actuate.autoconfigure.endpoint.condition.ConditionalOnEnabledEndpoint;
+import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import com.cff.springbootwork.actuator.endpoint.SuperEndPoint;
+
+@Configuration
+@ServletComponentScan 
+public class MvcEndPointConfig {
+
+    @Bean
+    @ConditionalOnEnabledEndpoint
+    public SuperEndPoint superEndPoint() {
+        return new SuperEndPoint();
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br></div></div><h1 id="使用-filter-对访问-actuator-做限制"><a href="#使用-filter-对访问-actuator-做限制" class="header-anchor">#</a> 使用 Filter 对访问 actuator 做限制</h1> <p>上面已经说了，actuator 的接口要做保护，我这里就用 filter 对接口做最简单的保护。</p> <ul><li>对 / actuator/* 下所有路径做过滤, 并用 actuator.filter.switch 属性对 filter 做开关；</li> <li>如果时 /actuator/super 路径的 post 操作，放行它，它将会往 request 中放一个对象；</li> <li>其他 / actuator/* 下路径要判断 request 中有没有 user 对象，没有就返回错误提示。</li></ul> <p>ActuatorPermissionFilter ：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>package com.cff.springbootwork.actuator.filter;
+
+import java.io.IOException;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+@WebFilter(urlPatterns = &quot;/actuator/*&quot;, filterName = &quot;actuatorPermissionFilter&quot;)
+@Order(1) // 指定过滤器的执行顺序,值越大越靠后执行
+public class ActuatorPermissionFilter implements Filter {
+    private String excludePath = &quot;actuator/super&quot;;
+    @Value(&quot;${actuator.filter.switch}&quot;)
+    Boolean actuatorSwitch;
+
+    @Override
+    public void init(FilterConfig filterConfig) {
+
+    }
+
+    @Override
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+            throws IOException, ServletException {
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
+        if (actuatorSwitch &amp;&amp; !(request.getRequestURI().endsWith(excludePath)
+                &amp;&amp; request.getMethod().equals(HttpMethod.POST.toString()))) {
+            Object user = request.getSession().getAttribute(&quot;superUser&quot;);
+            if (user == null) {
+                // 未登录,返回数据
+                ObjectMapper mapper = new ObjectMapper();
+                response.setStatus(HttpStatus.OK.value());
+                response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
+                mapper.writeValue(response.getWriter(), &quot;您没有权限访问该接口，请使用自定义的登录接口设置superUser后使用！&quot;);
+                return;
+            }
+        }
+        filterChain.doFilter(servletRequest, servletResponse);
+
+    }
+
+    @Override
+    public void destroy() {
+    }
+
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br></div></div><h3 id="spring-boot-monitor-做监控页面"><a href="#spring-boot-monitor-做监控页面" class="header-anchor">#</a> Spring Boot Monitor 做监控页面</h3> <p>额外引入依赖</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>&lt;dependency&gt;
+    &lt;groupId&gt;cn.pomit&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-monitor&lt;/artifactId&gt;
+    &lt;version&gt;0.0.1&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p><a href="https://link.zhihu.com/?target=https%3A//www.pomit.cn/SpringBootMonitor/%23/" target="_blank" rel="noopener noreferrer">Spring Boot Monitor<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a> 是一个对 Spring boot admin 监控工具做修改并适配单机的监控工具，完美继承了 Spring boot admin 的风格，直接使用 actuator 的指标进行显示。</p> <p><a href="https://link.zhihu.com/?target=https%3A//www.pomit.cn/SpringBootMonitor/%23/" target="_blank" rel="noopener noreferrer">Spring Boot Monitor<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a> 官网：<a href="https://link.zhihu.com/?target=https%3A//www.pomit.cn/SpringBootMonitor/%23/" target="_blank" rel="noopener noreferrer">https://www.pomit.cn/SpringBootMonitor<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p> <p>前面 maven 依赖中，已经说明依赖<code>spring-boot-monitor</code>，这时，无需其他配置.</p> <p>访问<code>http://127.0.0.1:8080/monitor</code>， 自动跳转到 Spring Boot Monitor 的监控页面。</p> <p>![](../.vuepress/public/Spring boot/97f762464c0fde7daab14c7d1ee85b25.png)</p> <p>Spring Boot Monitor 的监控页面和 Spring boot admin 的一模一样，前端的功能也一模一样。</p> <p>![](../.vuepress/public/Spring boot/2eda616356aa0437d327e6c388b012f1.png)</p> <p>可以对 Spring boot 的各项指标一目了然，还可以进行简单的操作。</p> <p>当然，如果 Spring boot actuator 的指标被限制了，它也拿不到相应的指标了，因为它是直接请求 actuator 接口的。</p> <h2 id="参考"><a href="#参考" class="header-anchor">#</a> 参考</h2> <ul><li><a href="https://my.oschina.net/iyinghui/blog/1835220" target="_blank" rel="noopener noreferrer">spring boot 2 使用 actuator 404 的问题<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a><br>
+使用 actuator 的指标进行显示。</li></ul> <p><a href="https://link.zhihu.com/?target=https%3A//www.pomit.cn/SpringBootMonitor/%23/" target="_blank" rel="noopener noreferrer">Spring Boot Monitor<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a> 官网：<a href="https://link.zhihu.com/?target=https%3A//www.pomit.cn/SpringBootMonitor/%23/" target="_blank" rel="noopener noreferrer">https://www.pomit.cn/SpringBootMonitor<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p> <p>前面 maven 依赖中，已经说明依赖<code>spring-boot-monitor</code>，这时，无需其他配置.</p> <p>访问<code>http://127.0.0.1:8080/monitor</code>， 自动跳转到 Spring Boot Monitor 的监控页面。</p> <p>[外链图片转存中…(img-Naa3Zjvk-1642576052461)]</p> <p>Spring Boot Monitor 的监控页面和 Spring boot admin 的一模一样，前端的功能也一模一样。</p> <p>[外链图片转存中…(img-EaAoMOpX-1642576052462)]</p> <p>可以对 Spring boot 的各项指标一目了然，还可以进行简单的操作。</p> <p>当然，如果 Spring boot actuator 的指标被限制了，它也拿不到相应的指标了，因为它是直接请求 actuator 接口的。</p> <h2 id="参考-2"><a href="#参考-2" class="header-anchor">#</a> 参考</h2> <ul><li><a href="https://my.oschina.net/iyinghui/blog/1835220" target="_blank" rel="noopener noreferrer">spring boot 2 使用 actuator 404 的问题<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li> <li><a href="https://blog.csdn.net/alinyua/article/details/80009435" target="_blank" rel="noopener noreferrer">Spring Boot 2.0 官方文档之 Actuator<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div>  <div class="page-edit"><div class="edit-link"><a href="https://github.com/andanyang/vuepress-theme-vdoing/edit/master/docs/Spring boot/1000.SpringBoot 监控神器——Actuator 保姆级教程.md" target="_blank" rel="noopener noreferrer">编辑</a> <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></div> <!----> <div class="last-updated"><span class="prefix">上次更新:</span> <span class="time">2023/06/07, 05:36:15</span></div></div> <div class="page-nav-wapper"><!----> <!----></div></div> <div class="article-list"><div class="article-title"><a href="/archives/" class="iconfont icon-bi">最近更新</a></div> <div class="article-wrapper"><dl><dd>01</dd> <dt><a href="/pages/haddop-MapReduce/"><div>
+            MapReduce编程框架
+            <!----></div></a> <span class="date">06-05</span></dt></dl><dl><dd>02</dd> <dt><a href="/pages/Hadoop-working-mechanism/"><div>
+            Hadoop之HDFS详解以及工作机制介绍
+            <!----></div></a> <span class="date">06-01</span></dt></dl><dl><dd>03</dd> <dt><a href="/pages/Build-Hadoop-running-environment/"><div>
+            大数据之Hadoop 运行环境搭建
+            <!----></div></a> <span class="date">06-01</span></dt></dl> <dl><dd></dd> <dt><a href="/archives/" class="more">更多文章&gt;</a></dt></dl></div></div></main></div> <div class="footer"><div class="icons"><a href="mailto:1218853253@qq.com" title="发邮件" target="_blank" class="iconfont icon-youjian"></a><a href="https://github.com/andanyang" title="GitHub" target="_blank" class="iconfont icon-github"></a><a href="https://music.163.com/#/playlist?id=755597173" title="听音乐" target="_blank" class="iconfont icon-erji"></a></div> 
+  Theme by
+  <a href="https://github.com/xugaoyi/vuepress-theme-vdoing" target="_blank" title="本站主题">Vdoing</a> 
+    | Copyright © 2019-2023
+    <span>Young | <a href="https://github.com/andanyoung/young-blog/blob/master/LICENSE" target="_blank">MIT License</a> <br/> <a  href="https://beian.miit.gov.cn/" target="_blank">浙ICP备20002744号</a></span></div> <div class="buttons"><div title="返回顶部" class="button blur go-to-top iconfont icon-fanhuidingbu" style="display:none;"></div> <div title="去评论" class="button blur go-to-comment iconfont icon-pinglun" style="display:none;"></div> <div title="主题模式" class="button blur theme-mode-but iconfont icon-zhuti"><ul class="select-box" style="display:none;"><li class="iconfont icon-zidong">
+          跟随系统
+        </li><li class="iconfont icon-rijianmoshi">
+          浅色模式
+        </li><li class="iconfont icon-yejianmoshi">
+          深色模式
+        </li><li class="iconfont icon-yuedu">
+          阅读模式
+        </li></ul></div></div> <!----> <!----> <!----></div><div class="global-ui"><div></div></div></div>
+    <script src="/assets/js/app.c2a0235b.js" defer></script><script src="/assets/js/2.2024b389.js" defer></script><script src="/assets/js/36.6582b7ce.js" defer></script>
+  </body>
+</html>
