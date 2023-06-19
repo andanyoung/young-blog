@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>SpringBoot读配置的6种方式 | Young&#39;s blog</title>
+    <meta name="generator" content="VuePress 1.9.5">
+    <link rel="icon" href="/img/favicon.ico">
+    <meta name="description" content="Young丶java后端技术博客,专注后端学习与总结。擅长spring boot,JAVA基础总结,等方面的知识,关注spring,架构,elasticsearch,mysql领域.">
+    <meta name="keywords" content="前端博客,个人技术博客,前端,前端开发,前端框架,web前端,前端面试题,技术文档,学习,面试,JavaScript,js,ES6,TypeScript,vue,python,css3,html5,Node,git,github,markdown">
+    <meta name="baidu-site-verification" content="7F55weZDDc">
+    <meta name="theme-color" content="#11a8cd">
+    
+    <link rel="preload" href="/assets/css/0.styles.d9c8cf8c.css" as="style"><link rel="preload" href="/assets/js/app.418bf6dd.js" as="script"><link rel="preload" href="/assets/js/2.983c299a.js" as="script"><link rel="preload" href="/assets/js/43.891ca7fa.js" as="script"><link rel="prefetch" href="/assets/js/10.8b3c6a84.js"><link rel="prefetch" href="/assets/js/11.26d785fb.js"><link rel="prefetch" href="/assets/js/12.4cd7eb5a.js"><link rel="prefetch" href="/assets/js/13.27a0bf4a.js"><link rel="prefetch" href="/assets/js/14.78be34e8.js"><link rel="prefetch" href="/assets/js/15.cdb419ae.js"><link rel="prefetch" href="/assets/js/16.aad51548.js"><link rel="prefetch" href="/assets/js/17.2cfa3cec.js"><link rel="prefetch" href="/assets/js/18.a7763f6d.js"><link rel="prefetch" href="/assets/js/19.b9b89bd8.js"><link rel="prefetch" href="/assets/js/20.a2bd94a9.js"><link rel="prefetch" href="/assets/js/21.06de6e16.js"><link rel="prefetch" href="/assets/js/22.f1990458.js"><link rel="prefetch" href="/assets/js/23.84ec78ef.js"><link rel="prefetch" href="/assets/js/24.c17db7cd.js"><link rel="prefetch" href="/assets/js/25.f8e82020.js"><link rel="prefetch" href="/assets/js/26.35951792.js"><link rel="prefetch" href="/assets/js/27.a0c59314.js"><link rel="prefetch" href="/assets/js/28.3ac69e84.js"><link rel="prefetch" href="/assets/js/29.ec84c2f2.js"><link rel="prefetch" href="/assets/js/3.ce899bea.js"><link rel="prefetch" href="/assets/js/30.66c5df37.js"><link rel="prefetch" href="/assets/js/31.fac9bbed.js"><link rel="prefetch" href="/assets/js/32.078080a2.js"><link rel="prefetch" href="/assets/js/33.a49ef9f5.js"><link rel="prefetch" href="/assets/js/34.fe77e897.js"><link rel="prefetch" href="/assets/js/35.35b64569.js"><link rel="prefetch" href="/assets/js/36.d6c8fd37.js"><link rel="prefetch" href="/assets/js/37.d9c663fe.js"><link rel="prefetch" href="/assets/js/38.68be6dc0.js"><link rel="prefetch" href="/assets/js/39.fd281ce5.js"><link rel="prefetch" href="/assets/js/4.15b3b030.js"><link rel="prefetch" href="/assets/js/40.9d424da6.js"><link rel="prefetch" href="/assets/js/41.0b0ec782.js"><link rel="prefetch" href="/assets/js/42.352907cf.js"><link rel="prefetch" href="/assets/js/44.4bf5d667.js"><link rel="prefetch" href="/assets/js/45.b8a60761.js"><link rel="prefetch" href="/assets/js/46.88dec701.js"><link rel="prefetch" href="/assets/js/47.008f79a3.js"><link rel="prefetch" href="/assets/js/48.0f8831b2.js"><link rel="prefetch" href="/assets/js/49.7aa6ae0c.js"><link rel="prefetch" href="/assets/js/5.ae3f100a.js"><link rel="prefetch" href="/assets/js/50.8c13ea10.js"><link rel="prefetch" href="/assets/js/51.08e73a92.js"><link rel="prefetch" href="/assets/js/52.465645ed.js"><link rel="prefetch" href="/assets/js/53.1326b76f.js"><link rel="prefetch" href="/assets/js/54.8adf12ae.js"><link rel="prefetch" href="/assets/js/55.f2470d74.js"><link rel="prefetch" href="/assets/js/56.e100b251.js"><link rel="prefetch" href="/assets/js/57.92317fb6.js"><link rel="prefetch" href="/assets/js/58.53181f6a.js"><link rel="prefetch" href="/assets/js/59.02b7509a.js"><link rel="prefetch" href="/assets/js/6.8fb4552d.js"><link rel="prefetch" href="/assets/js/60.105766ca.js"><link rel="prefetch" href="/assets/js/61.95524e5d.js"><link rel="prefetch" href="/assets/js/62.41d482b4.js"><link rel="prefetch" href="/assets/js/63.dc1a38bb.js"><link rel="prefetch" href="/assets/js/64.8a631794.js"><link rel="prefetch" href="/assets/js/65.5d57c0a8.js"><link rel="prefetch" href="/assets/js/66.14780bda.js"><link rel="prefetch" href="/assets/js/67.8cd6d08a.js"><link rel="prefetch" href="/assets/js/68.f439e216.js"><link rel="prefetch" href="/assets/js/69.5ba0efe6.js"><link rel="prefetch" href="/assets/js/7.3e46e34b.js"><link rel="prefetch" href="/assets/js/70.1a12c0c6.js"><link rel="prefetch" href="/assets/js/71.19330357.js"><link rel="prefetch" href="/assets/js/72.608f72b9.js"><link rel="prefetch" href="/assets/js/73.becedccc.js"><link rel="prefetch" href="/assets/js/74.61dc7029.js"><link rel="prefetch" href="/assets/js/75.d2e4efcc.js"><link rel="prefetch" href="/assets/js/76.47ce3aa6.js"><link rel="prefetch" href="/assets/js/77.19c47b0f.js"><link rel="prefetch" href="/assets/js/78.f8c11947.js"><link rel="prefetch" href="/assets/js/79.9501365e.js"><link rel="prefetch" href="/assets/js/8.262916b7.js"><link rel="prefetch" href="/assets/js/80.429f79a7.js"><link rel="prefetch" href="/assets/js/81.0b98910a.js"><link rel="prefetch" href="/assets/js/82.d288e3b0.js"><link rel="prefetch" href="/assets/js/83.8b67ea96.js"><link rel="prefetch" href="/assets/js/84.b7f6371e.js"><link rel="prefetch" href="/assets/js/85.f09c2bd4.js"><link rel="prefetch" href="/assets/js/86.4c4c841e.js"><link rel="prefetch" href="/assets/js/87.18154821.js"><link rel="prefetch" href="/assets/js/88.0a8bdfe4.js"><link rel="prefetch" href="/assets/js/89.f5ea1951.js"><link rel="prefetch" href="/assets/js/9.08cff4e3.js"><link rel="prefetch" href="/assets/js/90.a86459a1.js"><link rel="prefetch" href="/assets/js/91.f68d3875.js"><link rel="prefetch" href="/assets/js/92.2baf8703.js"><link rel="prefetch" href="/assets/js/93.ba719b01.js"><link rel="prefetch" href="/assets/js/94.2fda61a8.js"><link rel="prefetch" href="/assets/js/95.85313faa.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.d9c8cf8c.css">
+  </head>
+  <body class="theme-mode-light">
+    <div id="app" data-server-rendered="true"><div class="theme-container sidebar-open have-rightmenu"><header class="navbar blur"><div title="目录" class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/img/logo.png" alt="Young's blog" class="logo"> <span class="site-name can-hide">Young's blog</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><a href="/Spring/" class="nav-link">Spring</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="前端" class="dropdown-title"><a href="/web/" class="link-title">前端</a> <span class="title" style="display:none;">前端</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>前端文章1</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/pages/8143cc480faf9a11/" class="nav-link">JavaScript</a></li></ul></li><li class="dropdown-item"><h4>学习笔记</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/note/javascript/" class="nav-link">《JavaScript教程》</a></li><li class="dropdown-subitem"><a href="/note/js/" class="nav-link">《JavaScript高级程序设计》</a></li><li class="dropdown-subitem"><a href="/note/es6/" class="nav-link">《ES6 教程》</a></li><li class="dropdown-subitem"><a href="/note/vue/" class="nav-link">《Vue》</a></li><li class="dropdown-subitem"><a href="/note/react/" class="nav-link">《React》</a></li><li class="dropdown-subitem"><a href="/note/typescript-axios/" class="nav-link">《TypeScript 从零实现 axios》</a></li><li class="dropdown-subitem"><a href="/note/git/" class="nav-link">《Git》</a></li><li class="dropdown-subitem"><a href="/pages/51afd6/" class="nav-link">TypeScript</a></li><li class="dropdown-subitem"><a href="/pages/4643cd/" class="nav-link">JS设计模式总结</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="页面" class="dropdown-title"><a href="/ui/" class="link-title">页面</a> <span class="title" style="display:none;">页面</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/8309a5b876fc95e3/" class="nav-link">HTML</a></li><li class="dropdown-item"><!----> <a href="/pages/0a83b083bdf257cb/" class="nav-link">CSS</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="技术" class="dropdown-title"><a href="/technology/" class="link-title">技术</a> <span class="title" style="display:none;">技术</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/9a7ee40fc232253e/" class="nav-link">技术文档</a></li><li class="dropdown-item"><!----> <a href="/pages/4c778760be26d8b3/" class="nav-link">GitHub技巧</a></li><li class="dropdown-item"><!----> <a href="/pages/117708e0af7f0bd9/" class="nav-link">Nodejs</a></li><li class="dropdown-item"><!----> <a href="/pages/41f87d890d0a02af/" class="nav-link">博客搭建</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="更多" class="dropdown-title"><a href="/more/" class="link-title">更多</a> <span class="title" style="display:none;">更多</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/f2a556/" class="nav-link">学习</a></li><li class="dropdown-item"><!----> <a href="/pages/aea6571b7a8bae86/" class="nav-link">面试</a></li><li class="dropdown-item"><!----> <a href="/pages/2d615df9a36a98ed/" class="nav-link">心情杂货</a></li><li class="dropdown-item"><!----> <a href="/pages/baaa02/" class="nav-link">实用技巧</a></li><li class="dropdown-item"><!----> <a href="/friends/" class="nav-link">友情链接</a></li></ul></div></div><div class="nav-item"><a href="/about/" class="nav-link">关于</a></div><div class="nav-item"><a href="/pages/beb6c0bd8a66cea6/" class="nav-link">收藏</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="索引" class="dropdown-title"><a href="/archives/" class="link-title">索引</a> <span class="title" style="display:none;">索引</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/" class="nav-link">分类</a></li><li class="dropdown-item"><!----> <a href="/tags/" class="nav-link">标签</a></li><li class="dropdown-item"><!----> <a href="/archives/" class="nav-link">归档</a></li></ul></div></div> <a href="https://github.com/andanyang/vuepress-theme-vdoing" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <div class="sidebar-hover-trigger"></div> <aside class="sidebar" style="display:none;"><div class="blogger"><img src="/img/logo.png"> <div class="blogger-info"><h3>Young</h3> <span></span></div></div> <nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><a href="/Spring/" class="nav-link">Spring</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="前端" class="dropdown-title"><a href="/web/" class="link-title">前端</a> <span class="title" style="display:none;">前端</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>前端文章1</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/pages/8143cc480faf9a11/" class="nav-link">JavaScript</a></li></ul></li><li class="dropdown-item"><h4>学习笔记</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/note/javascript/" class="nav-link">《JavaScript教程》</a></li><li class="dropdown-subitem"><a href="/note/js/" class="nav-link">《JavaScript高级程序设计》</a></li><li class="dropdown-subitem"><a href="/note/es6/" class="nav-link">《ES6 教程》</a></li><li class="dropdown-subitem"><a href="/note/vue/" class="nav-link">《Vue》</a></li><li class="dropdown-subitem"><a href="/note/react/" class="nav-link">《React》</a></li><li class="dropdown-subitem"><a href="/note/typescript-axios/" class="nav-link">《TypeScript 从零实现 axios》</a></li><li class="dropdown-subitem"><a href="/note/git/" class="nav-link">《Git》</a></li><li class="dropdown-subitem"><a href="/pages/51afd6/" class="nav-link">TypeScript</a></li><li class="dropdown-subitem"><a href="/pages/4643cd/" class="nav-link">JS设计模式总结</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="页面" class="dropdown-title"><a href="/ui/" class="link-title">页面</a> <span class="title" style="display:none;">页面</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/8309a5b876fc95e3/" class="nav-link">HTML</a></li><li class="dropdown-item"><!----> <a href="/pages/0a83b083bdf257cb/" class="nav-link">CSS</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="技术" class="dropdown-title"><a href="/technology/" class="link-title">技术</a> <span class="title" style="display:none;">技术</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/9a7ee40fc232253e/" class="nav-link">技术文档</a></li><li class="dropdown-item"><!----> <a href="/pages/4c778760be26d8b3/" class="nav-link">GitHub技巧</a></li><li class="dropdown-item"><!----> <a href="/pages/117708e0af7f0bd9/" class="nav-link">Nodejs</a></li><li class="dropdown-item"><!----> <a href="/pages/41f87d890d0a02af/" class="nav-link">博客搭建</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="更多" class="dropdown-title"><a href="/more/" class="link-title">更多</a> <span class="title" style="display:none;">更多</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/f2a556/" class="nav-link">学习</a></li><li class="dropdown-item"><!----> <a href="/pages/aea6571b7a8bae86/" class="nav-link">面试</a></li><li class="dropdown-item"><!----> <a href="/pages/2d615df9a36a98ed/" class="nav-link">心情杂货</a></li><li class="dropdown-item"><!----> <a href="/pages/baaa02/" class="nav-link">实用技巧</a></li><li class="dropdown-item"><!----> <a href="/friends/" class="nav-link">友情链接</a></li></ul></div></div><div class="nav-item"><a href="/about/" class="nav-link">关于</a></div><div class="nav-item"><a href="/pages/beb6c0bd8a66cea6/" class="nav-link">收藏</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="索引" class="dropdown-title"><a href="/archives/" class="link-title">索引</a> <span class="title" style="display:none;">索引</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/" class="nav-link">分类</a></li><li class="dropdown-item"><!----> <a href="/tags/" class="nav-link">标签</a></li><li class="dropdown-item"><!----> <a href="/archives/" class="nav-link">归档</a></li></ul></div></div> <a href="https://github.com/andanyang/vuepress-theme-vdoing" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><a href="/springboot/Actuator/" class="sidebar-link">SpringBoot 监控神器——Actuator 保姆级教程</a></li><li><a href="/pages/fcabaf/" class="sidebar-link">什么是多租户架构？</a></li><li><a href="/Spring boot/MybatisPlus-Transaction /" class="sidebar-link">小心 MybatisPlus 的一个坑与面试题 Transaction rolled back because it has been marked as rollback-only</a></li><li><a href="/pages/f63cbe/" class="sidebar-link">SpringBoot 插件化开发模式详细总结</a></li><li><a href="/Spring_boot/cas/" class="sidebar-link">Untitled</a></li><li><a href="/Spring_boot/read_cinfog/" aria-current="page" class="active sidebar-link">SpringBoot读配置的6种方式</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level2"><a href="/Spring_boot/read_cinfog/#一、environment" class="sidebar-link">一、Environment</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/Spring_boot/read_cinfog/#_1、什么是-environment" class="sidebar-link">1、什么是 Environment？</a></li><li class="sidebar-sub-header level3"><a href="/Spring_boot/read_cinfog/#_2、配置初始化" class="sidebar-link">2、配置初始化</a></li><li class="sidebar-sub-header level3"><a href="/Spring_boot/read_cinfog/#_3、读取配置" class="sidebar-link">3、读取配置</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/Spring_boot/read_cinfog/#二、-value-注解" class="sidebar-link">二、@Value 注解</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/Spring_boot/read_cinfog/#如何使用" class="sidebar-link">如何使用</a></li><li class="sidebar-sub-header level3"><a href="/Spring_boot/read_cinfog/#_1、缺失配置" class="sidebar-link">1、缺失配置</a></li><li class="sidebar-sub-header level3"><a href="/Spring_boot/read_cinfog/#_2、静态变量-static-赋值" class="sidebar-link">2、静态变量（static）赋值</a></li><li class="sidebar-sub-header level3"><a href="/Spring_boot/read_cinfog/#_3、常量-final-赋值" class="sidebar-link">3、常量（final）赋值</a></li><li class="sidebar-sub-header level3"><a href="/Spring_boot/read_cinfog/#_4、非注册的类中使用" class="sidebar-link">4、非注册的类中使用</a></li><li class="sidebar-sub-header level3"><a href="/Spring_boot/read_cinfog/#_5、引用方式不对" class="sidebar-link">5、引用方式不对</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/Spring_boot/read_cinfog/#三、-configurationproperties-注解" class="sidebar-link">三、@ConfigurationProperties 注解</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/Spring_boot/read_cinfog/#加载原理" class="sidebar-link">加载原理</a></li><li class="sidebar-sub-header level3"><a href="/Spring_boot/read_cinfog/#如何使用-2" class="sidebar-link">如何使用</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/Spring_boot/read_cinfog/#四、-propertysources-注解" class="sidebar-link">四、@PropertySources 注解</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/Spring_boot/read_cinfog/#如何使用-3" class="sidebar-link">如何使用</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/Spring_boot/read_cinfog/#五、yamlpropertiesfactorybean-加载-yaml-文件" class="sidebar-link">五、YamlPropertiesFactoryBean 加载 YAML 文件</a></li><li class="sidebar-sub-header level2"><a href="/Spring_boot/read_cinfog/#六、自定义读取" class="sidebar-link">六、自定义读取</a></li><li class="sidebar-sub-header level2"><a href="/Spring_boot/read_cinfog/#总结" class="sidebar-link">总结</a></li></ul></li></ul> </aside> <div><main class="page"><div class="theme-vdoing-wrapper "><div class="articleInfo-wrap" data-v-06225672><div class="articleInfo" data-v-06225672><ul class="breadcrumbs" data-v-06225672><li data-v-06225672><a href="/" title="首页" class="iconfont icon-home router-link-active" data-v-06225672></a></li> <li data-v-06225672><a href="/categories/?category=Spring%20boot" title="分类" data-v-06225672>Spring boot</a></li></ul> <div class="info" data-v-06225672><div title="作者" class="author iconfont icon-touxiang" data-v-06225672><a href="https://github.com/andanyoung" target="_blank" title="作者" class="beLink" data-v-06225672>andanyang</a></div> <div title="创建时间" class="date iconfont icon-riqi" data-v-06225672><a href="javascript:;" data-v-06225672>2023-06-19</a></div> <!----></div></div></div> <!----> <div class="content-wrapper"><div class="right-menu-wrapper"><div class="right-menu-margin"><div class="right-menu-title">目录</div> <div class="right-menu-content"></div></div></div> <h1><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAABGpJREFUSA3tVVtoXFUU3fvOI53UlmCaKIFmwEhsE7QK0ipFEdHEKpXaZGrp15SINsXUWvBDpBgQRKi0+KKoFeJHfZA+ED9KKoIU2gYD9UejTW4rVIzm0VSTziPzuNu1z507dibTTjL4U/DAzLn3nL3X2o91ziX6f9wMFdh6Jvbm9nNSV0msViVO6tN1Rm7NMu2OpeJ9lWBUTDxrJbYTS0hInuwciu9eLHlFxCLCZEk3MegsJmZ5K/JD6t7FkFdEvGUo1g7qJoG3MHImqRIn8/nzY1K9UPKKiJmtnUqHVE3Gbuay6vJE/N2FEmuxFjW2nUuE0yQXRRxLiTUAzs36zhZvOXJPdX850EVnnLZkB8prodQoM5JGj7Xk2mvC7JB8tG04Ef5PiXtG0UtxupRQSfTnBoCy554x18yJHI6I+G5Eru4LHmPJZEQsrvPUbMiA8G/WgMK7w7I+ez7++o2ANfbrjvaOl1tFMs+htG3IrZH9/hDX1Pr8Tc0UvH8tcX29KzAgIGcEkINyW5BF9x891hw6VYqgJHEk0huccS7vh3C6gTiODL+26huuBtbct8eZnqLML8PkxGYpuPZBqtqwkSjgc4mB5gbgig5i+y0UDK35LMxXisn9xQtK+nd26gTIHsHe/oblK/b29fUmN/8Y+9jAQrnBp56m1LcDlDp9irKTExSKduXJVWSqdBMA08pEJnEIOB3FPPMybu/oeV8zFeYN3xx576Q6RH+VmplE4ncQV5v+5rzSoyOU7PuEAg8g803PwBJ0CExno/jcMbN8tONYeOmHiuUNryvm3fRUy4tMPVLdAGkUhNWuggGrJcXPv+ouCjz0MKUHz1J2/E8IC9nqTabcxgaBYM0hPhD5Y65FsbxRQKxCQrDjDctW7PUM3HuZunFyifSAqEfuzCp48Il24luWUWZoyJCaPR82jE0+kFA643wRFVni4RYSq3ohJO2pZ7B5dO4xkDWbEpossJPLSrPjYID8rS2UHTlvyNxqIGsg674XJJ7vnh5L7PNwC4hh2sjCI96mzszOTpxLF0T7l88Yz7lAuK6OnL8gXLOnTvpzSb22YG8W7us3jSebFHeeqnXRG1vt+MoUM84LQIBmMsCTAcOauTh0T0l0neQK7m2bLMt2mGxU3HYssS0J2cdv5wljlPsrIuZLAG/2DOZIXgCYT8uMGZN+e2kSirfxZOPCsC0f24nTZzspnVn9VePS1Z5vubmAGGXG8ZFno9Hel0yfA5ZPhF7Dh972BQJ2qCpgH67lmWtBYbvk6sz02wjky2vXyz0XErP/kFB619js1BtwfOV4OPRqOQBjy3Qbk18vigUPPSD5ceHnwck7W9bhAqZdd7SuG7w4/P2F/GaJh8c7e9qgow+Q7cGBo+98WsLkuktFqiZabtXuQTu/Y5ETbR0v7tNSFnvrmu6pjdoan2KjMu8q/Hmj1EfCO2ZGfEIbIXKUlw8qaX9/b2oeSJmFksSeT/Fn0V3nSypChh4Gjh74ybO9aeZ/AN2dwciu2/MhAAAAAElFTkSuQmCC">SpringBoot读配置的6种方式<!----></h1>  <div class="theme-vdoing-content content__default"><p>从配置文件中获取属性应该是<code>SpringBoot</code>开发中最为常用的功能之一，但就是这么常用的功能，仍然有很多开发者在这个方面踩坑。</p> <p>我整理了几种获取配置属性的方式，目的不仅是要让大家学会如何使用，更重要的是<strong>弄清配置加载、读取的底层原理</strong>，一旦出现问题可以分析出其症结所在，而不是一报错取不到属性，无头苍蝇般的重启项目，在句句<strong>卧槽</strong>中逐渐抓狂～</p> <blockquote><p>以下示例源码 Springboot 版本均为 2.7.6</p></blockquote> <p>下边我们一一过下这几种玩法和原理，看看有哪些是你没用过的！话不多说，开始搞～</p> <h2 id="一、environment"><a href="#一、environment" class="header-anchor">#</a> 一、Environment</h2> <p>使用 Environment 方式来获取配置属性值非常简单，只要注入 Environment 类调用其方法<code>getProperty(属性key)</code>即可，但知其然知其所以然，简单了解下它的原理，因为后续的几种获取配置的方法都和它息息相关。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>@Slf4j
+@SpringBootTest
+public class EnvironmentTest {
+
+    @Resource
+    private Environment env;
+
+    @Test
+    public void var1Test() {
+        String var1 = env.getProperty(&quot;env101.var1&quot;);
+        log.info(&quot;Environment 配置获取 {}&quot;, var1);
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><h3 id="_1、什么是-environment"><a href="#_1、什么是-environment" class="header-anchor">#</a> 1、什么是 Environment？</h3> <p>Environment 是 springboot 核心的环境配置接口，它提供了简单的方法来访问应用程序属性，包括系统属性、操作系统环境变量、命令行参数、和应用程序配置文件中定义的属性等等。</p> <h3 id="_2、配置初始化"><a href="#_2、配置初始化" class="header-anchor">#</a> 2、配置初始化</h3> <p>Springboot 程序启动加载流程里，会执行<code>SpringApplication.run</code>中的<code>prepareEnvironment()</code>方法进行配置的初始化，那初始化过程每一步都做了什么呢？</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>private ConfigurableEnvironment prepareEnvironment(SpringApplicationRunListeners listeners,
+   DefaultBootstrapContext bootstrapContext, ApplicationArguments applicationArguments) {
+      /** 
+      * 1、创建 ConfigurableEnvironment 对象：首先调用 getOrCreateEnvironment() 方法获取或创建
+      * ConfigurableEnvironment 对象，该对象用于存储环境参数。如果已经存在 ConfigurableEnvironment 对象，则直接使用它；否则，根据用户的配置和默认配置创建一个新的。
+      */
+      ConfigurableEnvironment environment = getOrCreateEnvironment();
+      /**
+      * 2、解析并加载用户指定的配置文件，将其作为 PropertySource 添加到环境对象中。该方法默认会解析 application.properties 和 application.yml 文件，并将其添加到 ConfigurableEnvironment 对象中。
+      * PropertySource 或 PropertySourcesPlaceholderConfigurer 加载应用程序的定制化配置。
+      */
+      configureEnvironment(environment, applicationArguments.getSourceArgs());
+      // 3、加载所有的系统属性，并将它们添加到 ConfigurableEnvironment 对象中
+      ConfigurationPropertySources.attach(environment);
+      // 4、通知监听器环境参数已经准备就绪
+      listeners.environmentPrepared(bootstrapContext, environment);
+      /**
+      *  5、将默认的属性源中的所有属性值移到环境对象的队列末尾，
+      这样用户自定义的属性值就可以覆盖默认的属性值。这是为了避免用户无意中覆盖了 Spring Boot 所提供的默认属性。
+      */
+      DefaultPropertiesPropertySource.moveToEnd(environment);
+      Assert.state(!environment.containsProperty(&quot;spring.main.environment-prefix&quot;),
+          &quot;Environment prefix cannot be set via properties.&quot;);
+      // 6、将 Spring Boot 应用程序的属性绑定到环境对象上，以便能够正确地读取和使用这些配置属性
+      bindToSpringApplication(environment);
+      // 7、如果没有自定义的环境类型，则使用 EnvironmentConverter 类型将环境对象转换为标准的环境类型，并添加到 ConfigurableEnvironment 对象中。
+      if (!this.isCustomEnvironment) {
+        EnvironmentConverter environmentConverter = new EnvironmentConverter(getClassLoader());
+        environment = environmentConverter.convertEnvironmentIfNecessary(environment, deduceEnvironmentClass());
+      }
+      // 8、再次加载系统配置，以防止被其他配置覆盖
+      ConfigurationPropertySources.attach(environment);
+      return environment;
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br></div></div><p>看看它的配置加载流程步骤：</p> <ul><li><p>创建 <strong>环境对象</strong> <code>ConfigurableEnvironment</code> 用于存储环境参数；</p></li> <li><p><code>configureEnvironment</code> 方法加载默认的 <code>application.properties</code> 和 <code>application.yml</code> 配置文件；以及用户指定的配置文件，将其封装为 <strong>PropertySource</strong> 添加到环境对象中；</p></li> <li><p><code>attach()</code>： 加载所有的系统属性，并将它们添加到环境对象中；</p></li> <li><p><code>listeners.environmentPrepared()</code>： 发送环境参数配置已经准备就绪的监听通知；</p></li> <li><p><code>moveToEnd()</code>： 将 <strong>系统默认</strong> 的属性源中的所有属性值移到环境对象的队列末尾，这样用户自定义的属性值就可以覆盖默认的属性值。</p></li> <li><p><code>bindToSpringApplication</code>： 应用程序的属性绑定到 Bean 对象上；</p></li> <li><p><code>attach()</code>： 再次加载系统配置，以防止被其他配置覆盖；</p></li></ul> <p>上边的配置加载流程中，各种配置属性会封装成一个个抽象的数据结构 <code>PropertySource</code>中，这个数据结构代码格式如下，key-value 形式。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>public abstract class PropertySource&lt;T&gt; {
+    protected final String name; // 属性源名称
+    protected final T source; // 属性源值（一个泛型，比如Map，Property）
+    public String getName();  // 获取属性源的名字  
+    public T getSource(); // 获取属性源值  
+    public boolean containsProperty(String name);  //是否包含某个属性  
+    public abstract Object getProperty(String name);   //得到属性名对应的属性值   
+} 
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><p><code>PropertySource</code> 有诸多的实现类用于管理应用程序的配置属性。不同的 PropertySource 实现类可以从不同的来源获取配置属性，例如文件、环境变量、命令行参数等。其中涉及到的一些实现类有：</p> <p>![](../.vuepress/public/Spring boot/640-1687166632027-41.png)</p> <p>关系图</p> <ul><li><p><code>MapPropertySource</code>: Map 键值对的对象转换为 PropertySource 对象的适配器；</p></li> <li><p><code>PropertiesPropertySource</code>: Properties 对象中的所有配置属性转换为 Spring 环境中的属性值；</p></li> <li><p><code>ResourcePropertySource</code>: 从文件系统或者 classpath 中加载配置属性，封装成 PropertySource 对象；</p></li> <li><p><code>ServletConfigPropertySource</code>: Servlet 配置中读取配置属性，封装成 PropertySource 对象；</p></li> <li><p><code>ServletContextPropertySource</code>: Servlet 上下文中读取配置属性，封装成 PropertySource 对象；</p></li> <li><p><code>StubPropertySource</code>: 是个空的实现类，它的作用仅仅是给 CompositePropertySource 类作为默认的父级属性源，以避免空指针异常；</p></li> <li><p><code>CompositePropertySource</code>: 是个复合型的实现类，内部维护了 PropertySource 集合队列，可以将多个 PropertySource 对象合并；</p></li> <li><p><code>SystemEnvironmentPropertySource</code>: 操作系统环境变量中读取配置属性，封装成 PropertySource 对象；</p></li></ul> <p>上边各类配置初始化生成的 PropertySource 对象会被维护到集合队列中。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>List&lt;PropertySource&lt;?&gt;&gt; sources = new ArrayList&lt;PropertySource&lt;?&gt;&gt;()
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>配置初始化完毕，应用程序上下文<code>AbstractApplicationContext</code>会加载配置，这样程序在运行时就可以随时获取配置信息了。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code> private void prepareContext(DefaultBootstrapContext bootstrapContext, ConfigurableApplicationContext context,
+   ConfigurableEnvironment environment, SpringApplicationRunListeners listeners,
+   ApplicationArguments applicationArguments, Banner printedBanner) {
+    // 应用上下文加载环境对象
+  context.setEnvironment(environment);
+  postProcessApplicationContext(context);
+    .........
+  }
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><h3 id="_3、读取配置"><a href="#_3、读取配置" class="header-anchor">#</a> 3、读取配置</h3> <p>看明白上边配置加载的流程，其实读取配置就容易理解了，无非就是遍历队列里的<code>PropertySource</code>，拿属性名称<code>name</code>匹配对应的属性值<code>source</code>。</p> <p><code>PropertyResolver</code>是获取配置的关键类，其内部提供了操作<code>PropertySource</code> 队列的方法，核心方法<code>getProperty(key)</code>获取配置值，看了下这个类的依赖关系，发现 <code>Environment</code> 是它子类。</p> <p>![](../.vuepress/public/Spring boot/640-1687166632028-42.png)</p> <p>那么直接用 PropertyResolver 来获取配置属性其实也是可以的，到这我们就大致明白了 Springboot 配置的加载和读取了。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>@Slf4j
+@SpringBootTest
+public class EnvironmentTest {
+
+    @Resource
+    private PropertyResolver env;
+    
+    @Test
+    public void var1Test() {
+        String var1 = env.getProperty(&quot;env101.var1&quot;);
+        log.info(&quot;Environment 配置获取 {}&quot;, var1);
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><h2 id="二、-value-注解"><a href="#二、-value-注解" class="header-anchor">#</a> 二、@Value 注解</h2> <p>@Value 注解是<code>Spring</code>框架提供的用于注入配置属性值的注解，它可用于类的<code>成员变量</code>、<code>方法参数</code>和<code>构造函数</code>参数上，<strong>这个记住很重要！</strong></p> <p>在应用程序启动时，使用 @Value 注解的 Bean 会被实例化。所有使用了 @Value 注解的 Bean 会被加入到 <code>PropertySourcesPlaceholderConfigurer</code> 的后置处理器集合中。</p> <p>当后置处理器开始执行时，它会读取 Bean 中所有 @Value 注解所标注的值，并通过反射将解析后的属性值赋值给标有 @Value 注解的成员变量、方法参数和构造函数参数。</p> <blockquote><p>需要注意，在使用 @Value 注解时需要确保注入的属性值已经加载到 Spring 容器中，否则会导致注入失败。</p></blockquote> <h3 id="如何使用"><a href="#如何使用" class="header-anchor">#</a> 如何使用</h3> <p>在<code>src/main/resources</code>目录下的<code>application.yml</code>配置文件中添加<code>env101.var1</code>属性。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>env101:
+  var1: var1
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><p>只要在变量上加注解 <code>@Value(&quot;${env101.var1}&quot;)</code>就可以了，@Value 注解会自动将配置文件中的<code>env101.var1</code>属性值注入到<code>var1</code>字段中，跑个单元测试看一下结果。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>@Slf4j
+@SpringBootTest
+public class EnvVariablesTest {
+
+    @Value(&quot;${env101.var1}&quot;)
+    private String var1;
+    
+    @Test
+    public void var1Test(){
+        log.info(&quot;配置文件属性: {}&quot;,var1);
+    }
+}
+毫无悬念，成
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><p>毫无悬念，成功拿到配置数据。</p> <p>![](../.vuepress/public/Spring boot/640-1687166632028-43.png)</p> <p>虽然 @Value 注解方式使用起来很简单，如果使用不当还会遇到不少坑。</p> <h3 id="_1、缺失配置"><a href="#_1、缺失配置" class="header-anchor">#</a> 1、缺失配置</h3> <p>如果在代码中引用变量，配置文件中未进行配值，就会出现类似下图所示的错误。</p> <p>![](../.vuepress/public/Spring boot/640-1687166632028-44.png)</p> <p>为了避免此类错误导致服务启动异常，我们可以在引用变量的同时给它赋一个<strong>默认值</strong>，以确保即使在未正确配值的情况下，程序依然能够正常运行。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>@Value(&quot;${env101.var1:我是小富}&quot;)
+private String var1;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><h3 id="_2、静态变量-static-赋值"><a href="#_2、静态变量-static-赋值" class="header-anchor">#</a> 2、静态变量（static）赋值</h3> <p>还有一种常见的使用误区，就是将 @Value 注解加到静态变量上，这样做是无法获取属性值的。静态变量是类的属性，并不属于对象的属性，而 Spring 是基于对象的属性进行依赖注入的，类在应用启动时静态变量就被初始化，<strong>此时 Bean 还未被实例化，因此不可能通过 @Value 注入属性值。</strong></p> <div class="language- line-numbers-mode"><pre class="language-text"><code>@Slf4j
+@SpringBootTest
+public class EnvVariablesTest {
+
+    @Value(&quot;${env101.var1}&quot;)
+    private static String var1;
+    
+    @Test
+    public void var1Test(){
+        log.info(&quot;配置文件属性: {}&quot;,var1);
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div></div><p>即使 @Value 注解无法直接用在静态变量上，我们仍然可以通过获取已有 Bean 实例化后的属性值，再将其赋值给静态变量来实现给静态变量赋值。</p> <p>我们可以先通过 @Value 注解将属性值注入到普通 Bean 中，然后在获取该 Bean 对应的属性值，并将其赋值给静态变量。这样，就可以在静态变量中使用该属性值了。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>@Slf4j
+@SpringBootTest
+public class EnvVariablesTest {
+
+    private static String var3;
+    
+    private static String var4;
+    
+    @Value(&quot;${env101.var3}&quot;)
+    public void setVar3(String var3) {
+        var3 = var3;
+    }
+    
+    EnvVariablesTest(@Value(&quot;${env101.var4}&quot;) String var4){
+        var4 = var4;
+    }
+    
+    public static String getVar4() {
+        return var4;
+    }
+
+    public static String getVar3() {
+        return var3;
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br></div></div><h3 id="_3、常量-final-赋值"><a href="#_3、常量-final-赋值" class="header-anchor">#</a> 3、常量（final）赋值</h3> <p>@Value 注解加到<code>final</code>关键字上同样也无法获取属性值，因为 final 变量必须在构造方法中进行初始化，并且一旦被赋值便不能再次更改。而 @Value 注解是在 bean 实例化之后才进行属性注入的，<strong>因此无法在构造方法中初始化 final 变量。</strong></p> <div class="language- line-numbers-mode"><pre class="language-text"><code>@Slf4j
+@SpringBootTest
+public class EnvVariables2Test {
+
+    private final String var6;
+
+    @Autowired
+    EnvVariables2Test( @Value(&quot;${env101.var6}&quot;)  String var6) {
+
+        this.var6 = var6;
+    }
+
+    /**
+     * @value注解 final 获取
+     */
+    @Test
+    public void var1Test() {
+        log.info(&quot;final 注入: {}&quot;, var6);
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br></div></div><h3 id="_4、非注册的类中使用"><a href="#_4、非注册的类中使用" class="header-anchor">#</a> 4、非注册的类中使用</h3> <p>只有标注了<code>@Component</code>、<code>@Service</code>、<code>@Controller</code>、<code>@Repository</code> 或 <code>@Configuration</code> 等<strong>容器管理</strong>注解的类，由 Spring 管理的 bean 中使用 @Value 注解才会生效。而对于普通的 POJO 类**，则无法使用 @Value 注解进行属性注入。**</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>/**
+ * @value注解 非注册的类中使用
+ * `@Component`、`@Service`、`@Controller`、`@Repository` 或 `@Configuration` 等
+ * 容器管理注解的类中使用 @Value注解才会生效
+ */
+@Data
+@Slf4j
+@Component
+public class TestService {
+
+    @Value(&quot;${env101.var7}&quot;)
+    private String var7;
+
+    public String getVar7(){
+       return this.var7;
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br></div></div><h3 id="_5、引用方式不对"><a href="#_5、引用方式不对" class="header-anchor">#</a> 5、引用方式不对</h3> <p>如果我们想要获取 TestService 类中的某个变量的属性值，需要使用依赖注入的方式，而不能使用 new 的方式。通过依赖注入的方式创建 TestService 对象，Spring 会在创建对象时将对象所需的属性值注入到其中。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>
+  /**
+   * @value注解 引用方式不对
+   */
+  @Test
+  public void var7_1Test() {
+
+      TestService testService = new TestService();
+      log.info(&quot;引用方式不对 注入: {}&quot;, testService.getVar7());
+  }
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div></div><blockquote><p>最后总结一下 <strong>@Value 注解要在 Bean 的生命周期内使用才能生效。</strong></p></blockquote> <h2 id="三、-configurationproperties-注解"><a href="#三、-configurationproperties-注解" class="header-anchor">#</a> 三、@ConfigurationProperties 注解</h2> <p><code>@ConfigurationProperties</code>注解是 SpringBoot 提供的一种更加便捷来处理配置文件中的属性值的方式，可以通过自动绑定和类型转换等机制，将指定前缀的属性集合自动绑定到一个 Bean 对象上。</p> <h3 id="加载原理"><a href="#加载原理" class="header-anchor">#</a> 加载原理</h3> <p>在 Springboot 启动流程加载配置的 <code>prepareEnvironment()</code> 方法中，有一个重要的步骤方法 <code>bindToSpringApplication(environment)</code>，它的作用是将配置文件中的属性值绑定到被 <code>@ConfigurationProperties</code> 注解标记的 Bean 对象中。但此时这些对象还没有被 Spring 容器管理，因此无法完成属性的自动注入。</p> <p>那么这些 Bean 对象又是什么时候被注册到 Spring 容器中的呢？</p> <p>这就涉及到了 <code>ConfigurationPropertiesBindingPostProcessor</code> 类，它是 Bean 后置处理器，负责扫描容器中所有被 @ConfigurationProperties 注解所标记的 Bean 对象。如果找到了，则会使用 Binder 组件将外部属性的值绑定到它们身上，从而实现自动注入。</p> <p>![](../.vuepress/public/Spring boot/640-1687166632028-45.png)</p> <ul><li><p><code>bindToSpringApplication</code> 主要是将属性值绑定到 Bean 对象中；</p></li> <li><p><code>ConfigurationPropertiesBindingPostProcessor</code> 负责在 Spring 容器启动时将被注解标记的 Bean 对象注册到容器中，并完成后续的属性注入操作；</p></li></ul> <h3 id="如何使用-2"><a href="#如何使用-2" class="header-anchor">#</a> 如何使用</h3> <p>演示使用 @ConfigurationProperties 注解，在 application.yml 配置文件中添加配置项：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>env101:
+  var1: var1
+  var2: var2
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>创建一个 MyConf 类用于承载所有前缀为<code>env101</code>的配置属性。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>@Data
+@Configuration
+@ConfigurationProperties(prefix = &quot;env101&quot;)
+public class MyConf {
+
+    private String var1;
+    
+    private String var2;
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><p>在需要使用<code>var1</code>、<code>var2</code>属性值的地方，将 MyConf 对象注入到依赖对象中即可。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>@Slf4j
+@SpringBootTest
+public class ConfTest {
+
+    @Resource
+    private MyConf myConf;
+
+    @Test
+    public void myConfTest() {
+        log.info(&quot;@ConfigurationProperties注解 配置获取 {}&quot;, JSON.toJSONString(myConf));
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div></div><h2 id="四、-propertysources-注解"><a href="#四、-propertysources-注解" class="header-anchor">#</a> 四、@PropertySources 注解</h2> <p>除了系统默认的 <code>application.yml</code> 或者 <code>application.properties</code> 文件外，我们还可能需要使用自定义的配置文件来实现更加灵活和个性化的配置。与默认的配置文件不同的是，自定义的配置文件无法被应用自动加载，需要我们手动指定加载。</p> <p><code>@PropertySources</code> 注解的实现原理相对简单，应用程序启动时扫描所有被该注解标注的类，获取到注解中指定自定义配置文件的路径，将指定路径下的配置文件内容加载到 Environment 中，这样可以通过 <code>@Value</code> 注解或 <code>Environment.getProperty()</code> 方法来获取其中定义的属性值了。</p> <h3 id="如何使用-3"><a href="#如何使用-3" class="header-anchor">#</a> 如何使用</h3> <p>在 src/main/resources/ 目录下创建自定义配置文件 <code>xiaofu.properties</code>，增加两个属性。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>env101.var9=var9
+env101.var10=var10
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><p>在需要使用自定义配置文件的类上添加 <code>@PropertySources</code> 注解，注解 value 属性中指定自定义配置文件的路径，可以指定多个路径，用逗号隔开。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>@Data
+@Configuration
+@PropertySources({
+        @PropertySource(value = &quot;classpath:xiaofu.properties&quot;,encoding = &quot;utf-8&quot;),
+        @PropertySource(value = &quot;classpath:xiaofu.properties&quot;,encoding = &quot;utf-8&quot;)
+})
+public class PropertySourcesConf {
+
+    @Value(&quot;${env101.var10}&quot;)
+    private String var10;
+
+    @Value(&quot;${env101.var9}&quot;)
+    private String var9;
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div></div><p>成功获取配置了</p> <p>![](../.vuepress/public/Spring boot/640-1687166632029-46.png)</p> <p>但是当我试图加载<code>.yaml</code>文件时，启动项目居然报错了，经过一番摸索我发现，@PropertySources 注解只内置了<code>PropertySourceFactory</code>适配器。也就是说它只能加载<code>.properties</code>文件。</p> <p>![](../.vuepress/public/Spring boot/640-1687166632029-47.png)</p> <p>那如果我想要加载一个<code>.yaml</code>类型文件，则<strong>需要自行实现 yaml 的适配器</strong> <code>YamlPropertySourceFactory</code>。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>public class YamlPropertySourceFactory implements PropertySourceFactory {
+
+    @Override
+    public PropertySource&lt;?&gt; createPropertySource(String name, EncodedResource encodedResource) throws IOException {
+        YamlPropertiesFactoryBean factory = new YamlPropertiesFactoryBean();
+        factory.setResources(encodedResource.getResource());
+
+        Properties properties = factory.getObject();
+
+        return new PropertiesPropertySource(encodedResource.getResource().getFilename(), properties);
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div></div><p>而在加载配置时要显示的指定使用 <code>YamlPropertySourceFactory</code>适配器，这样就完成了 @PropertySource 注解加载 yaml 文件。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>@Data
+@Configuration
+@PropertySources({
+        @PropertySource(value = &quot;classpath:xiaofu.yaml&quot;, encoding = &quot;utf-8&quot;, factory = YamlPropertySourceFactory.class)
+})
+public class PropertySourcesConf2 {
+
+    @Value(&quot;${env101.var10}&quot;)
+    private String var10;
+
+    @Value(&quot;${env101.var9}&quot;)
+    private String var9;
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><h2 id="五、yamlpropertiesfactorybean-加载-yaml-文件"><a href="#五、yamlpropertiesfactorybean-加载-yaml-文件" class="header-anchor">#</a> 五、YamlPropertiesFactoryBean 加载 YAML 文件</h2> <p>我们可以使用 <code>YamlPropertiesFactoryBean</code> 类将 YAML 配置文件中的属性值注入到 Bean 中。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>@Configuration
+public class MyYamlConfig {
+
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer yamlConfigurer() {
+        PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
+        YamlPropertiesFactoryBean yaml = new YamlPropertiesFactoryBean();
+        yaml.setResources(new ClassPathResource(&quot;xiaofu.yml&quot;));
+        configurer.setProperties(Objects.requireNonNull(yaml.getObject()));
+        return configurer;
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div></div><p>可以通过 <code>@Value</code> 注解或 <code>Environment.getProperty()</code> 方法来获取其中定义的属性值。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>@Slf4j
+@SpringBootTest
+public class YamlTest {
+
+    @Value(&quot;${env101.var11}&quot;)
+    private String var11;
+
+    @Test
+    public void  myYamlTest() {
+        log.info(&quot;Yaml 配置获取 {}&quot;, var11);
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div></div><h2 id="六、自定义读取"><a href="#六、自定义读取" class="header-anchor">#</a> 六、自定义读取</h2> <p>如果上边的几种读取配置的方式你都不喜欢，就想自己写个更流批的轮子，那也很好办。我们直接注入<code>PropertySources</code>获取所有属性的配置队列，你是想用注解实现还是其他什么方式，就可以为所欲为了。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>@Slf4j
+@SpringBootTest
+public class CustomTest {
+
+    @Autowired
+    private PropertySources propertySources;
+
+    @Test
+    public void customTest() {
+        for (PropertySource&lt;?&gt; propertySource : propertySources) {
+            log.info(&quot;自定义获取 配置获取 name {} ,{}&quot;, propertySource.getName(), propertySource.getSource());
+        }
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div></div><h2 id="总结"><a href="#总结" class="header-anchor">#</a> 总结</h2> <p>我们可以通过 <code>@Value</code> 注解、<code>Environment</code> 类、<code>@ConfigurationProperties</code> 注解、<code>@PropertySource</code> 注解等方式来获取配置信息。</p> <p>其中，@Value 注解适用于单个值的注入，而其他几种方式适用于批量配置的注入。不同的方式在效率、灵活性、易用性等方面存在差异，在选择配置获取方式时，还需要考虑个人编程习惯和业务需求。</p> <p>如果重视代码的可读性和可维护性，则可以选择使用 <code>@ConfigurationProperties</code> 注解；如果更注重运行效率，则可以选择使用 <code>Environment</code> 类。总之，不同的场景需要选择不同的方式，以达到最优的效果。</p></div></div>  <div class="page-edit"><div class="edit-link"><a href="https://github.com/andanyang/vuepress-theme-vdoing/edit/master/docs/Spring boot/10004.Spring 读取配置文件.md" target="_blank" rel="noopener noreferrer">编辑</a> <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></div> <!----> <div class="last-updated"><span class="prefix">上次更新:</span> <span class="time">2023/06/19, 09:33:51</span></div></div> <div class="page-nav-wapper"><div class="page-nav-centre-wrap"><a href="/Spring_boot/cas/" class="page-nav-centre page-nav-centre-prev"><div class="tooltip">Untitled</div></a> <!----></div> <div class="page-nav"><p class="inner"><span class="prev">
+        ←
+        <a href="/Spring_boot/cas/" class="prev">Untitled</a></span> <!----></p></div></div></div> <div class="article-list"><div class="article-title"><a href="/archives/" class="iconfont icon-bi">最近更新</a></div> <div class="article-wrapper"><dl><dd>01</dd> <dt><a href="/Spring_boot/cas/"><div>
+            Untitled
+            <!----></div></a> <span class="date">06-19</span></dt></dl><dl><dd>02</dd> <dt><a href="/mysql/Interview/"><div>
+            面试官：MySQL连环炮，你扛得住嘛？
+            <!----></div></a> <span class="date">06-19</span></dt></dl><dl><dd>03</dd> <dt><a href="/pages/f63cbe/"><div>
+            SpringBoot 插件化开发模式详细总结
+            <!----></div></a> <span class="date">06-15</span></dt></dl> <dl><dd></dd> <dt><a href="/archives/" class="more">更多文章&gt;</a></dt></dl></div></div></main></div> <div class="footer"><div class="icons"><a href="mailto:1218853253@qq.com" title="发邮件" target="_blank" class="iconfont icon-youjian"></a><a href="https://github.com/andanyang" title="GitHub" target="_blank" class="iconfont icon-github"></a><a href="https://music.163.com/#/playlist?id=755597173" title="听音乐" target="_blank" class="iconfont icon-erji"></a></div> 
+  Theme by
+  <a href="https://github.com/xugaoyi/vuepress-theme-vdoing" target="_blank" title="本站主题">Vdoing</a> 
+    | Copyright © 2019-2023
+    <span>Young | <a href="https://github.com/andanyoung/young-blog/blob/master/LICENSE" target="_blank">MIT License</a> <br/> <a  href="https://beian.miit.gov.cn/" target="_blank">浙ICP备20002744号</a></span></div> <div class="buttons"><div title="返回顶部" class="button blur go-to-top iconfont icon-fanhuidingbu" style="display:none;"></div> <div title="去评论" class="button blur go-to-comment iconfont icon-pinglun" style="display:none;"></div> <div title="主题模式" class="button blur theme-mode-but iconfont icon-zhuti"><ul class="select-box" style="display:none;"><li class="iconfont icon-zidong">
+          跟随系统
+        </li><li class="iconfont icon-rijianmoshi">
+          浅色模式
+        </li><li class="iconfont icon-yejianmoshi">
+          深色模式
+        </li><li class="iconfont icon-yuedu">
+          阅读模式
+        </li></ul></div></div> <!----> <!----> <!----></div><div class="global-ui"><div></div></div></div>
+    <script src="/assets/js/app.418bf6dd.js" defer></script><script src="/assets/js/2.983c299a.js" defer></script><script src="/assets/js/43.891ca7fa.js" defer></script>
+  </body>
+</html>
