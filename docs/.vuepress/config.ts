@@ -336,12 +336,12 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
           clientSecret: "659d426b9e222e0e2143a3d7c83b784f2a07dd63",
           repo: "gitalk", // GitHub 仓库
           owner: "aoooooooo", // GitHub仓库所有者
-          admin: ["aoooooooo", "1218853253@qq.com"], // 对仓库有写权限的人
+          admin: ["1218853253@qq.com"], // 对仓库有写权限的人
           // distractionFreeMode: true,
           pagerDirection: "last", // 'first'正序 | 'last'倒序
           id: "<%- (frontmatter.permalink || frontmatter.to.path).slice(-16) %>", //  页面的唯一标识,长度不能超过50
           title: "「评论」<%- frontmatter.title %>", // GitHub issue 的标题
-          labels: ["Gitalk", "Comment"], // GitHub issue 的标签
+          labels: ["Comment"], // GitHub issue 的标签
           body: "页面：<%- window.location.origin + (frontmatter.to.path || window.location.pathname) %>", // GitHub issue 的内容
           createIssueManually: true, //如果当前页面没有相应的 issue 且登录的用户属于 admin，则会自动创建 issue。如果设置为 true，则显示一个初始化页面，创建 issue 需要点击 init 按钮。
         },
