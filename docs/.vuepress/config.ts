@@ -343,6 +343,7 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
           title: "「评论」<%- frontmatter.title %>", // GitHub issue 的标题
           labels: ["Gitalk", "Comment"], // GitHub issue 的标签
           body: "页面：<%- window.location.origin + (frontmatter.to.path || window.location.pathname) %>", // GitHub issue 的内容
+          createIssueManually: true, //如果当前页面没有相应的 issue 且登录的用户属于 admin，则会自动创建 issue。如果设置为 true，则显示一个初始化页面，创建 issue 需要点击 init 按钮。
         },
       },
     ],
