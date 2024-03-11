@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>大数据技术之 SparkStreaming | Young&#39;s blog</title>
+    <meta name="generator" content="VuePress 1.9.5">
+    <link rel="icon" href="/img/favicon.ico">
+    <meta name="description" content="Young丶java后端技术博客,专注后端学习与总结。擅长spring boot,JAVA基础总结,等方面的知识,关注spring,架构,elasticsearch,mysql领域.">
+    <meta name="keywords" content="前端博客,个人技术博客,前端,前端开发,前端框架,web前端,前端面试题,技术文档,学习,面试,JavaScript,js,ES6,TypeScript,vue,python,css3,html5,Node,git,github,markdown">
+    <meta name="baidu-site-verification" content="7F55weZDDc">
+    <meta name="theme-color" content="#11a8cd">
+    
+    <link rel="preload" href="/assets/css/0.styles.53c04193.css" as="style"><link rel="preload" href="/assets/js/app.e4caa6db.js" as="script"><link rel="preload" href="/assets/js/2.d1be14c5.js" as="script"><link rel="preload" href="/assets/js/40.8cde36eb.js" as="script"><link rel="prefetch" href="/assets/js/10.20449a2b.js"><link rel="prefetch" href="/assets/js/100.f25e73b5.js"><link rel="prefetch" href="/assets/js/101.3180ba9d.js"><link rel="prefetch" href="/assets/js/102.fcd415ea.js"><link rel="prefetch" href="/assets/js/103.522869bb.js"><link rel="prefetch" href="/assets/js/104.5da1e4e4.js"><link rel="prefetch" href="/assets/js/105.e5a40fe8.js"><link rel="prefetch" href="/assets/js/106.627d6279.js"><link rel="prefetch" href="/assets/js/107.606beca1.js"><link rel="prefetch" href="/assets/js/108.100e1cb2.js"><link rel="prefetch" href="/assets/js/109.9765392e.js"><link rel="prefetch" href="/assets/js/11.da3512b5.js"><link rel="prefetch" href="/assets/js/110.b73cf0d9.js"><link rel="prefetch" href="/assets/js/111.3f77dd60.js"><link rel="prefetch" href="/assets/js/112.0c7d547d.js"><link rel="prefetch" href="/assets/js/113.1827c266.js"><link rel="prefetch" href="/assets/js/114.daf1d8a5.js"><link rel="prefetch" href="/assets/js/115.e7dca24d.js"><link rel="prefetch" href="/assets/js/116.11b303de.js"><link rel="prefetch" href="/assets/js/117.203cefba.js"><link rel="prefetch" href="/assets/js/118.61d8527b.js"><link rel="prefetch" href="/assets/js/119.1f959a37.js"><link rel="prefetch" href="/assets/js/12.11f18e06.js"><link rel="prefetch" href="/assets/js/120.c268b7aa.js"><link rel="prefetch" href="/assets/js/121.64318c96.js"><link rel="prefetch" href="/assets/js/122.cbddb70d.js"><link rel="prefetch" href="/assets/js/123.b49b84fb.js"><link rel="prefetch" href="/assets/js/124.392f030b.js"><link rel="prefetch" href="/assets/js/125.45f631c4.js"><link rel="prefetch" href="/assets/js/126.700cc575.js"><link rel="prefetch" href="/assets/js/127.d649cb2a.js"><link rel="prefetch" href="/assets/js/128.bc018411.js"><link rel="prefetch" href="/assets/js/129.d0a74611.js"><link rel="prefetch" href="/assets/js/13.1cb33dc8.js"><link rel="prefetch" href="/assets/js/130.45b1f75c.js"><link rel="prefetch" href="/assets/js/131.45ba93df.js"><link rel="prefetch" href="/assets/js/132.c58bbbd7.js"><link rel="prefetch" href="/assets/js/133.7f53922e.js"><link rel="prefetch" href="/assets/js/134.ddf0d780.js"><link rel="prefetch" href="/assets/js/135.ada3af13.js"><link rel="prefetch" href="/assets/js/136.4097c2be.js"><link rel="prefetch" href="/assets/js/137.fc910ac9.js"><link rel="prefetch" href="/assets/js/138.9628f460.js"><link rel="prefetch" href="/assets/js/139.3125ef74.js"><link rel="prefetch" href="/assets/js/14.1004ce43.js"><link rel="prefetch" href="/assets/js/140.bb53ac81.js"><link rel="prefetch" href="/assets/js/141.a002ac19.js"><link rel="prefetch" href="/assets/js/142.540d19e4.js"><link rel="prefetch" href="/assets/js/143.4cbccfca.js"><link rel="prefetch" href="/assets/js/144.8a217b6a.js"><link rel="prefetch" href="/assets/js/145.9c7bc0de.js"><link rel="prefetch" href="/assets/js/146.3dfd0773.js"><link rel="prefetch" href="/assets/js/147.bc0f0d42.js"><link rel="prefetch" href="/assets/js/148.e0cdc4d5.js"><link rel="prefetch" href="/assets/js/149.8486db6e.js"><link rel="prefetch" href="/assets/js/15.703e8784.js"><link rel="prefetch" href="/assets/js/150.5f3b7fb5.js"><link rel="prefetch" href="/assets/js/151.98a3f202.js"><link rel="prefetch" href="/assets/js/152.2940f2ba.js"><link rel="prefetch" href="/assets/js/153.75f3a085.js"><link rel="prefetch" href="/assets/js/154.fa2da83b.js"><link rel="prefetch" href="/assets/js/155.113be5c8.js"><link rel="prefetch" href="/assets/js/156.0667e7f5.js"><link rel="prefetch" href="/assets/js/157.0b3e5dfa.js"><link rel="prefetch" href="/assets/js/158.a338bdd7.js"><link rel="prefetch" href="/assets/js/159.33c9771c.js"><link rel="prefetch" href="/assets/js/16.71e3d898.js"><link rel="prefetch" href="/assets/js/160.e868c8b3.js"><link rel="prefetch" href="/assets/js/161.cf61955e.js"><link rel="prefetch" href="/assets/js/162.baee00ca.js"><link rel="prefetch" href="/assets/js/163.183cde82.js"><link rel="prefetch" href="/assets/js/164.c1eadef5.js"><link rel="prefetch" href="/assets/js/165.70ee8a24.js"><link rel="prefetch" href="/assets/js/166.8e185ff2.js"><link rel="prefetch" href="/assets/js/167.0881cf57.js"><link rel="prefetch" href="/assets/js/168.88caf424.js"><link rel="prefetch" href="/assets/js/169.e7e984ff.js"><link rel="prefetch" href="/assets/js/17.b0356f05.js"><link rel="prefetch" href="/assets/js/170.c7052d81.js"><link rel="prefetch" href="/assets/js/171.2ab773fd.js"><link rel="prefetch" href="/assets/js/172.0e39f858.js"><link rel="prefetch" href="/assets/js/173.76661218.js"><link rel="prefetch" href="/assets/js/174.0ac9f795.js"><link rel="prefetch" href="/assets/js/175.da30bba2.js"><link rel="prefetch" href="/assets/js/176.0f230688.js"><link rel="prefetch" href="/assets/js/177.040e0937.js"><link rel="prefetch" href="/assets/js/178.68852030.js"><link rel="prefetch" href="/assets/js/179.c998f0ca.js"><link rel="prefetch" href="/assets/js/18.2e77c8d1.js"><link rel="prefetch" href="/assets/js/180.4f6b395f.js"><link rel="prefetch" href="/assets/js/181.577a5325.js"><link rel="prefetch" href="/assets/js/182.6b43cbf2.js"><link rel="prefetch" href="/assets/js/183.cf9e9cca.js"><link rel="prefetch" href="/assets/js/184.f0e76def.js"><link rel="prefetch" href="/assets/js/185.2d3d8eea.js"><link rel="prefetch" href="/assets/js/186.4db71601.js"><link rel="prefetch" href="/assets/js/187.8b6a6829.js"><link rel="prefetch" href="/assets/js/188.4a0b8f41.js"><link rel="prefetch" href="/assets/js/189.0a28241b.js"><link rel="prefetch" href="/assets/js/19.51c97d4c.js"><link rel="prefetch" href="/assets/js/190.5001309c.js"><link rel="prefetch" href="/assets/js/191.42778cf1.js"><link rel="prefetch" href="/assets/js/192.fabd1cb0.js"><link rel="prefetch" href="/assets/js/193.cbc113b8.js"><link rel="prefetch" href="/assets/js/194.4cf24763.js"><link rel="prefetch" href="/assets/js/195.ea5d1afb.js"><link rel="prefetch" href="/assets/js/196.16115ce4.js"><link rel="prefetch" href="/assets/js/197.b90179d1.js"><link rel="prefetch" href="/assets/js/198.456ceb51.js"><link rel="prefetch" href="/assets/js/199.a28de97a.js"><link rel="prefetch" href="/assets/js/20.79989fc4.js"><link rel="prefetch" href="/assets/js/200.72102ac7.js"><link rel="prefetch" href="/assets/js/201.e2b3a297.js"><link rel="prefetch" href="/assets/js/202.d4283e12.js"><link rel="prefetch" href="/assets/js/203.6e5e6596.js"><link rel="prefetch" href="/assets/js/204.363863cf.js"><link rel="prefetch" href="/assets/js/205.d16c5a36.js"><link rel="prefetch" href="/assets/js/206.dc867263.js"><link rel="prefetch" href="/assets/js/207.acfeaaaa.js"><link rel="prefetch" href="/assets/js/208.22c49054.js"><link rel="prefetch" href="/assets/js/209.0f7c526b.js"><link rel="prefetch" href="/assets/js/21.1b619a3f.js"><link rel="prefetch" href="/assets/js/210.b247a678.js"><link rel="prefetch" href="/assets/js/211.fe8629a4.js"><link rel="prefetch" href="/assets/js/212.48b672e5.js"><link rel="prefetch" href="/assets/js/213.08f571a8.js"><link rel="prefetch" href="/assets/js/214.04da1824.js"><link rel="prefetch" href="/assets/js/215.f60b57f4.js"><link rel="prefetch" href="/assets/js/216.4383ceb6.js"><link rel="prefetch" href="/assets/js/217.3b1ce286.js"><link rel="prefetch" href="/assets/js/218.1534ef52.js"><link rel="prefetch" href="/assets/js/219.6901e38c.js"><link rel="prefetch" href="/assets/js/22.349d3a16.js"><link rel="prefetch" href="/assets/js/220.22e0c5ea.js"><link rel="prefetch" href="/assets/js/221.2e7a5a4f.js"><link rel="prefetch" href="/assets/js/222.76b63073.js"><link rel="prefetch" href="/assets/js/223.500a058f.js"><link rel="prefetch" href="/assets/js/224.7f7c1250.js"><link rel="prefetch" href="/assets/js/225.2f183cbe.js"><link rel="prefetch" href="/assets/js/23.712dd5ac.js"><link rel="prefetch" href="/assets/js/24.77ae5052.js"><link rel="prefetch" href="/assets/js/25.e95f81fb.js"><link rel="prefetch" href="/assets/js/26.82cdd880.js"><link rel="prefetch" href="/assets/js/27.427a5aec.js"><link rel="prefetch" href="/assets/js/28.e245952d.js"><link rel="prefetch" href="/assets/js/29.50596e31.js"><link rel="prefetch" href="/assets/js/3.4f4335cf.js"><link rel="prefetch" href="/assets/js/30.016e73a0.js"><link rel="prefetch" href="/assets/js/31.fb0b0b40.js"><link rel="prefetch" href="/assets/js/32.8e7d8efe.js"><link rel="prefetch" href="/assets/js/33.f05f242b.js"><link rel="prefetch" href="/assets/js/34.893b8c3e.js"><link rel="prefetch" href="/assets/js/35.f98d31b7.js"><link rel="prefetch" href="/assets/js/36.6a5744a0.js"><link rel="prefetch" href="/assets/js/37.67e8976d.js"><link rel="prefetch" href="/assets/js/38.2d8447e0.js"><link rel="prefetch" href="/assets/js/39.3b3fde85.js"><link rel="prefetch" href="/assets/js/4.93e1dc89.js"><link rel="prefetch" href="/assets/js/41.9df0f821.js"><link rel="prefetch" href="/assets/js/42.c9f1a26b.js"><link rel="prefetch" href="/assets/js/43.fa088c07.js"><link rel="prefetch" href="/assets/js/44.121055e3.js"><link rel="prefetch" href="/assets/js/45.7995c3a0.js"><link rel="prefetch" href="/assets/js/46.17d53a2e.js"><link rel="prefetch" href="/assets/js/47.4a374966.js"><link rel="prefetch" href="/assets/js/48.733e5b6c.js"><link rel="prefetch" href="/assets/js/49.0fb92742.js"><link rel="prefetch" href="/assets/js/5.f52855e6.js"><link rel="prefetch" href="/assets/js/50.50fc5031.js"><link rel="prefetch" href="/assets/js/51.69d8d52a.js"><link rel="prefetch" href="/assets/js/52.d84cedc3.js"><link rel="prefetch" href="/assets/js/53.a64ddaf4.js"><link rel="prefetch" href="/assets/js/54.15e09103.js"><link rel="prefetch" href="/assets/js/55.0f7e8fd5.js"><link rel="prefetch" href="/assets/js/56.6cb5bf13.js"><link rel="prefetch" href="/assets/js/57.d90d9da6.js"><link rel="prefetch" href="/assets/js/58.2c03a905.js"><link rel="prefetch" href="/assets/js/59.02cf613a.js"><link rel="prefetch" href="/assets/js/6.0ff35647.js"><link rel="prefetch" href="/assets/js/60.bb6d2b2f.js"><link rel="prefetch" href="/assets/js/61.ef2abfd3.js"><link rel="prefetch" href="/assets/js/62.b09e5f81.js"><link rel="prefetch" href="/assets/js/63.6ca85ec7.js"><link rel="prefetch" href="/assets/js/64.77eab656.js"><link rel="prefetch" href="/assets/js/65.65b00883.js"><link rel="prefetch" href="/assets/js/66.040b5d23.js"><link rel="prefetch" href="/assets/js/67.23318ab1.js"><link rel="prefetch" href="/assets/js/68.5c29433f.js"><link rel="prefetch" href="/assets/js/69.90978695.js"><link rel="prefetch" href="/assets/js/7.463451e9.js"><link rel="prefetch" href="/assets/js/70.0c585fbd.js"><link rel="prefetch" href="/assets/js/71.120e4ae5.js"><link rel="prefetch" href="/assets/js/72.53bf1e3a.js"><link rel="prefetch" href="/assets/js/73.282f5b35.js"><link rel="prefetch" href="/assets/js/74.4f1cb67d.js"><link rel="prefetch" href="/assets/js/75.f5d3ea1e.js"><link rel="prefetch" href="/assets/js/76.fb173587.js"><link rel="prefetch" href="/assets/js/77.8064b022.js"><link rel="prefetch" href="/assets/js/78.d26f8075.js"><link rel="prefetch" href="/assets/js/79.6cff2fa5.js"><link rel="prefetch" href="/assets/js/8.d5f74857.js"><link rel="prefetch" href="/assets/js/80.29d746c7.js"><link rel="prefetch" href="/assets/js/81.c0a214a2.js"><link rel="prefetch" href="/assets/js/82.f0c93ca2.js"><link rel="prefetch" href="/assets/js/83.db6f55e1.js"><link rel="prefetch" href="/assets/js/84.b0a7a28c.js"><link rel="prefetch" href="/assets/js/85.db7376d4.js"><link rel="prefetch" href="/assets/js/86.96ec3402.js"><link rel="prefetch" href="/assets/js/87.ae41a109.js"><link rel="prefetch" href="/assets/js/88.d83c21c8.js"><link rel="prefetch" href="/assets/js/89.33868490.js"><link rel="prefetch" href="/assets/js/9.2680f96d.js"><link rel="prefetch" href="/assets/js/90.ed48459a.js"><link rel="prefetch" href="/assets/js/91.e1ee23ba.js"><link rel="prefetch" href="/assets/js/92.8b354527.js"><link rel="prefetch" href="/assets/js/93.0682d2e4.js"><link rel="prefetch" href="/assets/js/94.105580aa.js"><link rel="prefetch" href="/assets/js/95.d378d658.js"><link rel="prefetch" href="/assets/js/96.a6460598.js"><link rel="prefetch" href="/assets/js/97.a4cc955f.js"><link rel="prefetch" href="/assets/js/98.9a600d4f.js"><link rel="prefetch" href="/assets/js/99.45007523.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.53c04193.css">
+  </head>
+  <body class="theme-mode-light">
+    <div id="app" data-server-rendered="true"><div class="theme-container sidebar-open have-rightmenu"><header class="navbar blur"><div title="目录" class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/img/logo.png" alt="Young's blog" class="logo"> <span class="site-name can-hide">Young's blog</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><a href="/Spring/" class="nav-link">Spring</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="前端" class="dropdown-title"><a href="/web/" class="link-title">前端</a> <span class="title" style="display:none;">前端</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>前端文章1</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/pages/8143cc480faf9a11/" class="nav-link">JavaScript</a></li></ul></li><li class="dropdown-item"><h4>学习笔记</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/note/javascript/" class="nav-link">《JavaScript教程》</a></li><li class="dropdown-subitem"><a href="/note/js/" class="nav-link">《JavaScript高级程序设计》</a></li><li class="dropdown-subitem"><a href="/note/es6/" class="nav-link">《ES6 教程》</a></li><li class="dropdown-subitem"><a href="/note/vue/" class="nav-link">《Vue》</a></li><li class="dropdown-subitem"><a href="/note/react/" class="nav-link">《React》</a></li><li class="dropdown-subitem"><a href="/note/typescript-axios/" class="nav-link">《TypeScript 从零实现 axios》</a></li><li class="dropdown-subitem"><a href="/note/git/" class="nav-link">《Git》</a></li><li class="dropdown-subitem"><a href="/pages/51afd6/" class="nav-link">TypeScript</a></li><li class="dropdown-subitem"><a href="/pages/4643cd/" class="nav-link">JS设计模式总结</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="页面" class="dropdown-title"><a href="/ui/" class="link-title">页面</a> <span class="title" style="display:none;">页面</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/8309a5b876fc95e3/" class="nav-link">HTML</a></li><li class="dropdown-item"><!----> <a href="/pages/0a83b083bdf257cb/" class="nav-link">CSS</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="技术" class="dropdown-title"><a href="/technology/" class="link-title">技术</a> <span class="title" style="display:none;">技术</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/9a7ee40fc232253e/" class="nav-link">技术文档</a></li><li class="dropdown-item"><!----> <a href="/pages/4c778760be26d8b3/" class="nav-link">GitHub技巧</a></li><li class="dropdown-item"><!----> <a href="/pages/117708e0af7f0bd9/" class="nav-link">Nodejs</a></li><li class="dropdown-item"><!----> <a href="/pages/41f87d890d0a02af/" class="nav-link">博客搭建</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="更多" class="dropdown-title"><a href="/more/" class="link-title">更多</a> <span class="title" style="display:none;">更多</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/f2a556/" class="nav-link">学习</a></li><li class="dropdown-item"><!----> <a href="/pages/aea6571b7a8bae86/" class="nav-link">面试</a></li><li class="dropdown-item"><!----> <a href="/pages/2d615df9a36a98ed/" class="nav-link">心情杂货</a></li><li class="dropdown-item"><!----> <a href="/pages/baaa02/" class="nav-link">实用技巧</a></li><li class="dropdown-item"><!----> <a href="/friends/" class="nav-link">友情链接</a></li></ul></div></div><div class="nav-item"><a href="/about/" class="nav-link">关于</a></div><div class="nav-item"><a href="/pages/beb6c0bd8a66cea6/" class="nav-link">收藏</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="索引" class="dropdown-title"><a href="/archives/" class="link-title">索引</a> <span class="title" style="display:none;">索引</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/" class="nav-link">分类</a></li><li class="dropdown-item"><!----> <a href="/tags/" class="nav-link">标签</a></li><li class="dropdown-item"><!----> <a href="/archives/" class="nav-link">归档</a></li></ul></div></div> <a href="https://github.com/andanyang/vuepress-theme-vdoing" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <div class="sidebar-hover-trigger"></div> <aside class="sidebar" style="display:none;"><div class="blogger"><img src="/img/logo.png"> <div class="blogger-info"><h3>Young</h3> <span></span></div></div> <nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><a href="/Spring/" class="nav-link">Spring</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="前端" class="dropdown-title"><a href="/web/" class="link-title">前端</a> <span class="title" style="display:none;">前端</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>前端文章1</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/pages/8143cc480faf9a11/" class="nav-link">JavaScript</a></li></ul></li><li class="dropdown-item"><h4>学习笔记</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/note/javascript/" class="nav-link">《JavaScript教程》</a></li><li class="dropdown-subitem"><a href="/note/js/" class="nav-link">《JavaScript高级程序设计》</a></li><li class="dropdown-subitem"><a href="/note/es6/" class="nav-link">《ES6 教程》</a></li><li class="dropdown-subitem"><a href="/note/vue/" class="nav-link">《Vue》</a></li><li class="dropdown-subitem"><a href="/note/react/" class="nav-link">《React》</a></li><li class="dropdown-subitem"><a href="/note/typescript-axios/" class="nav-link">《TypeScript 从零实现 axios》</a></li><li class="dropdown-subitem"><a href="/note/git/" class="nav-link">《Git》</a></li><li class="dropdown-subitem"><a href="/pages/51afd6/" class="nav-link">TypeScript</a></li><li class="dropdown-subitem"><a href="/pages/4643cd/" class="nav-link">JS设计模式总结</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="页面" class="dropdown-title"><a href="/ui/" class="link-title">页面</a> <span class="title" style="display:none;">页面</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/8309a5b876fc95e3/" class="nav-link">HTML</a></li><li class="dropdown-item"><!----> <a href="/pages/0a83b083bdf257cb/" class="nav-link">CSS</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="技术" class="dropdown-title"><a href="/technology/" class="link-title">技术</a> <span class="title" style="display:none;">技术</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/9a7ee40fc232253e/" class="nav-link">技术文档</a></li><li class="dropdown-item"><!----> <a href="/pages/4c778760be26d8b3/" class="nav-link">GitHub技巧</a></li><li class="dropdown-item"><!----> <a href="/pages/117708e0af7f0bd9/" class="nav-link">Nodejs</a></li><li class="dropdown-item"><!----> <a href="/pages/41f87d890d0a02af/" class="nav-link">博客搭建</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="更多" class="dropdown-title"><a href="/more/" class="link-title">更多</a> <span class="title" style="display:none;">更多</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/f2a556/" class="nav-link">学习</a></li><li class="dropdown-item"><!----> <a href="/pages/aea6571b7a8bae86/" class="nav-link">面试</a></li><li class="dropdown-item"><!----> <a href="/pages/2d615df9a36a98ed/" class="nav-link">心情杂货</a></li><li class="dropdown-item"><!----> <a href="/pages/baaa02/" class="nav-link">实用技巧</a></li><li class="dropdown-item"><!----> <a href="/friends/" class="nav-link">友情链接</a></li></ul></div></div><div class="nav-item"><a href="/about/" class="nav-link">关于</a></div><div class="nav-item"><a href="/pages/beb6c0bd8a66cea6/" class="nav-link">收藏</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="索引" class="dropdown-title"><a href="/archives/" class="link-title">索引</a> <span class="title" style="display:none;">索引</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/" class="nav-link">分类</a></li><li class="dropdown-item"><!----> <a href="/tags/" class="nav-link">标签</a></li><li class="dropdown-item"><!----> <a href="/archives/" class="nav-link">归档</a></li></ul></div></div> <a href="https://github.com/andanyang/vuepress-theme-vdoing" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Hadoop</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>kafka</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Flume</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>hive</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>scala</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>spark</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><section class="sidebar-group collapsable is-sub-group depth-1"><p class="sidebar-heading"><span>spark core</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable is-sub-group depth-1"><p class="sidebar-heading open"><span>spark sql</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/bigdata/spark/sql/" class="sidebar-link">Spark 核心编程之 RDD 累加器与广播变量</a></li><li><a href="/bigdata/spark/SparkStreaming/" aria-current="page" class="active sidebar-link">大数据技术之 SparkStreaming</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level2"><a href="/bigdata/spark/SparkStreaming/#_1-1-spark-streaming-是什么" class="sidebar-link">1.1 Spark Streaming 是什么</a></li><li class="sidebar-sub-header level2"><a href="/bigdata/spark/SparkStreaming/#_1-2-spark-streaming-的特点" class="sidebar-link">1.2 Spark Streaming 的特点</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level5"><a href="/bigdata/spark/SparkStreaming/#易用" class="sidebar-link">易用</a></li><li class="sidebar-sub-header level5"><a href="/bigdata/spark/SparkStreaming/#统一的批处理和流api" class="sidebar-link">统一的批处理和流api</a></li><li class="sidebar-sub-header level5"><a href="/bigdata/spark/SparkStreaming/#低延迟和成本效益" class="sidebar-link">低延迟和成本效益</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/bigdata/spark/SparkStreaming/#_1-3-spark-streaming-架构" class="sidebar-link">1.3 Spark Streaming 架构</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/bigdata/spark/SparkStreaming/#_1-3-1-架构图" class="sidebar-link">1.3.1 架构图</a></li><li class="sidebar-sub-header level5"><a href="/bigdata/spark/SparkStreaming/#整体架构图" class="sidebar-link">整体架构图</a></li><li class="sidebar-sub-header level5"><a href="/bigdata/spark/SparkStreaming/#sparkstreaming-架构图" class="sidebar-link">SparkStreaming 架构图</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/spark/SparkStreaming/#_1-3-2-背压机制" class="sidebar-link">1.3.2 背压机制</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/bigdata/spark/SparkStreaming/#_2-1-wordcount-案例实操" class="sidebar-link">2.1 WordCount 案例实操</a></li><li class="sidebar-sub-header level2"><a href="/bigdata/spark/SparkStreaming/#_2-2-wordcount-解析" class="sidebar-link">2.2 WordCount 解析</a></li><li class="sidebar-sub-header level2"><a href="/bigdata/spark/SparkStreaming/#_3-1-rdd-队列" class="sidebar-link">3.1 RDD 队列</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/bigdata/spark/SparkStreaming/#_3-1-1-用法及说明" class="sidebar-link">3.1.1 用法及说明</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/spark/SparkStreaming/#_3-1-2-案例实操" class="sidebar-link">3.1.2 案例实操</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/bigdata/spark/SparkStreaming/#_3-2-自定义数据源" class="sidebar-link">3.2 自定义数据源</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/bigdata/spark/SparkStreaming/#_3-2-1-用法及说明" class="sidebar-link">3.2.1 用法及说明</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/spark/SparkStreaming/#_3-2-2-案例实操" class="sidebar-link">3.2.2 案例实操</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/bigdata/spark/SparkStreaming/#_3-3-kafka-数据源-面试、开发重点" class="sidebar-link">3.3 Kafka 数据源（面试、开发重点）</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/bigdata/spark/SparkStreaming/#_3-3-1-版本选型" class="sidebar-link">3.3.1 版本选型</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/spark/SparkStreaming/#_3-3-2-kafka-0-8-receiver-模式-当前版本不适用" class="sidebar-link">3.3.2 Kafka 0-8 Receiver 模式（当前版本不适用）</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/spark/SparkStreaming/#_3-3-4-kafka-0-10-direct-模式" class="sidebar-link">3.3.4 Kafka 0-10 Direct 模式</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/bigdata/spark/SparkStreaming/#_4-1-无状态转化操作" class="sidebar-link">4.1 无状态转化操作</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/bigdata/spark/SparkStreaming/#_4-1-1-transform" class="sidebar-link">4.1.1 Transform</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/spark/SparkStreaming/#_4-1-2-join" class="sidebar-link">4.1.2 join</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/bigdata/spark/SparkStreaming/#_4-2-有状态转化操作" class="sidebar-link">4.2 有状态转化操作</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/bigdata/spark/SparkStreaming/#_4-2-1-updatestatebykey" class="sidebar-link">4.2.1 UpdateStateByKey</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/spark/SparkStreaming/#_4-2-2-windowoperations" class="sidebar-link">4.2.2 WindowOperations</a></li></ul></li></ul></li><li><a href="/bigdata/spark/SparkStreaming_Driver_Executer/" class="sidebar-link">spark中代码的执行位置（Driver or Executer）</a></li></ul></section></li></ul></section></li></ul> </aside> <div><main class="page"><div class="theme-vdoing-wrapper "><div class="articleInfo-wrap" data-v-06225672><div class="articleInfo" data-v-06225672><ul class="breadcrumbs" data-v-06225672><li data-v-06225672><a href="/" title="首页" class="iconfont icon-home router-link-active" data-v-06225672></a></li> <li data-v-06225672><a href="/categories/?category=%E5%A4%A7%E6%95%B0%E6%8D%AE" title="分类" data-v-06225672>大数据</a></li><li data-v-06225672><a href="/categories/?category=spark" title="分类" data-v-06225672>spark</a></li><li data-v-06225672><a href="/categories/?category=spark%20sql" title="分类" data-v-06225672>spark sql</a></li></ul> <div class="info" data-v-06225672><div title="作者" class="author iconfont icon-touxiang" data-v-06225672><a href="https://github.com/andanyoung" target="_blank" title="作者" class="beLink" data-v-06225672>andanyang</a></div> <div title="创建时间" class="date iconfont icon-riqi" data-v-06225672><a href="javascript:;" data-v-06225672>2023-12-12</a></div> <!----></div></div></div> <!----> <div class="content-wrapper"><div class="right-menu-wrapper"><div class="right-menu-margin"><div class="right-menu-title">目录</div> <div class="right-menu-content"></div></div></div> <h1><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAABKFJREFUSA3tVl1oFVcQnrMbrak3QUgkya1akpJYcrUtIqW1JvFBE9LiQ5v6JmJpolbMg32rVrhgoYK0QiMY6i9Y6EMaW5D+xFJaTYItIuK2Kr3+BJNwkxBj05sQY3b3nM6cs2dv9t7NT/vQJw/sndk5M/PNzJkzewGerP+pAmy+ON8lLzUJgA8ZYxYIYZmGYRnctDaWvJJAmTtfP1pvXsBCCPP8QFcCaRkZYACgDZFO4stNIcBCajEOlmmC9XpJ9bAGCaPaPmzPl32dvLSVu3BWCTQs0XQQ6g0DYgwLIoAZbBCdW/i+781o1VVlm/410mw4h06Y7bIPHNyWDyL4FHkX03Q8SrzNhZTZriieckWt7cL6MM85YcLpsi/7O9/iXFT6MswI0DmmpkSaJ0qLxFIm3+i1THHB3zmBH3PYx9CcykcLOeQVVa7QtdxTgQgEleX2AjHYfwA+2ddV77ruGoJUbhGDI09YSNXyMpUt5ylOzxgbUmtOp7NmbNt8v3arjTBfYELmLUV+M+nSawNNAUqpT3ClJWg5I3BLT+cGW/DXNGCa6tx1aakCGEigArTn4TDIPdrXXYKCZNrHLMCOEPvHBlLQ99s9eHB7EB6NTki73CVPQ2F5MSx/uRQixfmq7rK0wYD8w8E905bnPDfwoWs/rfv93NWN/ZfvwsLIU7A09gxECyISeGJkHAau98L97tuw7NXnoPyNF8FcYGLGKsOs0mN3OEyec9esGW/ZEl945dTP34wlR2FZVQWU1q0Cw8Tr7p+hgLLNL0FPxx/Q35mA8aEUrH6nCgwEl0tn7wUiZYJnNRh6DK4UH/k0lfyrsBKdPVv/AriGIQcEDQZ65LBAGe2Rzui9Ybjz7XUppz1/uKBbyVPGkN3ZAeC6hr0x7Nr38N5+EqkoOm17xpoqR9ohQF55ERSvr4Dkr3chNfC3DMzGJlNBElW8w9nsGQvhNGIzDkXzCg8cLK951xHsFBlTJspJNi3ZFIMF2AeDV3q8DNOB+YHi6QTrChDIWDBRi5U5f+ZMfJLu3ccrqxtdxk4SKH336LFxSmkqefwU5T8fhdSdQf9IVKD6aNiwI/hnmcAZ91isYMJIaCUCx9W098+LgruikeTqzqqxKPUwqJyCPJiyemVVZBOijDGjD38Os0jOiSPL1z3SPjXNANbiNPXAdzTfukjjuknNBbyz3nwgTd3AVFqUJ5hpHlq9MveLnWwttUfoygBmvVjuikxND3znrhsELnZk7k+OjIGxeNEkomyLVta0xxn+HZhjBc4YZ/AFjHjz9u3xRZl2BN4aq9nFwWh16IrQ1aHHEd3j1+4/dB9OtH4e29A2H1DyHQRmOSfQZ1Fy7MHBTGB6J/Djq6p3OxyO2cB+4Car7v/o3GXgfAkj23+x9ID1Teoamo/SXcbvSf2PX7Vc8DdCmE1vN9di+32P9/5YR3vLnhCVGUWBjEkr3yh4H8v9CzmsbdhzOKzsJKM90iFdaTMjRPhGVsakRvOaRidljo6H6G7j+ctrJpsP+4COhDIl0La2+FS4+5mlocBaXY5QnGZysIBYoeSsl5qQzrSj/cgNrfuEzlWBfwA+EjrZyWUvpAAAAABJRU5ErkJggg==">大数据技术之 SparkStreaming<!----></h1>  <div class="theme-vdoing-content content__default"><h1 id="第1章-sparkstreaming-概述"><a href="#第1章-sparkstreaming-概述" class="header-anchor">#</a> 第1章 SparkStreaming 概述</h1> <h2 id="_1-1-spark-streaming-是什么"><a href="#_1-1-spark-streaming-是什么" class="header-anchor">#</a> 1.1 Spark Streaming 是什么</h2> <p>https://spark.apache.org/streaming/</p> <p>Spark 流使得构建可扩展的容错流应用程序变得更加容易。</p> <p>Spark Streaming 用于流式数据的处理。Spark Streaming 支持的数据输入源很多，例如：Kafka、 Flume、Twitter、ZeroMQ 和简单的 TCP 套接字等等。数据输入后可以用 Spark 的高度抽象原语 如：map、reduce、join、window 等进行运算。而结果也能保存在很多地方，如 HDFS，数据库等。</p> <p><img src="/assets/img/image-20231213215547662.7ef32c2f.png" alt="image-20231213215547662"></p> <p>和 Spark 基于 RDD 的概念很相似，Spark Streaming 使用离散化流(discretized stream)作为抽 象表示，叫作 DStream。DStream 是随时间推移而收到的数据的序列。在内部，每个时间区间收 到的数据都作为 RDD 存在，而 DStream 是由这些 RDD 所组成的序列(因此得名“离散化”)。所以 简单来将，DStream 就是对 RDD 在实时数据处理场景的一种封装。</p> <h2 id="_1-2-spark-streaming-的特点"><a href="#_1-2-spark-streaming-的特点" class="header-anchor">#</a> 1.2 Spark Streaming 的特点</h2> <h5 id="易用"><a href="#易用" class="header-anchor">#</a> 易用</h5> <p><img src="/assets/img/image-20231213215657412.f8401a2e.png" alt="image-20231213215657412"></p> <h5 id="统一的批处理和流api"><a href="#统一的批处理和流api" class="header-anchor">#</a> 统一的批处理和流api</h5> <p><img src="/assets/img/image-20231213215815963.d0df1058.png" alt="image-20231213215815963"></p> <h5 id="低延迟和成本效益"><a href="#低延迟和成本效益" class="header-anchor">#</a> 低延迟和成本效益</h5> <p><img src="/assets/img/image-20231213215858372.92afc178.png" alt="image-20231213215858372"></p> <h2 id="_1-3-spark-streaming-架构"><a href="#_1-3-spark-streaming-架构" class="header-anchor">#</a> 1.3 Spark Streaming 架构</h2> <h3 id="_1-3-1-架构图"><a href="#_1-3-1-架构图" class="header-anchor">#</a> 1.3.1 架构图</h3> <h5 id="整体架构图"><a href="#整体架构图" class="header-anchor">#</a> 整体架构图</h5> <p><img src="/assets/img/image-20231213220048304.c5b1ed6f.png" alt="image-20231213220048304"></p> <h5 id="sparkstreaming-架构图"><a href="#sparkstreaming-架构图" class="header-anchor">#</a> SparkStreaming 架构图</h5> <p><img src="/assets/img/image-20231213220110723.e612c46c.png" alt="image-20231213220110723"></p> <h3 id="_1-3-2-背压机制"><a href="#_1-3-2-背压机制" class="header-anchor">#</a> 1.3.2 背压机制</h3> <p>Spark 1.5 以前版本，用户如果要限制 Receiver 的数据接收速率，可以通过设置静态配制参数“spark.streaming.receiver.maxRate”的值来实现，此举虽然可以通过限制接收速率，来适配当前的处理能力，防止内存溢出，但也会引入其它问题。比如：producer 数据生产高于 maxRate，当前集群处理能力也高于 maxRate，这就会造成资源利用率下降等问题。 为了更好的协调数据接收速率与资源处理能力，1.5 版本开始 Spark Streaming 可以动态控制数据接收速率来适配集群数据处理能力。<strong>背压机制（即 Spark Streaming Backpressure）</strong>: 根据 JobScheduler 反馈作业的执行信息来动态调整 Receiver 数据接收率。 通过属性“spark.streaming.backpressure.enabled”来控制是否启用 backpressure 机制，默认值 false，即不启用。</p> <h1 id="第-2-章-dstream-入门"><a href="#第-2-章-dstream-入门" class="header-anchor">#</a> 第 2 章 Dstream 入门</h1> <h2 id="_2-1-wordcount-案例实操"><a href="#_2-1-wordcount-案例实操" class="header-anchor">#</a> 2.1 WordCount 案例实操</h2> <p>➢ 需求：使用 netcat 工具向 9999 端口不断的发送数据，通过 SparkStreaming 读取端口数据并统计不同单词出现的次数</p> <ol><li><p>添加依赖</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>&lt;dependency&gt;
+ &lt;groupId&gt;org.apache.spark&lt;/groupId&gt;
+ &lt;artifactId&gt;spark-streaming_2.12&lt;/artifactId&gt;
+ &lt;version&gt;3.0.0&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div></li></ol> <ol start="2"><li><p>编写代码</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>object SparkStreaming01_WordCount {
+
+    def main(args: Array[String]): Unit = {
+
+        // 初始化 Spark 配置信息
+        // StreamingContext创建时，需要传递两个参数
+        // 第一个参数表示环境配置
+        val sparkConf = new SparkConf().setMaster(&quot;local[*]&quot;).setAppName(&quot;SparkStreaming&quot;)
+        // 第二个参数表示批量处理的周期（采集周期）
+        val ssc = new StreamingContext(sparkConf, Seconds(3))
+
+ 
+        // 通过监控端口创建 DStream，读进来的数据为一行行
+        val lines: ReceiverInputDStream[String] = ssc.socketTextStream(&quot;localhost&quot;, 9999)
+		// 将每一行数据做切分，形成一个个单词
+        val words = lines.flatMap(_.split(&quot; &quot;))
+
+		// 将单词映射成元组（word,1）
+        val wordToOne = words.map((_,1))
+
+        // 将相同的单词次数做统计
+        val wordToCount: DStream[(String, Int)] = wordToOne.reduceByKey(_+_)
+
+		// 打印
+        wordToCount.print()
+
+        // 由于SparkStreaming采集器是长期执行的任务，所以不能直接关闭
+        // 如果main方法执行完毕，应用程序也会自动结束。所以不能让main执行完毕
+        //ssc.stop()
+        // 1. 启动采集器
+        ssc.start()
+        // 2. 等待采集器的关闭
+        ssc.awaitTermination()
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br></div></div></li></ol> <ol start="3"><li><p>启动程序并通过 netcat 发送数据：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>nc -lk 9999
+hello spark
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div></li></ol> <h2 id="_2-2-wordcount-解析"><a href="#_2-2-wordcount-解析" class="header-anchor">#</a> 2.2 WordCount 解析</h2> <p>Discretized Stream 是 Spark Streaming 的基础抽象，代表持续性的数据流和经过各种 Spark 原语操作后的结果数据流。在内部实现上，DStream 是一系列连续的 RDD 来表示。每个 RDD 含有 一段时间间隔内的数据。</p> <p><img src="/assets/img/image-20231213220901942.ddb44eb8.png" alt="image-20231213220901942"></p> <p>对数据的操作也是按照 RDD 为单位来进行的</p> <p><img src="/assets/img/image-20231213220923644.bd785fea.png" alt="image-20231213220923644"></p> <p>计算过程由 Spark Engine 来完成</p> <p><img src="/assets/img/image-20231213220944673.24e69a0d.png" alt="image-20231213220944673"></p> <h1 id="第-3-章-dstream-创建"><a href="#第-3-章-dstream-创建" class="header-anchor">#</a> 第 3 章 DStream 创建</h1> <h2 id="_3-1-rdd-队列"><a href="#_3-1-rdd-队列" class="header-anchor">#</a> 3.1 RDD 队列</h2> <h3 id="_3-1-1-用法及说明"><a href="#_3-1-1-用法及说明" class="header-anchor">#</a> 3.1.1 用法及说明</h3> <p><strong>测试过程中</strong>，可以通过使用 ssc.queueStream(queueOfRDDs)来创建 DStream，每一个推送到这个队列中的 RDD，都会作为一个 DStream 处理。</p> <h3 id="_3-1-2-案例实操"><a href="#_3-1-2-案例实操" class="header-anchor">#</a> 3.1.2 案例实操</h3> <p>需求：循环创建几个 RDD，将 RDD 放入队列。通过 SparkStream 创建 Dstream，计算WordCount</p> <ol><li><p>编写代码</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>object RDDStream {
+  def main(args: Array[String]) {
+    //1.初始化 Spark 配置信息
+    val conf = new SparkConf().setMaster(&quot;local[*]&quot;).setAppName(&quot;RDDStream&quot;)
+    
+    //2.初始化 SparkStreamingContext
+    val ssc = new StreamingContext(conf, Seconds(4))
+    
+    //3.创建 RDD 队列
+    val rddQueue = new mutable.Queue[RDD[Int]]()
+    
+    //4.创建 QueueInputDStream
+    val inputStream = ssc.queueStream(rddQueue, oneAtATime = false)
+    
+    //5.处理队列中的 RDD 数据
+    val mappedStream = inputStream.map((_, 1))
+    val reducedStream = mappedStream.reduceByKey(_ + _)
+    
+    //6.打印结果
+    reducedStream.print()
+    
+    //7.启动任务
+    ssc.start()
+    
+    //8.循环创建并向 RDD 队列中放入 RDD
+    for (i &lt;- 1 to 5) {
+      rddQueue += ssc.sparkContext.makeRDD(1 to 300, 10)
+      Thread.sleep(2000)
+    }
+    ssc.awaitTermination()
+  }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br></div></div></li></ol> <ol start="2"><li><p>结果展示</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>-------------------------------------------
+Time: 1539075280000 ms
+-------------------------------------------
+(4,60)
+(0,60)
+(6,60)
+(8,60)
+(2,60)
+(1,60)
+(3,60)
+(7,60)
+(9,60)
+(5,60)
+-------------------------------------------
+Time: 1539075284000 ms
+-------------------------------------------
+(4,60)
+(0,60)
+(6,60)
+(8,60)
+(2,60)
+(1,60)
+(3,60)
+(7,60)
+(9,60)
+(5,60)
+-------------------------------------------
+Time: 1539075288000 ms
+-------------------------------------------
+(4,30)
+(0,30)
+(6,30)
+(8,30)
+(2,30)
+(1,30)
+(3,30)
+(7,30)
+(9,30)
+(5,30)
+-------------------------------------------
+Time: 1539075292000 ms
+-------------------------------------------
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br></div></div></li></ol> <h2 id="_3-2-自定义数据源"><a href="#_3-2-自定义数据源" class="header-anchor">#</a> 3.2 自定义数据源</h2> <h3 id="_3-2-1-用法及说明"><a href="#_3-2-1-用法及说明" class="header-anchor">#</a> 3.2.1 用法及说明</h3> <p>需要继承 Receiver，并实现 onStart、onStop 方法来自定义数据源采集。</p> <h3 id="_3-2-2-案例实操"><a href="#_3-2-2-案例实操" class="header-anchor">#</a> 3.2.2 案例实操</h3> <p>需求：自定义数据源，实现监控某个端口号，获取该端口号内容。</p> <ol><li>自定义数据源</li></ol> <div class="language- line-numbers-mode"><pre class="language-text"><code>import org.apache.spark.SparkConf
+import org.apache.spark.rdd.RDD
+import org.apache.spark.storage.StorageLevel
+import org.apache.spark.streaming.dstream.ReceiverInputDStream
+import org.apache.spark.streaming.receiver.Receiver
+import org.apache.spark.streaming.{Seconds, StreamingContext}
+
+import scala.collection.mutable
+
+object CustomerReceiver {
+
+    def main(args: Array[String]): Unit = {
+
+        val sparkConf = new SparkConf().setMaster(&quot;local[*]&quot;).setAppName(&quot;SparkStreaming&quot;)
+        val ssc = new StreamingContext(sparkConf, Seconds(3))
+
+        val messageDS: ReceiverInputDStream[String] = ssc.receiverStream(new MyReceiver())
+        messageDS.print()
+
+        ssc.start()
+        ssc.awaitTermination()
+    }
+    /*
+    自定义数据采集器
+    1. 继承Receiver，定义泛型, 传递参数
+    2. 重写方法
+     */
+    class MyReceiver extends Receiver[String](StorageLevel.MEMORY_ONLY) {
+        private var flg = true
+        override def onStart(): Unit = {
+            new Thread(new Runnable {
+                override def run(): Unit = {
+                    while ( flg ) {
+                        val message = &quot;采集的数据为：&quot; + new Random().nextInt(10).toString
+                        store(message)
+                        Thread.sleep(500)
+                    }
+                }
+            }).start()
+        }
+
+        override def onStop(): Unit = {
+            flg = false;
+        }
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br></div></div><h2 id="_3-3-kafka-数据源-面试、开发重点"><a href="#_3-3-kafka-数据源-面试、开发重点" class="header-anchor">#</a> 3.3 Kafka 数据源（面试、开发重点）</h2> <h3 id="_3-3-1-版本选型"><a href="#_3-3-1-版本选型" class="header-anchor">#</a> 3.3.1 版本选型</h3> <p><strong>ReceiverAPI</strong>：需要一个专门的 Executor 去接收数据，然后发送给其他的 Executor 做计算。存在
+的问题，接收数据的 Executor 和计算的 Executor 速度会有所不同，特别在接收数据的 Executor
+速度大于计算的 Executor 速度，会导致计算数据的节点内存溢出。早期版本中提供此方式，当
+前版本不适用
+<strong>DirectAPI</strong>：是由计算的 Executor 来主动消费 Kafka 的数据，速度由自身控制。</p> <h3 id="_3-3-2-kafka-0-8-receiver-模式-当前版本不适用"><a href="#_3-3-2-kafka-0-8-receiver-模式-当前版本不适用" class="header-anchor">#</a> 3.3.2 Kafka 0-8 Receiver 模式（当前版本不适用）</h3> <p>1） 需求：通过 SparkStreaming 从 Kafka 读取数据，并将读取过来的数据做简单计算，最终打印到控制台。</p> <p>2）导入依赖</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>&lt;dependency&gt;
+ &lt;groupId&gt;org.apache.spark&lt;/groupId&gt;
+ &lt;artifactId&gt;spark-streaming-kafka-0-8_2.11&lt;/artifactId&gt;
+ &lt;version&gt;2.4.5&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p>3）编写代码（自动维护 offset）</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>object DirectAPIAuto02 {
+  val getSSC1: () =&gt; StreamingContext = () =&gt; {
+    val sparkConf: SparkConf = new
+        SparkConf().setAppName(&quot;ReceiverWordCount&quot;).setMaster(&quot;local[*]&quot;)
+    val ssc = new StreamingContext(sparkConf, Seconds(3))
+    ssc
+  }
+
+  def main(args: Array[String]): Unit = {
+    //获取 SSC
+    val ssc: StreamingContext = StreamingContext.getActiveOrCreate(&quot;./ck2&quot;, () =&gt;
+      getSSC)
+    //开启任务
+    ssc.start()
+    ssc.awaitTermination()
+  }
+
+  def getSSC: StreamingContext = {
+    
+    //1.创建 SparkConf
+    val sparkConf: SparkConf = new SparkConf().setAppName(&quot;ReceiverWordCount&quot;).setMaster(&quot;local[*]&quot;)
+    
+    //2.创建 StreamingContext
+    val ssc = new StreamingContext(sparkConf, Seconds(3))
+    //设置 CK
+    ssc.checkpoint(&quot;./ck2&quot;)
+    
+    //3.定义 Kafka 参数
+    val kafkaPara: Map[String, String] = Map[String, String](
+      ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG -&gt;
+        &quot;linux1:9092,linux2:9092,linux3:9092&quot;,
+      ConsumerConfig.GROUP_ID_CONFIG -&gt; &quot;atguigu&quot;
+    )
+    
+    //4.读取 Kafka 数据
+    val kafkaDStream: InputDStream[(String, String)] =
+      KafkaUtils.createDirectStream[String, String, StringDecoder, StringDecoder](ssc,
+        kafkaPara,
+        Set(&quot;atguigu&quot;))
+        
+    //5.计算 WordCount
+    kafkaDStream.map(_._2)
+      .flatMap(_.split(&quot; &quot;))
+      .map((_, 1))
+      .reduceByKey(_ + _)
+      .print()
+    //6.返回数据
+    ssc
+  }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br></div></div><p>4）编写代码（手动维护 offset）</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>object DirectAPIHandler {
+  def main(args: Array[String]): Unit = {
+    
+    //1.创建 SparkConf
+    val sparkConf: SparkConf = new SparkConf().setAppName(&quot;ReceiverWordCount&quot;).setMaster(&quot;local[*]&quot;)
+    //2.创建 StreamingContext
+    val ssc = new StreamingContext(sparkConf, Seconds(3))
+    
+    //3.Kafka 参数
+    val kafkaPara: Map[String, String] = Map[String, String](
+      ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG -&gt;
+        &quot;hadoop102:9092,hadoop103:9092,hadoop104:9092&quot;,
+      ConsumerConfig.GROUP_ID_CONFIG -&gt; &quot;atguigu&quot;
+    )
+    
+    //4.获取上一次启动最后保留的 Offset=&gt;getOffset(MySQL)
+    val fromOffsets: Map[TopicAndPartition, Long] = Map[TopicAndPartition,
+      Long](TopicAndPartition(&quot;atguigu&quot;, 0) -&gt; 20)
+    
+    //5.读取 Kafka 数据创建 DStream
+    val kafkaDStream: InputDStream[String] = KafkaUtils.createDirectStream[String,
+      String, StringDecoder, StringDecoder, String](ssc,
+      kafkaPara,
+      fromOffsets,
+      (m: MessageAndMetadata[String, String]) =&gt; m.message())
+    
+    //6.创建一个数组用于存放当前消费数据的 offset 信息
+    var offsetRanges = Array.empty[OffsetRange]
+    
+    //7.获取当前消费数据的 offset 信息
+    val wordToCountDStream: DStream[(String, Int)] = kafkaDStream.transform { rdd
+      =&gt;
+        offsetRanges = rdd.asInstanceOf[HasOffsetRanges].offsetRanges
+        rdd
+      }.flatMap(_.split(&quot; &quot;))
+      .map((_, 1))
+      .reduceByKey(_ + _)
+    //8.打印 Offset 信息
+    wordToCountDStream.foreachRDD(rdd =&gt; {
+      for (o &lt;- offsetRanges) {
+        println(s&quot;${o.topic}:${o.partition}:${o.fromOffset}:${o.untilOffset}&quot;)
+      }
+      rdd.foreach(println)
+    })
+    
+    //9.开启任务
+    ssc.start()
+    ssc.awaitTermination()
+  }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br></div></div><h3 id="_3-3-4-kafka-0-10-direct-模式"><a href="#_3-3-4-kafka-0-10-direct-模式" class="header-anchor">#</a> 3.3.4 Kafka 0-10 Direct 模式</h3> <p>1）需求：通过 SparkStreaming 从 Kafka 读取数据，并将读取过来的数据做简单计算，最终打印 到控制台。</p> <p>2）导入依赖</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>&lt;dependency&gt;
+ &lt;groupId&gt;org.apache.spark&lt;/groupId&gt;
+ &lt;artifactId&gt;spark-streaming-kafka-0-10_2.12&lt;/artifactId&gt;
+ &lt;version&gt;3.0.0&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+ &lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt;
+ &lt;artifactId&gt;jackson-core&lt;/artifactId&gt;
+ &lt;version&gt;2.10.1&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div></div><p>3）编写代码</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>object DirectAPI {
+  def main(args: Array[String]): Unit = {
+    //1.创建 SparkConf
+    val sparkConf: SparkConf = new SparkConf().setAppName(&quot;ReceiverWordCount&quot;).setMaster(&quot;local[*]&quot;)
+
+    //2.创建 StreamingContext
+    val ssc = new StreamingContext(sparkConf, Seconds(3))
+    //3.定义 Kafka 参数
+    val kafkaPara: Map[String, Object] = Map[String, Object](
+      ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG -&gt;
+        &quot;linux1:9092,linux2:9092,linux3:9092&quot;,
+      ConsumerConfig.GROUP_ID_CONFIG -&gt; &quot;atguigu&quot;,
+      &quot;key.deserializer&quot; -&gt;
+        &quot;org.apache.kafka.common.serialization.StringDeserializer&quot;,
+      &quot;value.deserializer&quot; -&gt;
+        &quot;org.apache.kafka.common.serialization.StringDeserializer&quot;
+    )
+    
+    //4.读取 Kafka 数据创建 DStream
+    val kafkaDStream: InputDStream[ConsumerRecord[String, String]] =
+      KafkaUtils.createDirectStream[String, String](ssc,
+        LocationStrategies.PreferConsistent,
+        ConsumerStrategies.Subscribe[String, String](Set(&quot;atguigu&quot;), kafkaPara))
+        
+    //5.将每条消息的 KV 取出
+    val valueDStream: DStream[String] = kafkaDStream.map(record =&gt; record.value())
+    
+    //6.计算 WordCount
+    valueDStream.flatMap(_.split(&quot; &quot;))
+      .map((_, 1))
+      .reduceByKey(_ + _)
+      .print()
+    //7.开启任务
+    ssc.start()
+    ssc.awaitTermination()
+  }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br></div></div><h1 id="第-4-章-dstream-转换"><a href="#第-4-章-dstream-转换" class="header-anchor">#</a> 第 4 章 DStream 转换</h1> <p>DStream 上的操作与 RDD 的类似，分为 Transformations（转换）和 Output Operations（输
+出）两种，此外转换操作中还有一些比较特殊的原语，如：updateStateByKey()、transform()以及
+各种 Window 相关的原语。</p> <h2 id="_4-1-无状态转化操作"><a href="#_4-1-无状态转化操作" class="header-anchor">#</a> 4.1 无状态转化操作</h2> <p><strong>无状态转化</strong>操作就是把简单的 RDD 转化操作应用到每个批次上，也就是转化 DStream 中的每
+一个 RDD。部分无状态转化操作列在了下表中。注意，针对键值对的 DStream 转化操作(比如
+reduceByKey())要添加 import StreamingContext._才能在 Scala 中使用。</p> <p><img src="/assets/img/image-20231213223044392.54114f3e.png" alt="image-20231213223044392"></p> <p>需要记住的是，尽管这些函数看起来像作用在整个流上一样，但事实上每个 DStream 在内部是由许多 RDD（批次）组成，且无状态转化操作是分别应用到每个 RDD 上的。
+例如：reduceByKey()会归约每个时间区间中的数据，但不会归约不同区间之间的数据。</p> <h3 id="_4-1-1-transform"><a href="#_4-1-1-transform" class="header-anchor">#</a> 4.1.1 Transform</h3> <p>Transform 允许 DStream 上执行任意的 RDD-to-RDD 函数。即使这些函数并没有在 DStream 的 API 中暴露出来，通过该函数可以方便的扩展 Spark API。该函数每一批次调度一次。其实也就是对 DStream 中的 RDD 应用转换。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>object Transform {
+  def main(args: Array[String]): Unit = {
+    //创建 SparkConf
+    val sparkConf: SparkConf = new SparkConf().setMaster(&quot;local[*]&quot;).setAppName(&quot;WordCount&quot;)
+    
+    //创建 StreamingContext
+    val ssc = new StreamingContext(sparkConf, Seconds(3))
+    
+    //创建 DStream
+    val lineDStream: ReceiverInputDStream[String] = ssc.socketTextStream(&quot;linux1&quot;,
+      9999)
+    
+    //转换为 RDD 操作
+    val wordAndCountDStream: DStream[(String, Int)] = lineDStream.transform(rdd =&gt; {
+      val words: RDD[String] = rdd.flatMap(_.split(&quot; &quot;))
+      val wordAndOne: RDD[(String, Int)] = words.map((_, 1))
+      val value: RDD[(String, Int)] = wordAndOne.reduceByKey(_ + _)
+      value
+    })
+    
+    //打印
+    wordAndCountDStream.print
+    
+    //启动
+    ssc.start()
+    ssc.awaitTermination()
+  }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br></div></div><h3 id="_4-1-2-join"><a href="#_4-1-2-join" class="header-anchor">#</a> 4.1.2 join</h3> <p>两个流之间的 join 需要两个流的批次大小一致，这样才能做到同时触发计算。计算过程就是对当前批次的两个流中各自的 RDD 进行 join，与两个 RDD 的 join 效果相同。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>object JoinTest {
+  def main(args: Array[String]): Unit = {
+    
+    //1.创建 SparkConf
+    val sparkConf: SparkConf = new
+        SparkConf().setMaster(&quot;local[*]&quot;).setAppName(&quot;JoinTest&quot;)
+   
+    //2.创建 StreamingContext
+    val ssc = new StreamingContext(sparkConf, Seconds(5))
+    
+    //3.从端口获取数据创建流
+    val lineDStream1: ReceiverInputDStream[String] =
+      ssc.socketTextStream(&quot;linux1&quot;, 9999)
+    val lineDStream2: ReceiverInputDStream[String] =
+      ssc.socketTextStream(&quot;linux2&quot;, 8888)
+   
+    //4.将两个流转换为 KV 类型
+    val wordToOneDStream: DStream[(String, Int)] = lineDStream1.flatMap(_.split(&quot; &quot;)).map((_, 1))
+    val wordToADStream: DStream[(String, String)] = lineDStream2.flatMap(_.split(&quot; &quot;)).map((_, &quot;a&quot;))
+   
+    //5.流的 JOIN
+    val joinDStream: DStream[(String, (Int, String))] =
+      wordToOneDStream.join(wordToADStream)
+      
+    //6.打印
+    joinDStream.print()
+    
+    //7.启动任务
+    ssc.start()
+    ssc.awaitTermination()
+  }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br></div></div><h2 id="_4-2-有状态转化操作"><a href="#_4-2-有状态转化操作" class="header-anchor">#</a> 4.2 有状态转化操作</h2> <h3 id="_4-2-1-updatestatebykey"><a href="#_4-2-1-updatestatebykey" class="header-anchor">#</a> 4.2.1 UpdateStateByKey</h3> <p>UpdateStateByKey 原语用于记录历史记录，有时，我们需要在 DStream 中跨批次维护状态(例如流计算中累加 wordcount)。针对这种情况，updateStateByKey()为我们提供了对一个状态变量的访问，用于键值对形式的 DStream。给定一个由(键，事件)对构成的 DStream，并传递一个指定如何根据新的事件更新每个键对应状态的函数，它可以构建出一个新的 DStream，其内部数据为(键，状态) 对。</p> <p>updateStateByKey() 的结果会是一个新的 DStream，其内部的 RDD 序列是由每个时间区间对应的(键，状态)对组成的。</p> <p>updateStateByKey 操作使得我们可以在用新信息进行更新时保持任意的状态。为使用这个功能，需要做下面两步：</p> <ol><li><p>定义状态，状态可以是一个任意的数据类型。</p></li> <li><p>定义状态更新函数，用此函数阐明如何使用之前的状态和来自输入流的新值对状态进行更新。</p> <p>使用 updateStateByKey 需要对检查点目录进行配置，会使用检查点来保存状态。</p> <p>更新版的 wordcount</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>object WorldCount {
+  def main(args: Array[String]) {
+
+    // 定义更新状态方法，参数 values 为当前批次单词频度，state 为以往批次单词频度
+    val updateFunc = (values: Seq[Int], state: Option[Int]) =&gt; {
+      val currentCount = values.foldLeft(0)(_ + _)
+      val previousCount = state.getOrElse(0)
+      Some(currentCount + previousCount)
+    }
+    val conf = new SparkConf().setMaster(&quot;local[*]&quot;).setAppName(&quot;NetworkWordCount&quot;)
+    val ssc = new StreamingContext(conf, Seconds(3))
+    ssc.checkpoint(&quot;./ck&quot;)
+
+    // Create a DStream that will connect to hostname:port, like hadoop102:9999
+    val lines = ssc.socketTextStream(&quot;linux1&quot;, 9999)
+
+    // Split each line into words
+    val words = lines.flatMap(_.split(&quot; &quot;))
+
+    //import org.apache.spark.streaming.StreamingContext._ // not necessary since Spark 1.3
+    // Count each word in each batch
+    val pairs = words.map(word =&gt; (word, 1))
+
+    // 使用 updateStateByKey 来更新状态，统计从运行开始以来单词总的次数
+    val stateDstream = pairs.updateStateByKey[Int](updateFunc)
+    stateDstream.print()
+    ssc.start() // Start the computation
+    ssc.awaitTermination() // Wait for the computation to terminate
+    //ssc.stop()
+  }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br></div></div></li> <li><p>启动程序并向 9999 端口发送数据</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>nc -lk 9999
+Hello World
+Hello Scala
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div></li> <li><p>结果展示</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>-------------------------------------------
+Time: 1504685175000 ms
+-------------------------------------------
+-------------------------------------------
+Time: 1504685181000 ms
+-------------------------------------------
+(shi,1)
+(shui,1)
+(ni,1)
+-------------------------------------------
+Time: 1504685187000 ms
+-------------------------------------------
+(shi,1)
+(ma,1)
+(hao,1)
+(shui,1)
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br></div></div></li></ol> <h3 id="_4-2-2-windowoperations"><a href="#_4-2-2-windowoperations" class="header-anchor">#</a> 4.2.2 WindowOperations</h3> <p>Window Operations 可以设置窗口的大小和滑动窗口的间隔来动态的获取当前 Steaming 的允许状态。所有基于窗口的操作都需要两个参数，分别为窗口时长以及滑动步长。</p> <p>➢  窗口时长：计算内容的时间范围；</p> <p>➢ 滑动步长：隔多久触发一次计算。</p> <blockquote><p>注意：这两者都必须为采集周期大小的整数倍。</p></blockquote> <p>WordCount 第三版：3 秒一个批次，窗口 12 秒，滑步 6 秒。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>object WorldCount {
+  def main(args: Array[String]) {
+    val conf = new  SparkConf().setMaster(&quot;local[2]&quot;).setAppName(&quot;NetworkWordCount&quot;)
+    val ssc = new StreamingContext(conf, Seconds(3))
+    ssc.checkpoint(&quot;./ck&quot;)
+    
+    // Create a DStream that will connect to hostname:port, like localhost:9999
+    val lines = ssc.socketTextStream(&quot;linux1&quot;, 9999)
+    
+    // Split each line into words
+    val words = lines.flatMap(_.split(&quot; &quot;))
+    
+    // Count each word in each batch
+    val pairs = words.map(word =&gt; (word, 1))
+    val wordCounts = pairs.reduceByKeyAndWindow((a: Int, b: Int) =&gt; (a + b), Seconds(12), Seconds(6))
+    
+    // Print the first ten elements of each RDD generated in this DStream to the console
+    wordCounts.print()
+    ssc.start() // Start the computation
+    ssc.awaitTermination() // Wait for the computation to terminate
+  }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br></div></div><p>关于 Window 的操作还有如下方法：</p> <p>（1）window(windowLength, slideInterval): 基于对源 DStream 窗化的批次进行计算返回一个 新的 Dstream；</p> <p>（2）countByWindow(windowLength, slideInterval): 返回一个滑动窗口计数流中的元素个数；</p> <p>（3）reduceByWindow(func, windowLength, slideInterval): 通过使用自定义函数整合滑动区间流元素来创建一个新的单元素流；</p> <p>（4）reduceByKeyAndWindow(func, windowLength, slideInterval, [numTasks]): 当在一个(K,V) 对的 DStream 上调用此函数，会返回一个新(K,V)对的 DStream，此处通过对滑动窗口中批次数 据使用 reduce 函数来整合每个 key 的 value 值。</p> <p>（5）reduceByKeyAndWindow(func, invFunc, windowLength, slideInterval, [numTasks]): 这个函数是上述函数的变化版本，每个窗口的 reduce 值都是通过用前一个窗的 reduce 值来递增计算。 通过 reduce 进入到滑动窗口数据并”反向 reduce”离开窗口的旧数据来实现这个操作。一个例子是随着窗口滑动对 keys 的“加”“减”计数。通过前边介绍可以想到，这个函数只适用于可逆的 reduce 函数”，也就是这些 reduce 函数有相应的”反 reduce”函数(以参数 invFunc 形式 传入)。如前述函数，reduce 任务的数量通过可选参数来配置。</p> <p><img src="/assets/img/image-20231213224604658.a92cd87a.png" alt="image-20231213224604658"></p> <div class="language- line-numbers-mode"><pre class="language-text"><code>val ipDStream = accessLogsDStream.map(logEntry =&gt; (logEntry.getIpAddress(), 1))
+val ipCountDStream = ipDStream.reduceByKeyAndWindow(
+ {(x, y) =&gt; x + y},
+ {(x, y) =&gt; x - y},
+ Seconds(30),
+ Seconds(10))
+ //加上新进入窗口的批次中的元素 //移除离开窗口的老批次中的元素 //窗口时长// 滑动步长
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><p>countByWindow()和 countByValueAndWindow()作为对数据进行计数操作的简写。 countByWindow()返回一个表示每个窗口中元素个数的 DStream，而 countByValueAndWindow() 返回的 DStream 则包含窗口中每个值的个数。</p> <h1 id="第-5-章-dstream-输出"><a href="#第-5-章-dstream-输出" class="header-anchor">#</a> 第 5 章 DStream 输出</h1> <p>输出操作指定了对流数据经转化操作得到的数据所要执行的操作(例如把结果推入外部数据库或输出到屏幕上)。与 RDD 中的惰性求值类似，如果一个 DStream 及其派生出的 DStream 都没有被执行输出操作，那么这些 DStream 就都不会被求值。如果 StreamingContext 中没有设定输出操作，整个 context 就都不会启动。</p> <p>输出操作如下：</p> <p>➢ print()：在运行流程序的<strong>驱动结点</strong>上打印 DStream 中每一批次数据的最开始 10 个元素。这用于开发和调试。在 Python API 中，同样的操作叫 print()。</p> <p>➢ saveAsTextFiles(prefix, [suffix])：以 text 文件形式存储这个 DStream 的内容。每一批次的存储文件名基于参数中的 prefix 和 suffix。”prefix-Time_IN_MS[.suffix]”。</p> <p>➢ saveAsObjectFiles(prefix, [suffix])：以 Java 对象序列化的方式将 Stream 中的数据保存为 SequenceFiles . 每一批次的存储文件名基于参数中的为&quot;prefix-TIME_IN_MS[.suffix]&quot;. Python 中目前不可用。</p> <p>➢ saveAsHadoopFiles(prefix, [suffix])：将 Stream 中的数据保存为 Hadoop files. 每一批次的存储文件名基于参数中的为&quot;prefix-TIME_IN_MS[.suffix]&quot;。Python API 中目前不可用。</p> <p>➢ foreachRDD(func)：这是最通用的输出操作，即将函数 func 用于产生于 stream 的每一个 RDD。其中参数传入的函数 func 应该实现将每一个 RDD 中数据推送到外部系统，如将 RDD 存入文件或者通过网络将其写入数据库。</p> <p>通用的输出操作 foreachRDD()，它用来对 DStream 中的 RDD 运行任意计算。这和 transform() 有些类似，都可以让我们访问任意 RDD。在 foreachRDD()中，可以重用我们在 Spark 中实现的所有行动操作。比如，常见的用例之一是把数据写到诸如 MySQL 的外部数据库中。</p> <p>注意：</p> <ol><li>连接不能写在 driver 层面（序列化）</li> <li>如果写在 foreach 则每个 RDD 中的每一条数据都创建，得不偿失；</li> <li>增加 foreachPartition，在分区创建（获取）。</li></ol> <blockquote><p>（1）、foreachRdd运行在driver节点，因为它是操作dstream的。foreachPartition和foreach运行在worker节点，因为它是操作rdd的。foreachRdd开启对任务的启动，当执行到执行算子的时候开始任务的执行。
+（2）、对rdd进行操作的就运行在worker节点，对dstream进行操作的就运行在driver节点。</p> <p>（3）、以下代码将rdd转成了set，所以在driver端执行。</p></blockquote> <h1 id="第-6-章-优雅关闭"><a href="#第-6-章-优雅关闭" class="header-anchor">#</a> 第 6 章 优雅关闭</h1> <p>流式任务需要 7*24 小时执行，但是有时涉及到升级代码需要主动停止程序，但是分布式程序，没办法做到一个个进程去杀死，所有配置优雅的关闭就显得至关重要了。
+使用外部文件系统来控制内部程序关闭。</p> <p>➢ MonitorStop</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>class MonitorStop(ssc: StreamingContext) extends Runnable {
+  override def run(): Unit = {
+    val fs: FileSystem = FileSystem.get(new URI(&quot;hdfs://linux1:9000&quot;), new Configuration(), &quot;atguigu&quot;)
+    while (true) {
+      try
+        Thread.sleep(5000)
+      catch {
+        case e: InterruptedException =&gt;
+          e.printStackTrace()
+      }
+      val state: StreamingContextState = ssc.getState
+      val bool: Boolean = fs.exists(new Path(&quot;hdfs://linux1:9000/stopSpark&quot;))
+      if (bool) {
+        if (state == StreamingContextState.ACTIVE) {
+          ssc.stop(stopSparkContext = true, stopGracefully = true)
+          System.exit(0)
+        }
+      }
+    }
+  }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br></div></div><p>➢ SparkTest</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>object SparkTest {
+  def main(args: Array[String]): Unit = {
+
+    val ssc: StreamingContext = StreamingContext.getActiveOrCreate(&quot;./ck&quot;, () =&gt;
+      createSSC())
+    new Thread(new MonitorStop(ssc)).start()
+    ssc.start()
+    ssc.awaitTermination()
+  }
+
+  def createSSC(): _root_.org.apache.spark.streaming.StreamingContext = {
+
+    val update: (Seq[Int], Option[Int]) =&gt; Some[Int] = (values: Seq[Int], status: Option[Int]) =&gt; {
+      //当前批次内容的计算
+      val sum: Int = values.sum
+      //取出状态信息中上一次状态
+      val lastStatu: Int = status.getOrElse(0)
+      Some(sum + lastStatu)
+    }
+    val sparkConf: SparkConf = new
+        SparkConf().setMaster(&quot;local[4]&quot;).setAppName(&quot;SparkTest&quot;)
+
+    //设置优雅的关闭
+    sparkConf.set(&quot;spark.streaming.stopGracefullyOnShutdown&quot;, &quot;true&quot;)
+    val ssc = new StreamingContext(sparkConf, Seconds(5))
+    ssc.checkpoint(&quot;./ck&quot;)
+    val line: ReceiverInputDStream[String] = ssc.socketTextStream(&quot;linux1&quot;, 9999)
+    val word: DStream[String] = line.flatMap(_.split(&quot; &quot;))
+    val wordAndOne: DStream[(String, Int)] = word.map((_, 1))
+    val wordAndCount: DStream[(String, Int)] = wordAndOne.updateStateByKey(update)
+    wordAndCount.print()
+    ssc
+  }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br></div></div><h1 id="案例"><a href="#案例" class="header-anchor">#</a> 案例</h1> <div class="language- line-numbers-mode"><pre class="language-text"><code>package com.atguigu.bigdata.spark.streaming
+
+import java.sql.ResultSet
+import java.text.SimpleDateFormat
+
+import com.atguigu.bigdata.spark.util.JDBCUtil
+import org.apache.kafka.clients.consumer.{ConsumerConfig, ConsumerRecord}
+import org.apache.spark.SparkConf
+import org.apache.spark.streaming.dstream.InputDStream
+import org.apache.spark.streaming.kafka010.{ConsumerStrategies, KafkaUtils, LocationStrategies}
+import org.apache.spark.streaming.{Seconds, StreamingContext}
+
+import scala.collection.mutable.ListBuffer
+
+object SparkStreaming11_Req1_BlackList {
+
+    def main(args: Array[String]): Unit = {
+
+        val sparkConf = new SparkConf().setMaster(&quot;local[*]&quot;).setAppName(&quot;SparkStreaming&quot;)
+        val ssc = new StreamingContext(sparkConf, Seconds(3))
+
+        val kafkaPara: Map[String, Object] = Map[String, Object](
+            ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG -&gt; &quot;linux1:9092,linux2:9092,linux3:9092&quot;,
+            ConsumerConfig.GROUP_ID_CONFIG -&gt; &quot;atguigu&quot;,
+            &quot;key.deserializer&quot; -&gt; &quot;org.apache.kafka.common.serialization.StringDeserializer&quot;,
+            &quot;value.deserializer&quot; -&gt; &quot;org.apache.kafka.common.serialization.StringDeserializer&quot;
+        )
+
+        val kafkaDataDS: InputDStream[ConsumerRecord[String, String]] = KafkaUtils.createDirectStream[String, String](
+            ssc,
+            LocationStrategies.PreferConsistent,
+            ConsumerStrategies.Subscribe[String, String](Set(&quot;atguiguNew&quot;), kafkaPara)
+        )
+        val adClickData = kafkaDataDS.map(
+            kafkaData =&gt; {
+                val data = kafkaData.value()
+                val datas = data.split(&quot; &quot;)
+                AdClickData(datas(0),datas(1),datas(2),datas(3),datas(4))
+            }
+        )
+
+        val ds = adClickData.transform(
+            rdd =&gt; {
+                // TODO 通过JDBC周期性获取黑名单数据
+                val blackList = ListBuffer[String]()
+
+                val conn = JDBCUtil.getConnection
+                val pstat = conn.prepareStatement(&quot;select userid from black_list&quot;)
+
+                val rs: ResultSet = pstat.executeQuery()
+                while ( rs.next() ) {
+                    blackList.append(rs.getString(1))
+                }
+
+                rs.close()
+                pstat.close()
+                conn.close()
+
+                // TODO 判断点击用户是否在黑名单中
+                val filterRDD = rdd.filter(
+                    data =&gt; {
+                        !blackList.contains(data.user)
+                    }
+                )
+
+                // TODO 如果用户不在黑名单中，那么进行统计数量（每个采集周期）
+                filterRDD.map(
+                    data =&gt; {
+                        val sdf = new SimpleDateFormat(&quot;yyyy-MM-dd&quot;)
+                        val day = sdf.format(new java.util.Date( data.ts.toLong ))
+                        val user = data.user
+                        val ad = data.ad
+
+                        (( day, user, ad ), 1) // (word, count)
+                    }
+                ).reduceByKey(_+_)
+            }
+        )
+
+        ds.foreachRDD(
+            rdd =&gt; {
+                rdd.foreach{
+                    case ( ( day, user, ad ), count ) =&gt; {
+                        println(s&quot;${day} ${user} ${ad} ${count}&quot;)
+                        if ( count &gt;= 30 ) {
+                            // TODO 如果统计数量超过点击阈值(30)，那么将用户拉入到黑名单
+                            val conn = JDBCUtil.getConnection
+                            val pstat = conn.prepareStatement(
+                                &quot;&quot;&quot;
+                                  |insert into black_list (userid) values (?)
+                                  |on DUPLICATE KEY
+                                  |UPDATE userid = ?
+                                &quot;&quot;&quot;.stripMargin)
+                            pstat.setString(1, user)
+                            pstat.setString(2, user)
+                            pstat.executeUpdate()
+                            pstat.close()
+                            conn.close()
+                        } else {
+                            // TODO 如果没有超过阈值，那么需要将当天的广告点击数量进行更新。
+                            val conn = JDBCUtil.getConnection
+                            val pstat = conn.prepareStatement(
+                                &quot;&quot;&quot;
+                                  | select
+                                  |     *
+                                  | from user_ad_count
+                                  | where dt = ? and userid = ? and adid = ?
+                                &quot;&quot;&quot;.stripMargin)
+
+                            pstat.setString(1, day)
+                            pstat.setString(2, user)
+                            pstat.setString(3, ad)
+                            val rs = pstat.executeQuery()
+                            // 查询统计表数据
+                            if ( rs.next() ) {
+                                // 如果存在数据，那么更新
+                                val pstat1 = conn.prepareStatement(
+                                    &quot;&quot;&quot;
+                                      | update user_ad_count
+                                      | set count = count + ?
+                                      | where dt = ? and userid = ? and adid = ?
+                                    &quot;&quot;&quot;.stripMargin)
+                                pstat1.setInt(1, count)
+                                pstat1.setString(2, day)
+                                pstat1.setString(3, user)
+                                pstat1.setString(4, ad)
+                                pstat1.executeUpdate()
+                                pstat1.close()
+                                // TODO 判断更新后的点击数据是否超过阈值，如果超过，那么将用户拉入到黑名单。
+                                val pstat2 = conn.prepareStatement(
+                                    &quot;&quot;&quot;
+                                      |select
+                                      |    *
+                                      |from user_ad_count
+                                      |where dt = ? and userid = ? and adid = ? and count &gt;= 30
+                                    &quot;&quot;&quot;.stripMargin)
+                                pstat2.setString(1, day)
+                                pstat2.setString(2, user)
+                                pstat2.setString(3, ad)
+                                val rs2 = pstat2.executeQuery()
+                                if ( rs2.next() ) {
+                                    val pstat3 = conn.prepareStatement(
+                                        &quot;&quot;&quot;
+                                          |insert into black_list (userid) values (?)
+                                          |on DUPLICATE KEY
+                                          |UPDATE userid = ?
+                                        &quot;&quot;&quot;.stripMargin)
+                                    pstat3.setString(1, user)
+                                    pstat3.setString(2, user)
+                                    pstat3.executeUpdate()
+                                    pstat3.close()
+                                }
+
+                                rs2.close()
+                                pstat2.close()
+                            } else {
+                                // 如果不存在数据，那么新增
+                                val pstat1 = conn.prepareStatement(
+                                    &quot;&quot;&quot;
+                                      | insert into user_ad_count ( dt, userid, adid, count ) values ( ?, ?, ?, ? )
+                                    &quot;&quot;&quot;.stripMargin)
+
+                                pstat1.setString(1, day)
+                                pstat1.setString(2, user)
+                                pstat1.setString(3, ad)
+                                pstat1.setInt(4, count)
+                                pstat1.executeUpdate()
+                                pstat1.close()
+                            }
+
+                            rs.close()
+                            pstat.close()
+                            conn.close()
+                        }
+                    }
+                }
+            }
+        )
+
+        ssc.start()
+        ssc.awaitTermination()
+    }
+    // 广告点击数据
+    case class AdClickData( ts:String, area:String, city:String, user:String, ad:String )
+
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br><span class="line-number">92</span><br><span class="line-number">93</span><br><span class="line-number">94</span><br><span class="line-number">95</span><br><span class="line-number">96</span><br><span class="line-number">97</span><br><span class="line-number">98</span><br><span class="line-number">99</span><br><span class="line-number">100</span><br><span class="line-number">101</span><br><span class="line-number">102</span><br><span class="line-number">103</span><br><span class="line-number">104</span><br><span class="line-number">105</span><br><span class="line-number">106</span><br><span class="line-number">107</span><br><span class="line-number">108</span><br><span class="line-number">109</span><br><span class="line-number">110</span><br><span class="line-number">111</span><br><span class="line-number">112</span><br><span class="line-number">113</span><br><span class="line-number">114</span><br><span class="line-number">115</span><br><span class="line-number">116</span><br><span class="line-number">117</span><br><span class="line-number">118</span><br><span class="line-number">119</span><br><span class="line-number">120</span><br><span class="line-number">121</span><br><span class="line-number">122</span><br><span class="line-number">123</span><br><span class="line-number">124</span><br><span class="line-number">125</span><br><span class="line-number">126</span><br><span class="line-number">127</span><br><span class="line-number">128</span><br><span class="line-number">129</span><br><span class="line-number">130</span><br><span class="line-number">131</span><br><span class="line-number">132</span><br><span class="line-number">133</span><br><span class="line-number">134</span><br><span class="line-number">135</span><br><span class="line-number">136</span><br><span class="line-number">137</span><br><span class="line-number">138</span><br><span class="line-number">139</span><br><span class="line-number">140</span><br><span class="line-number">141</span><br><span class="line-number">142</span><br><span class="line-number">143</span><br><span class="line-number">144</span><br><span class="line-number">145</span><br><span class="line-number">146</span><br><span class="line-number">147</span><br><span class="line-number">148</span><br><span class="line-number">149</span><br><span class="line-number">150</span><br><span class="line-number">151</span><br><span class="line-number">152</span><br><span class="line-number">153</span><br><span class="line-number">154</span><br><span class="line-number">155</span><br><span class="line-number">156</span><br><span class="line-number">157</span><br><span class="line-number">158</span><br><span class="line-number">159</span><br><span class="line-number">160</span><br><span class="line-number">161</span><br><span class="line-number">162</span><br><span class="line-number">163</span><br><span class="line-number">164</span><br><span class="line-number">165</span><br><span class="line-number">166</span><br><span class="line-number">167</span><br><span class="line-number">168</span><br><span class="line-number">169</span><br><span class="line-number">170</span><br><span class="line-number">171</span><br><span class="line-number">172</span><br><span class="line-number">173</span><br><span class="line-number">174</span><br><span class="line-number">175</span><br><span class="line-number">176</span><br><span class="line-number">177</span><br><span class="line-number">178</span><br><span class="line-number">179</span><br><span class="line-number">180</span><br><span class="line-number">181</span><br><span class="line-number">182</span><br><span class="line-number">183</span><br><span class="line-number">184</span><br><span class="line-number">185</span><br><span class="line-number">186</span><br></div></div></div></div>  <div class="page-edit"><div class="edit-link"><a href="https://github.com/andanyang/vuepress-theme-vdoing/edit/master/docs/大数据/006.spark/0062.spark sql/1002.spark stream.md" target="_blank" rel="noopener noreferrer">编辑</a> <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></div> <!----> <div class="last-updated"><span class="prefix">上次更新:</span> <span class="time">2024/03/11, 02:40:47</span></div></div> <div class="page-nav-wapper"><div class="page-nav-centre-wrap"><a href="/bigdata/spark/sql/" class="page-nav-centre page-nav-centre-prev"><div class="tooltip">Spark 核心编程之 RDD 累加器与广播变量</div></a> <a href="/bigdata/spark/SparkStreaming_Driver_Executer/" class="page-nav-centre page-nav-centre-next"><div class="tooltip">spark中代码的执行位置（Driver or Executer）</div></a></div> <div class="page-nav"><p class="inner"><span class="prev">
+        ←
+        <a href="/bigdata/spark/sql/" class="prev">Spark 核心编程之 RDD 累加器与广播变量</a></span> <span class="next"><a href="/bigdata/spark/SparkStreaming_Driver_Executer/">spark中代码的执行位置（Driver or Executer）</a>→
+      </span></p></div></div></div> <div class="article-list"><div class="article-title"><a href="/archives/" class="iconfont icon-bi">最近更新</a></div> <div class="article-wrapper"><dl><dd>01</dd> <dt><a href="/bigdata/spark/SparkStreaming_Driver_Executer/"><div>
+            spark中代码的执行位置（Driver or Executer）
+            <!----></div></a> <span class="date">12-12</span></dt></dl><dl><dd>02</dd> <dt><a href="/bigdata/spark/sql/"><div>
+            Spark 核心编程之 RDD 累加器与广播变量
+            <!----></div></a> <span class="date">12-06</span></dt></dl><dl><dd>03</dd> <dt><a href="/bigdata/spark/core_RDD_3/"><div>
+            Spark 核心编程之 RDD 累加器与广播变量
+            <!----></div></a> <span class="date">12-05</span></dt></dl> <dl><dd></dd> <dt><a href="/archives/" class="more">更多文章&gt;</a></dt></dl></div></div></main></div> <div class="footer"><div class="icons"><a href="mailto:1218853253@qq.com" title="发邮件" target="_blank" class="iconfont icon-youjian"></a><a href="https://github.com/andanyang" title="GitHub" target="_blank" class="iconfont icon-github"></a><a href="https://music.163.com/#/playlist?id=755597173" title="听音乐" target="_blank" class="iconfont icon-erji"></a></div> 
+  Theme by
+  <a href="https://github.com/xugaoyi/vuepress-theme-vdoing" target="_blank" title="本站主题">Vdoing</a> 
+    | Copyright © 2019-2024
+    <span>Young | <a href="https://github.com/andanyoung/young-blog/blob/master/LICENSE" target="_blank">MIT License</a> <br/> <a  href="https://beian.miit.gov.cn/" target="_blank">浙ICP备20002744号</a></span></div> <div class="buttons"><div title="返回顶部" class="button blur go-to-top iconfont icon-fanhuidingbu" style="display:none;"></div> <div title="去评论" class="button blur go-to-comment iconfont icon-pinglun" style="display:none;"></div> <div title="主题模式" class="button blur theme-mode-but iconfont icon-zhuti"><ul class="select-box" style="display:none;"><li class="iconfont icon-zidong">
+          跟随系统
+        </li><li class="iconfont icon-rijianmoshi">
+          浅色模式
+        </li><li class="iconfont icon-yejianmoshi">
+          深色模式
+        </li><li class="iconfont icon-yuedu">
+          阅读模式
+        </li></ul></div></div> <!----> <!----> <!----></div><div class="global-ui"><div></div></div></div>
+    <script src="/assets/js/app.e4caa6db.js" defer></script><script src="/assets/js/2.d1be14c5.js" defer></script><script src="/assets/js/40.8cde36eb.js" defer></script>
+  </body>
+</html>

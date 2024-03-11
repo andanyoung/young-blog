@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Kafka 消费者 | Young&#39;s blog</title>
+    <meta name="generator" content="VuePress 1.9.5">
+    <link rel="icon" href="/img/favicon.ico">
+    <meta name="description" content="Young丶java后端技术博客,专注后端学习与总结。擅长spring boot,JAVA基础总结,等方面的知识,关注spring,架构,elasticsearch,mysql领域.">
+    <meta name="keywords" content="前端博客,个人技术博客,前端,前端开发,前端框架,web前端,前端面试题,技术文档,学习,面试,JavaScript,js,ES6,TypeScript,vue,python,css3,html5,Node,git,github,markdown">
+    <meta name="baidu-site-verification" content="7F55weZDDc">
+    <meta name="theme-color" content="#11a8cd">
+    
+    <link rel="preload" href="/assets/css/0.styles.53c04193.css" as="style"><link rel="preload" href="/assets/js/app.e4caa6db.js" as="script"><link rel="preload" href="/assets/js/2.d1be14c5.js" as="script"><link rel="preload" href="/assets/js/17.b0356f05.js" as="script"><link rel="prefetch" href="/assets/js/10.20449a2b.js"><link rel="prefetch" href="/assets/js/100.f25e73b5.js"><link rel="prefetch" href="/assets/js/101.3180ba9d.js"><link rel="prefetch" href="/assets/js/102.fcd415ea.js"><link rel="prefetch" href="/assets/js/103.522869bb.js"><link rel="prefetch" href="/assets/js/104.5da1e4e4.js"><link rel="prefetch" href="/assets/js/105.e5a40fe8.js"><link rel="prefetch" href="/assets/js/106.627d6279.js"><link rel="prefetch" href="/assets/js/107.606beca1.js"><link rel="prefetch" href="/assets/js/108.100e1cb2.js"><link rel="prefetch" href="/assets/js/109.9765392e.js"><link rel="prefetch" href="/assets/js/11.da3512b5.js"><link rel="prefetch" href="/assets/js/110.b73cf0d9.js"><link rel="prefetch" href="/assets/js/111.3f77dd60.js"><link rel="prefetch" href="/assets/js/112.0c7d547d.js"><link rel="prefetch" href="/assets/js/113.1827c266.js"><link rel="prefetch" href="/assets/js/114.daf1d8a5.js"><link rel="prefetch" href="/assets/js/115.e7dca24d.js"><link rel="prefetch" href="/assets/js/116.11b303de.js"><link rel="prefetch" href="/assets/js/117.203cefba.js"><link rel="prefetch" href="/assets/js/118.61d8527b.js"><link rel="prefetch" href="/assets/js/119.1f959a37.js"><link rel="prefetch" href="/assets/js/12.11f18e06.js"><link rel="prefetch" href="/assets/js/120.c268b7aa.js"><link rel="prefetch" href="/assets/js/121.64318c96.js"><link rel="prefetch" href="/assets/js/122.cbddb70d.js"><link rel="prefetch" href="/assets/js/123.b49b84fb.js"><link rel="prefetch" href="/assets/js/124.392f030b.js"><link rel="prefetch" href="/assets/js/125.45f631c4.js"><link rel="prefetch" href="/assets/js/126.700cc575.js"><link rel="prefetch" href="/assets/js/127.d649cb2a.js"><link rel="prefetch" href="/assets/js/128.bc018411.js"><link rel="prefetch" href="/assets/js/129.d0a74611.js"><link rel="prefetch" href="/assets/js/13.1cb33dc8.js"><link rel="prefetch" href="/assets/js/130.45b1f75c.js"><link rel="prefetch" href="/assets/js/131.45ba93df.js"><link rel="prefetch" href="/assets/js/132.c58bbbd7.js"><link rel="prefetch" href="/assets/js/133.7f53922e.js"><link rel="prefetch" href="/assets/js/134.ddf0d780.js"><link rel="prefetch" href="/assets/js/135.ada3af13.js"><link rel="prefetch" href="/assets/js/136.4097c2be.js"><link rel="prefetch" href="/assets/js/137.fc910ac9.js"><link rel="prefetch" href="/assets/js/138.9628f460.js"><link rel="prefetch" href="/assets/js/139.3125ef74.js"><link rel="prefetch" href="/assets/js/14.1004ce43.js"><link rel="prefetch" href="/assets/js/140.bb53ac81.js"><link rel="prefetch" href="/assets/js/141.a002ac19.js"><link rel="prefetch" href="/assets/js/142.540d19e4.js"><link rel="prefetch" href="/assets/js/143.4cbccfca.js"><link rel="prefetch" href="/assets/js/144.8a217b6a.js"><link rel="prefetch" href="/assets/js/145.9c7bc0de.js"><link rel="prefetch" href="/assets/js/146.3dfd0773.js"><link rel="prefetch" href="/assets/js/147.bc0f0d42.js"><link rel="prefetch" href="/assets/js/148.e0cdc4d5.js"><link rel="prefetch" href="/assets/js/149.8486db6e.js"><link rel="prefetch" href="/assets/js/15.703e8784.js"><link rel="prefetch" href="/assets/js/150.5f3b7fb5.js"><link rel="prefetch" href="/assets/js/151.98a3f202.js"><link rel="prefetch" href="/assets/js/152.2940f2ba.js"><link rel="prefetch" href="/assets/js/153.75f3a085.js"><link rel="prefetch" href="/assets/js/154.fa2da83b.js"><link rel="prefetch" href="/assets/js/155.113be5c8.js"><link rel="prefetch" href="/assets/js/156.0667e7f5.js"><link rel="prefetch" href="/assets/js/157.0b3e5dfa.js"><link rel="prefetch" href="/assets/js/158.a338bdd7.js"><link rel="prefetch" href="/assets/js/159.33c9771c.js"><link rel="prefetch" href="/assets/js/16.71e3d898.js"><link rel="prefetch" href="/assets/js/160.e868c8b3.js"><link rel="prefetch" href="/assets/js/161.cf61955e.js"><link rel="prefetch" href="/assets/js/162.baee00ca.js"><link rel="prefetch" href="/assets/js/163.183cde82.js"><link rel="prefetch" href="/assets/js/164.c1eadef5.js"><link rel="prefetch" href="/assets/js/165.70ee8a24.js"><link rel="prefetch" href="/assets/js/166.8e185ff2.js"><link rel="prefetch" href="/assets/js/167.0881cf57.js"><link rel="prefetch" href="/assets/js/168.88caf424.js"><link rel="prefetch" href="/assets/js/169.e7e984ff.js"><link rel="prefetch" href="/assets/js/170.c7052d81.js"><link rel="prefetch" href="/assets/js/171.2ab773fd.js"><link rel="prefetch" href="/assets/js/172.0e39f858.js"><link rel="prefetch" href="/assets/js/173.76661218.js"><link rel="prefetch" href="/assets/js/174.0ac9f795.js"><link rel="prefetch" href="/assets/js/175.da30bba2.js"><link rel="prefetch" href="/assets/js/176.0f230688.js"><link rel="prefetch" href="/assets/js/177.040e0937.js"><link rel="prefetch" href="/assets/js/178.68852030.js"><link rel="prefetch" href="/assets/js/179.c998f0ca.js"><link rel="prefetch" href="/assets/js/18.2e77c8d1.js"><link rel="prefetch" href="/assets/js/180.4f6b395f.js"><link rel="prefetch" href="/assets/js/181.577a5325.js"><link rel="prefetch" href="/assets/js/182.6b43cbf2.js"><link rel="prefetch" href="/assets/js/183.cf9e9cca.js"><link rel="prefetch" href="/assets/js/184.f0e76def.js"><link rel="prefetch" href="/assets/js/185.2d3d8eea.js"><link rel="prefetch" href="/assets/js/186.4db71601.js"><link rel="prefetch" href="/assets/js/187.8b6a6829.js"><link rel="prefetch" href="/assets/js/188.4a0b8f41.js"><link rel="prefetch" href="/assets/js/189.0a28241b.js"><link rel="prefetch" href="/assets/js/19.51c97d4c.js"><link rel="prefetch" href="/assets/js/190.5001309c.js"><link rel="prefetch" href="/assets/js/191.42778cf1.js"><link rel="prefetch" href="/assets/js/192.fabd1cb0.js"><link rel="prefetch" href="/assets/js/193.cbc113b8.js"><link rel="prefetch" href="/assets/js/194.4cf24763.js"><link rel="prefetch" href="/assets/js/195.ea5d1afb.js"><link rel="prefetch" href="/assets/js/196.16115ce4.js"><link rel="prefetch" href="/assets/js/197.b90179d1.js"><link rel="prefetch" href="/assets/js/198.456ceb51.js"><link rel="prefetch" href="/assets/js/199.a28de97a.js"><link rel="prefetch" href="/assets/js/20.79989fc4.js"><link rel="prefetch" href="/assets/js/200.72102ac7.js"><link rel="prefetch" href="/assets/js/201.e2b3a297.js"><link rel="prefetch" href="/assets/js/202.d4283e12.js"><link rel="prefetch" href="/assets/js/203.6e5e6596.js"><link rel="prefetch" href="/assets/js/204.363863cf.js"><link rel="prefetch" href="/assets/js/205.d16c5a36.js"><link rel="prefetch" href="/assets/js/206.dc867263.js"><link rel="prefetch" href="/assets/js/207.acfeaaaa.js"><link rel="prefetch" href="/assets/js/208.22c49054.js"><link rel="prefetch" href="/assets/js/209.0f7c526b.js"><link rel="prefetch" href="/assets/js/21.1b619a3f.js"><link rel="prefetch" href="/assets/js/210.b247a678.js"><link rel="prefetch" href="/assets/js/211.fe8629a4.js"><link rel="prefetch" href="/assets/js/212.48b672e5.js"><link rel="prefetch" href="/assets/js/213.08f571a8.js"><link rel="prefetch" href="/assets/js/214.04da1824.js"><link rel="prefetch" href="/assets/js/215.f60b57f4.js"><link rel="prefetch" href="/assets/js/216.4383ceb6.js"><link rel="prefetch" href="/assets/js/217.3b1ce286.js"><link rel="prefetch" href="/assets/js/218.1534ef52.js"><link rel="prefetch" href="/assets/js/219.6901e38c.js"><link rel="prefetch" href="/assets/js/22.349d3a16.js"><link rel="prefetch" href="/assets/js/220.22e0c5ea.js"><link rel="prefetch" href="/assets/js/221.2e7a5a4f.js"><link rel="prefetch" href="/assets/js/222.76b63073.js"><link rel="prefetch" href="/assets/js/223.500a058f.js"><link rel="prefetch" href="/assets/js/224.7f7c1250.js"><link rel="prefetch" href="/assets/js/225.2f183cbe.js"><link rel="prefetch" href="/assets/js/23.712dd5ac.js"><link rel="prefetch" href="/assets/js/24.77ae5052.js"><link rel="prefetch" href="/assets/js/25.e95f81fb.js"><link rel="prefetch" href="/assets/js/26.82cdd880.js"><link rel="prefetch" href="/assets/js/27.427a5aec.js"><link rel="prefetch" href="/assets/js/28.e245952d.js"><link rel="prefetch" href="/assets/js/29.50596e31.js"><link rel="prefetch" href="/assets/js/3.4f4335cf.js"><link rel="prefetch" href="/assets/js/30.016e73a0.js"><link rel="prefetch" href="/assets/js/31.fb0b0b40.js"><link rel="prefetch" href="/assets/js/32.8e7d8efe.js"><link rel="prefetch" href="/assets/js/33.f05f242b.js"><link rel="prefetch" href="/assets/js/34.893b8c3e.js"><link rel="prefetch" href="/assets/js/35.f98d31b7.js"><link rel="prefetch" href="/assets/js/36.6a5744a0.js"><link rel="prefetch" href="/assets/js/37.67e8976d.js"><link rel="prefetch" href="/assets/js/38.2d8447e0.js"><link rel="prefetch" href="/assets/js/39.3b3fde85.js"><link rel="prefetch" href="/assets/js/4.93e1dc89.js"><link rel="prefetch" href="/assets/js/40.8cde36eb.js"><link rel="prefetch" href="/assets/js/41.9df0f821.js"><link rel="prefetch" href="/assets/js/42.c9f1a26b.js"><link rel="prefetch" href="/assets/js/43.fa088c07.js"><link rel="prefetch" href="/assets/js/44.121055e3.js"><link rel="prefetch" href="/assets/js/45.7995c3a0.js"><link rel="prefetch" href="/assets/js/46.17d53a2e.js"><link rel="prefetch" href="/assets/js/47.4a374966.js"><link rel="prefetch" href="/assets/js/48.733e5b6c.js"><link rel="prefetch" href="/assets/js/49.0fb92742.js"><link rel="prefetch" href="/assets/js/5.f52855e6.js"><link rel="prefetch" href="/assets/js/50.50fc5031.js"><link rel="prefetch" href="/assets/js/51.69d8d52a.js"><link rel="prefetch" href="/assets/js/52.d84cedc3.js"><link rel="prefetch" href="/assets/js/53.a64ddaf4.js"><link rel="prefetch" href="/assets/js/54.15e09103.js"><link rel="prefetch" href="/assets/js/55.0f7e8fd5.js"><link rel="prefetch" href="/assets/js/56.6cb5bf13.js"><link rel="prefetch" href="/assets/js/57.d90d9da6.js"><link rel="prefetch" href="/assets/js/58.2c03a905.js"><link rel="prefetch" href="/assets/js/59.02cf613a.js"><link rel="prefetch" href="/assets/js/6.0ff35647.js"><link rel="prefetch" href="/assets/js/60.bb6d2b2f.js"><link rel="prefetch" href="/assets/js/61.ef2abfd3.js"><link rel="prefetch" href="/assets/js/62.b09e5f81.js"><link rel="prefetch" href="/assets/js/63.6ca85ec7.js"><link rel="prefetch" href="/assets/js/64.77eab656.js"><link rel="prefetch" href="/assets/js/65.65b00883.js"><link rel="prefetch" href="/assets/js/66.040b5d23.js"><link rel="prefetch" href="/assets/js/67.23318ab1.js"><link rel="prefetch" href="/assets/js/68.5c29433f.js"><link rel="prefetch" href="/assets/js/69.90978695.js"><link rel="prefetch" href="/assets/js/7.463451e9.js"><link rel="prefetch" href="/assets/js/70.0c585fbd.js"><link rel="prefetch" href="/assets/js/71.120e4ae5.js"><link rel="prefetch" href="/assets/js/72.53bf1e3a.js"><link rel="prefetch" href="/assets/js/73.282f5b35.js"><link rel="prefetch" href="/assets/js/74.4f1cb67d.js"><link rel="prefetch" href="/assets/js/75.f5d3ea1e.js"><link rel="prefetch" href="/assets/js/76.fb173587.js"><link rel="prefetch" href="/assets/js/77.8064b022.js"><link rel="prefetch" href="/assets/js/78.d26f8075.js"><link rel="prefetch" href="/assets/js/79.6cff2fa5.js"><link rel="prefetch" href="/assets/js/8.d5f74857.js"><link rel="prefetch" href="/assets/js/80.29d746c7.js"><link rel="prefetch" href="/assets/js/81.c0a214a2.js"><link rel="prefetch" href="/assets/js/82.f0c93ca2.js"><link rel="prefetch" href="/assets/js/83.db6f55e1.js"><link rel="prefetch" href="/assets/js/84.b0a7a28c.js"><link rel="prefetch" href="/assets/js/85.db7376d4.js"><link rel="prefetch" href="/assets/js/86.96ec3402.js"><link rel="prefetch" href="/assets/js/87.ae41a109.js"><link rel="prefetch" href="/assets/js/88.d83c21c8.js"><link rel="prefetch" href="/assets/js/89.33868490.js"><link rel="prefetch" href="/assets/js/9.2680f96d.js"><link rel="prefetch" href="/assets/js/90.ed48459a.js"><link rel="prefetch" href="/assets/js/91.e1ee23ba.js"><link rel="prefetch" href="/assets/js/92.8b354527.js"><link rel="prefetch" href="/assets/js/93.0682d2e4.js"><link rel="prefetch" href="/assets/js/94.105580aa.js"><link rel="prefetch" href="/assets/js/95.d378d658.js"><link rel="prefetch" href="/assets/js/96.a6460598.js"><link rel="prefetch" href="/assets/js/97.a4cc955f.js"><link rel="prefetch" href="/assets/js/98.9a600d4f.js"><link rel="prefetch" href="/assets/js/99.45007523.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.53c04193.css">
+  </head>
+  <body class="theme-mode-light">
+    <div id="app" data-server-rendered="true"><div class="theme-container sidebar-open have-rightmenu"><header class="navbar blur"><div title="目录" class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/img/logo.png" alt="Young's blog" class="logo"> <span class="site-name can-hide">Young's blog</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><a href="/Spring/" class="nav-link">Spring</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="前端" class="dropdown-title"><a href="/web/" class="link-title">前端</a> <span class="title" style="display:none;">前端</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>前端文章1</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/pages/8143cc480faf9a11/" class="nav-link">JavaScript</a></li></ul></li><li class="dropdown-item"><h4>学习笔记</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/note/javascript/" class="nav-link">《JavaScript教程》</a></li><li class="dropdown-subitem"><a href="/note/js/" class="nav-link">《JavaScript高级程序设计》</a></li><li class="dropdown-subitem"><a href="/note/es6/" class="nav-link">《ES6 教程》</a></li><li class="dropdown-subitem"><a href="/note/vue/" class="nav-link">《Vue》</a></li><li class="dropdown-subitem"><a href="/note/react/" class="nav-link">《React》</a></li><li class="dropdown-subitem"><a href="/note/typescript-axios/" class="nav-link">《TypeScript 从零实现 axios》</a></li><li class="dropdown-subitem"><a href="/note/git/" class="nav-link">《Git》</a></li><li class="dropdown-subitem"><a href="/pages/51afd6/" class="nav-link">TypeScript</a></li><li class="dropdown-subitem"><a href="/pages/4643cd/" class="nav-link">JS设计模式总结</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="页面" class="dropdown-title"><a href="/ui/" class="link-title">页面</a> <span class="title" style="display:none;">页面</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/8309a5b876fc95e3/" class="nav-link">HTML</a></li><li class="dropdown-item"><!----> <a href="/pages/0a83b083bdf257cb/" class="nav-link">CSS</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="技术" class="dropdown-title"><a href="/technology/" class="link-title">技术</a> <span class="title" style="display:none;">技术</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/9a7ee40fc232253e/" class="nav-link">技术文档</a></li><li class="dropdown-item"><!----> <a href="/pages/4c778760be26d8b3/" class="nav-link">GitHub技巧</a></li><li class="dropdown-item"><!----> <a href="/pages/117708e0af7f0bd9/" class="nav-link">Nodejs</a></li><li class="dropdown-item"><!----> <a href="/pages/41f87d890d0a02af/" class="nav-link">博客搭建</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="更多" class="dropdown-title"><a href="/more/" class="link-title">更多</a> <span class="title" style="display:none;">更多</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/f2a556/" class="nav-link">学习</a></li><li class="dropdown-item"><!----> <a href="/pages/aea6571b7a8bae86/" class="nav-link">面试</a></li><li class="dropdown-item"><!----> <a href="/pages/2d615df9a36a98ed/" class="nav-link">心情杂货</a></li><li class="dropdown-item"><!----> <a href="/pages/baaa02/" class="nav-link">实用技巧</a></li><li class="dropdown-item"><!----> <a href="/friends/" class="nav-link">友情链接</a></li></ul></div></div><div class="nav-item"><a href="/about/" class="nav-link">关于</a></div><div class="nav-item"><a href="/pages/beb6c0bd8a66cea6/" class="nav-link">收藏</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="索引" class="dropdown-title"><a href="/archives/" class="link-title">索引</a> <span class="title" style="display:none;">索引</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/" class="nav-link">分类</a></li><li class="dropdown-item"><!----> <a href="/tags/" class="nav-link">标签</a></li><li class="dropdown-item"><!----> <a href="/archives/" class="nav-link">归档</a></li></ul></div></div> <a href="https://github.com/andanyang/vuepress-theme-vdoing" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <div class="sidebar-hover-trigger"></div> <aside class="sidebar" style="display:none;"><div class="blogger"><img src="/img/logo.png"> <div class="blogger-info"><h3>Young</h3> <span></span></div></div> <nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><a href="/Spring/" class="nav-link">Spring</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="前端" class="dropdown-title"><a href="/web/" class="link-title">前端</a> <span class="title" style="display:none;">前端</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>前端文章1</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/pages/8143cc480faf9a11/" class="nav-link">JavaScript</a></li></ul></li><li class="dropdown-item"><h4>学习笔记</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/note/javascript/" class="nav-link">《JavaScript教程》</a></li><li class="dropdown-subitem"><a href="/note/js/" class="nav-link">《JavaScript高级程序设计》</a></li><li class="dropdown-subitem"><a href="/note/es6/" class="nav-link">《ES6 教程》</a></li><li class="dropdown-subitem"><a href="/note/vue/" class="nav-link">《Vue》</a></li><li class="dropdown-subitem"><a href="/note/react/" class="nav-link">《React》</a></li><li class="dropdown-subitem"><a href="/note/typescript-axios/" class="nav-link">《TypeScript 从零实现 axios》</a></li><li class="dropdown-subitem"><a href="/note/git/" class="nav-link">《Git》</a></li><li class="dropdown-subitem"><a href="/pages/51afd6/" class="nav-link">TypeScript</a></li><li class="dropdown-subitem"><a href="/pages/4643cd/" class="nav-link">JS设计模式总结</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="页面" class="dropdown-title"><a href="/ui/" class="link-title">页面</a> <span class="title" style="display:none;">页面</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/8309a5b876fc95e3/" class="nav-link">HTML</a></li><li class="dropdown-item"><!----> <a href="/pages/0a83b083bdf257cb/" class="nav-link">CSS</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="技术" class="dropdown-title"><a href="/technology/" class="link-title">技术</a> <span class="title" style="display:none;">技术</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/9a7ee40fc232253e/" class="nav-link">技术文档</a></li><li class="dropdown-item"><!----> <a href="/pages/4c778760be26d8b3/" class="nav-link">GitHub技巧</a></li><li class="dropdown-item"><!----> <a href="/pages/117708e0af7f0bd9/" class="nav-link">Nodejs</a></li><li class="dropdown-item"><!----> <a href="/pages/41f87d890d0a02af/" class="nav-link">博客搭建</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="更多" class="dropdown-title"><a href="/more/" class="link-title">更多</a> <span class="title" style="display:none;">更多</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/f2a556/" class="nav-link">学习</a></li><li class="dropdown-item"><!----> <a href="/pages/aea6571b7a8bae86/" class="nav-link">面试</a></li><li class="dropdown-item"><!----> <a href="/pages/2d615df9a36a98ed/" class="nav-link">心情杂货</a></li><li class="dropdown-item"><!----> <a href="/pages/baaa02/" class="nav-link">实用技巧</a></li><li class="dropdown-item"><!----> <a href="/friends/" class="nav-link">友情链接</a></li></ul></div></div><div class="nav-item"><a href="/about/" class="nav-link">关于</a></div><div class="nav-item"><a href="/pages/beb6c0bd8a66cea6/" class="nav-link">收藏</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="索引" class="dropdown-title"><a href="/archives/" class="link-title">索引</a> <span class="title" style="display:none;">索引</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/" class="nav-link">分类</a></li><li class="dropdown-item"><!----> <a href="/tags/" class="nav-link">标签</a></li><li class="dropdown-item"><!----> <a href="/archives/" class="nav-link">归档</a></li></ul></div></div> <a href="https://github.com/andanyang/vuepress-theme-vdoing" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Hadoop</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>kafka</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/kafaka/introduction/" class="sidebar-link">kafka3.0入门</a></li><li><a href="/kafaka/producer/" class="sidebar-link">kafka3.0 生产者</a></li><li><a href="/kafka/broker/" class="sidebar-link">kafka3.0 broker</a></li><li><a href="/kafka/consumer/" aria-current="page" class="active sidebar-link">Kafka 消费者</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level2"><a href="/kafka/consumer/#_5-1-kafka-消费方式" class="sidebar-link">5.1 Kafka 消费方式</a></li><li class="sidebar-sub-header level2"><a href="/kafka/consumer/#_5-2-kafka-消费者工作流程" class="sidebar-link">5.2 Kafka 消费者工作流程</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/kafka/consumer/#_5-2-1-消费者总体工作流程" class="sidebar-link">5.2.1 消费者总体工作流程</a></li><li class="sidebar-sub-header level3"><a href="/kafka/consumer/#_5-2-2-消费者组原理" class="sidebar-link">5.2.2 消费者组原理</a></li><li class="sidebar-sub-header level4"><a href="/kafka/consumer/#消费者组初始化流程" class="sidebar-link">消费者组初始化流程</a></li><li class="sidebar-sub-header level3"><a href="/kafka/consumer/#_5-2-3-消费者重要参数" class="sidebar-link">5.2.3 消费者重要参数</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/kafka/consumer/#_5-3-消费者-api" class="sidebar-link">5.3 消费者 API</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/kafka/consumer/#_5-3-1-独立消费者案例-订阅主题" class="sidebar-link">5.3.1 独立消费者案例（订阅主题）</a></li><li class="sidebar-sub-header level3"><a href="/kafka/consumer/#_5-3-2-独立消费者案例-订阅分区" class="sidebar-link">5.3.2 独立消费者案例（订阅分区）</a></li><li class="sidebar-sub-header level3"><a href="/kafka/consumer/#_5-3-3-消费者组案例" class="sidebar-link">5.3.3 消费者组案例</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/kafka/consumer/#_5-4-生产经验-分区的分配以及再平衡" class="sidebar-link">5.4 生产经验——分区的分配以及再平衡</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/kafka/consumer/#_5-4-1-range-以及再平衡" class="sidebar-link">5.4.1 Range 以及再平衡</a></li><li class="sidebar-sub-header level4"><a href="/kafka/consumer/#_1-range-分区策略原理" class="sidebar-link">1）Range 分区策略原理</a></li><li class="sidebar-sub-header level4"><a href="/kafka/consumer/#_2-range-分区分配策略案例" class="sidebar-link">2）Range 分区分配策略案例</a></li><li class="sidebar-sub-header level4"><a href="/kafka/consumer/#_3-range-分区分配再平衡案例" class="sidebar-link">3）Range 分区分配再平衡案例</a></li><li class="sidebar-sub-header level3"><a href="/kafka/consumer/#_5-4-2-roundrobin-以及再平衡" class="sidebar-link">5.4.2 RoundRobin 以及再平衡</a></li><li class="sidebar-sub-header level3"><a href="/kafka/consumer/#_5-4-3-sticky-以及再平衡" class="sidebar-link">5.4.3 Sticky 以及再平衡</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/kafka/consumer/#_5-5-offset-位移" class="sidebar-link">5.5 offset 位移</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/kafka/consumer/#_5-5-1-offset-的默认维护位置" class="sidebar-link">5.5.1 offset 的默认维护位置</a></li><li class="sidebar-sub-header level4"><a href="/kafka/consumer/#_1-消费-offset-案例" class="sidebar-link">1）消费 offset 案例</a></li><li class="sidebar-sub-header level3"><a href="/kafka/consumer/#_5-5-2-自动提交-offset" class="sidebar-link">5.5.2 自动提交 offset</a></li><li class="sidebar-sub-header level4"><a href="/kafka/consumer/#_1-消费者自动提交-offset" class="sidebar-link">1）消费者自动提交 offset</a></li><li class="sidebar-sub-header level3"><a href="/kafka/consumer/#_5-5-3-手动提交-offset" class="sidebar-link">5.5.3 手动提交 offset</a></li><li class="sidebar-sub-header level4"><a href="/kafka/consumer/#_1-同步提交-offset" class="sidebar-link">1）同步提交 offset</a></li><li class="sidebar-sub-header level4"><a href="/kafka/consumer/#_2-异步提交-offset" class="sidebar-link">2）异步提交 offset</a></li><li class="sidebar-sub-header level3"><a href="/kafka/consumer/#_5-5-4-指定-offset-消费" class="sidebar-link">5.5.4 指定 Offset 消费</a></li><li class="sidebar-sub-header level3"><a href="/kafka/consumer/#_5-5-5-指定时间消费" class="sidebar-link">5.5.5 指定时间消费</a></li><li class="sidebar-sub-header level3"><a href="/kafka/consumer/#_5-5-6-漏消费和重复消费" class="sidebar-link">5.5.6 漏消费和重复消费</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/kafka/consumer/#_5-6-生产经验-消费者事务" class="sidebar-link">5.6 生产经验——消费者事务</a></li><li class="sidebar-sub-header level2"><a href="/kafka/consumer/#_5-7-生产经验-数据积压-消费者如何提高吞吐量" class="sidebar-link">5.7 生产经验——数据积压（消费者如何提高吞吐量）</a></li><li class="sidebar-sub-header level2"><a href="/kafka/consumer/#第-6-章-kafka-eagle-监控" class="sidebar-link">第 6 章 Kafka-Eagle 监控</a></li></ul></li><li><a href="/kafka/Kafka_Kraft/" class="sidebar-link">Kafka-Kraft 模式</a></li><li><a href="/kafka/Kafka_Workflow/" class="sidebar-link">Kafka 整体流程</a></li><li><a href="/kafka/Kafka_Idempotent_transactional/" class="sidebar-link">Kafka 幂等性和事务</a></li><li><a href="/kafka/Kafka_integration/" class="sidebar-link">Kafka 外部系统集成 Springboot</a></li><li><a href="/kafka/Kafka_Production_tuning/" class="sidebar-link">Kafka生产调优手册</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Flume</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>hive</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>scala</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>spark</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <div><main class="page"><div class="theme-vdoing-wrapper "><div class="articleInfo-wrap" data-v-06225672><div class="articleInfo" data-v-06225672><ul class="breadcrumbs" data-v-06225672><li data-v-06225672><a href="/" title="首页" class="iconfont icon-home router-link-active" data-v-06225672></a></li> <li data-v-06225672><a href="/categories/?category=%E5%A4%A7%E6%95%B0%E6%8D%AE" title="分类" data-v-06225672>大数据</a></li><li data-v-06225672><a href="/categories/?category=kafka" title="分类" data-v-06225672>kafka</a></li></ul> <div class="info" data-v-06225672><div title="作者" class="author iconfont icon-touxiang" data-v-06225672><a href="https://github.com/andanyoung" target="_blank" title="作者" class="beLink" data-v-06225672>andanyang</a></div> <div title="创建时间" class="date iconfont icon-riqi" data-v-06225672><a href="javascript:;" data-v-06225672>2023-09-21</a></div> <!----></div></div></div> <!----> <div class="content-wrapper"><div class="right-menu-wrapper"><div class="right-menu-margin"><div class="right-menu-title">目录</div> <div class="right-menu-content"></div></div></div> <h1><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAABGpJREFUSA3tVVtoXFUU3fvOI53UlmCaKIFmwEhsE7QK0ipFEdHEKpXaZGrp15SINsXUWvBDpBgQRKi0+KKoFeJHfZA+ED9KKoIU2gYD9UejTW4rVIzm0VSTziPzuNu1z507dibTTjL4U/DAzLn3nL3X2o91ziX6f9wMFdh6Jvbm9nNSV0msViVO6tN1Rm7NMu2OpeJ9lWBUTDxrJbYTS0hInuwciu9eLHlFxCLCZEk3MegsJmZ5K/JD6t7FkFdEvGUo1g7qJoG3MHImqRIn8/nzY1K9UPKKiJmtnUqHVE3Gbuay6vJE/N2FEmuxFjW2nUuE0yQXRRxLiTUAzs36zhZvOXJPdX850EVnnLZkB8prodQoM5JGj7Xk2mvC7JB8tG04Ef5PiXtG0UtxupRQSfTnBoCy554x18yJHI6I+G5Eru4LHmPJZEQsrvPUbMiA8G/WgMK7w7I+ez7++o2ANfbrjvaOl1tFMs+htG3IrZH9/hDX1Pr8Tc0UvH8tcX29KzAgIGcEkINyW5BF9x891hw6VYqgJHEk0huccS7vh3C6gTiODL+26huuBtbct8eZnqLML8PkxGYpuPZBqtqwkSjgc4mB5gbgig5i+y0UDK35LMxXisn9xQtK+nd26gTIHsHe/oblK/b29fUmN/8Y+9jAQrnBp56m1LcDlDp9irKTExSKduXJVWSqdBMA08pEJnEIOB3FPPMybu/oeV8zFeYN3xx576Q6RH+VmplE4ncQV5v+5rzSoyOU7PuEAg8g803PwBJ0CExno/jcMbN8tONYeOmHiuUNryvm3fRUy4tMPVLdAGkUhNWuggGrJcXPv+ouCjz0MKUHz1J2/E8IC9nqTabcxgaBYM0hPhD5Y65FsbxRQKxCQrDjDctW7PUM3HuZunFyifSAqEfuzCp48Il24luWUWZoyJCaPR82jE0+kFA643wRFVni4RYSq3ohJO2pZ7B5dO4xkDWbEpossJPLSrPjYID8rS2UHTlvyNxqIGsg674XJJ7vnh5L7PNwC4hh2sjCI96mzszOTpxLF0T7l88Yz7lAuK6OnL8gXLOnTvpzSb22YG8W7us3jSebFHeeqnXRG1vt+MoUM84LQIBmMsCTAcOauTh0T0l0neQK7m2bLMt2mGxU3HYssS0J2cdv5wljlPsrIuZLAG/2DOZIXgCYT8uMGZN+e2kSirfxZOPCsC0f24nTZzspnVn9VePS1Z5vubmAGGXG8ZFno9Hel0yfA5ZPhF7Dh972BQJ2qCpgH67lmWtBYbvk6sz02wjky2vXyz0XErP/kFB619js1BtwfOV4OPRqOQBjy3Qbk18vigUPPSD5ceHnwck7W9bhAqZdd7SuG7w4/P2F/GaJh8c7e9qgow+Q7cGBo+98WsLkuktFqiZabtXuQTu/Y5ETbR0v7tNSFnvrmu6pjdoan2KjMu8q/Hmj1EfCO2ZGfEIbIXKUlw8qaX9/b2oeSJmFksSeT/Fn0V3nSypChh4Gjh74ybO9aeZ/AN2dwciu2/MhAAAAAElFTkSuQmCC">Kafka 消费者<!----></h1>  <div class="theme-vdoing-content content__default"><h2 id="_5-1-kafka-消费方式"><a href="#_5-1-kafka-消费方式" class="header-anchor">#</a> 5.1 Kafka 消费方式</h2> <p>➢ pull（拉）模 式：</p> <p>consumer 采用从 broker 中主动拉取数据。 Kafka 采用这种方式。</p> <p>➢ push（推）模式：</p> <p>Kafka 没有采用这种方式，因为由 broker 决定消息发送速率，很难适应所有消费者的消费速率。例如推送的速度是 50m/s， Consumer1、Consumer2 就来不及处理消息。</p> <p>pull 模式不足之处是，如 果 Kafka 没有数据，消费者可能会陷入循环中，一直返回空数据。</p> <p><img src="/assets/img/image-20230925231300761.d357330d.png" alt="image-20230925231300761"></p> <h2 id="_5-2-kafka-消费者工作流程"><a href="#_5-2-kafka-消费者工作流程" class="header-anchor">#</a> 5.2 Kafka 消费者工作流程</h2> <h3 id="_5-2-1-消费者总体工作流程"><a href="#_5-2-1-消费者总体工作流程" class="header-anchor">#</a> 5.2.1 消费者总体工作流程</h3> <p><img src="/assets/img/image-20230925231334380.c81d6ef3.png" alt="Kafka 消费者总体工作流程"></p> <h3 id="_5-2-2-消费者组原理"><a href="#_5-2-2-消费者组原理" class="header-anchor">#</a> 5.2.2 消费者组原理</h3> <p>Consumer Group（CG）：消费者组，由多个 consumer 组成。形成一个消费者组的条件，是所有消费者的 groupid 相同。</p> <ul><li>消费者组内每个消费者负责消费不同分区的数据，一个分区只能由一个组内消费者消费。</li> <li>消费者组之间互不影响。所有的消费者都属于某个消费者组，即消费者组是<strong>逻辑上的一个订阅者。</strong> <img src="/assets/img/image-20230925231501905.b801de2d.png" alt="消费者组"></li></ul> <p><img src="/assets/img/image-20230925231619300.07d476ad.png" alt="image-20230925231619300"></p> <h4 id="消费者组初始化流程"><a href="#消费者组初始化流程" class="header-anchor">#</a> 消费者组初始化流程</h4> <ol><li><p>coordinator：辅助实现消费者组的初始化和分区的分配。</p> <p>coordinator 节点选择 = groupid 的 hashcode 值 % 50（ __consumer_offsets 的分区数量）</p> <p>例如： groupid 的 hashcode 值 = 1，1% 50 = 1，那么<code>__consumer_offsets</code> 主题的 1 号分区，在哪个 broker 上，就选择这个节点的 coordinator 作为这个消费者组的老大。消费者组下的所有的消费者提交 offset 的时候就往这个分区去提交 offset。</p> <p><img src="/assets/img/image-20230925231845686.287b5636.png" alt="消费者组初始化流程"></p> <p><img src="/assets/img/image-20230925232042677.0f1783e1.png" alt="消费者组详细消费流程"></p></li></ol> <h3 id="_5-2-3-消费者重要参数"><a href="#_5-2-3-消费者重要参数" class="header-anchor">#</a> 5.2.3 消费者重要参数</h3> <table><thead><tr><th>参数名称</th> <th>描述</th></tr></thead> <tbody><tr><td>bootstrap.servers</td> <td>向 Kafka 集群建立初始连接用到的 host/port 列表。</td></tr> <tr><td>key.deserializer 和 value.deserializer</td> <td>指定接收消息的 key 和 value 的反序列化类型。一定要写全 类名。</td></tr> <tr><td>group.id</td> <td>标记消费者所属的消费者组。</td></tr> <tr><td>enable.auto.commit</td> <td><strong>默认值为 true</strong>，消费者会自动周期性地向服务器提交偏移量。</td></tr> <tr><td>auto.commit.interval.ms</td> <td>如果设置了 enable.auto.commit 的值为 true， 则该值定义了消费者偏移量向 Kafka 提交的频率，<strong>默认 5s。</strong></td></tr> <tr><td>auto.offset.reset</td> <td>当 Kafka 中没有初始偏移量或当前偏移量在服务器中不存在 （如，数据被删除了），该如何处理？ earliest：自动重置偏 移量到最早的偏移量。 <strong>latest：默认，自动重置偏移量为最 新的偏移量。</strong> none：如果消费组原来的（previous）偏移量 不存在，则向消费者抛异常。 anything：向消费者抛异常。</td></tr> <tr><td>offsets.topic.num.partitions</td> <td><code>__consumer_offsets</code> 的分区数，<strong>默认是 50 个分区。</strong></td></tr> <tr><td>heartbeat.interval.ms</td> <td>Kafka 消费者和 coordinator 之间的心跳时间，默认 3s。 该条目的值必须小于 session.timeout.ms ，也不应该高于 session.timeout.ms 的 1/3。</td></tr> <tr><td>session.timeout.ms</td> <td>Kafka 消费者和 coordinator 之间连接超时时间，<strong>默认 45s</strong>。 超过该值，该消费者被移除，消费者组执行再平衡。</td></tr> <tr><td>max.poll.interval.ms</td> <td>消费者处理消息的最大时长，<strong>默认是 5 分钟</strong>。超过该值，该 消费者被移除，消费者组执行再平衡。</td></tr> <tr><td>fetch.min.bytes</td> <td>默认 1 个字节。消费者获取服务器端一批消息最小的字节 数。</td></tr> <tr><td>fetch.max.wait.ms</td> <td>默认 500ms。如果没有从服务器端获取到一批数据的最小字 节数。该时间到，仍然会返回数据。</td></tr> <tr><td>fetch.max.bytes</td> <td>默认 Default: 52428800（50 m）。消费者获取服务器端一批 消息最大的字节数。如果服务器端一批次的数据大于该值 （50m）仍然可以拉取回来这批数据，因此，这不是一个绝对最大值。一批次的大小受 message.max.bytes （broker config）or max.message.bytes （topic config）影响。</td></tr> <tr><td>max.poll.records</td> <td>一次 poll 拉取数据返回消息的最大条数，默认是 500 条。</td></tr></tbody></table> <h2 id="_5-3-消费者-api"><a href="#_5-3-消费者-api" class="header-anchor">#</a> 5.3 消费者 API</h2> <h3 id="_5-3-1-独立消费者案例-订阅主题"><a href="#_5-3-1-独立消费者案例-订阅主题" class="header-anchor">#</a> 5.3.1 独立消费者案例（订阅主题）</h3> <p>创建一个独立消费者，消费 first 主题中数据。</p> <p><img src="/assets/img/image-20230925232551571.e7ed7d19.png" alt="image-20230925232551571"></p> <blockquote><p>注意：在消费者 API 代码中必须配置消费者组 id。命令行启动消费者不填写消费者组 id 会被自动填写随机的消费者组 id。</p></blockquote> <p>2）实现步骤</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>public class CustomConsumer {
+
+    public static void main(String[] args) {
+
+        // 0 配置
+        Properties properties = new Properties();
+
+        // 连接 bootstrap.servers
+        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,&quot;hadoop102:9092,hadoop103:9092&quot;);
+
+        // 反序列化
+        properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+        properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+
+        // 配置消费者组id
+        properties.put(ConsumerConfig.GROUP_ID_CONFIG,&quot;test5&quot;);
+
+        // 设置分区分配策略
+        properties.put(ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG,&quot;org.apache.kafka.clients.consumer.StickyAssignor&quot;);
+
+        // 1 创建一个消费者  &quot;&quot;, &quot;hello&quot;
+        KafkaConsumer&lt;String, String&gt; kafkaConsumer = new KafkaConsumer&lt;&gt;(properties);
+
+        // 2 订阅主题 first
+        ArrayList&lt;String&gt; topics = new ArrayList&lt;&gt;();
+        topics.add(&quot;first&quot;);
+        kafkaConsumer.subscribe(topics);
+
+        // 3 消费数据
+        while (true){
+
+            ConsumerRecords&lt;String, String&gt; consumerRecords = kafkaConsumer.poll(Duration.ofSeconds(1));
+
+            for (ConsumerRecord&lt;String, String&gt; consumerRecord : consumerRecords) {
+                System.out.println(consumerRecord);
+            }
+
+            kafkaConsumer.commitAsync();
+        }
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br></div></div><h3 id="_5-3-2-独立消费者案例-订阅分区"><a href="#_5-3-2-独立消费者案例-订阅分区" class="header-anchor">#</a> 5.3.2 独立消费者案例（订阅分区）</h3> <p>1）需求：创建一个独立消费者，消费 first 主题 0 号分区的数据。</p> <p><img src="/assets/img/image-20230925232733072.231176dd.png" alt="独立消费者案例"></p> <p>2）实现步骤</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>public class CustomConsumerPartition {
+
+    public static void main(String[] args) {
+        // 0 配置
+        Properties properties = new Properties();
+
+        // 连接
+        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,&quot;hadoop102:9092,hadoop103:9092&quot;);
+
+        // 反序列化
+        properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+        properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+
+        // 组id
+        properties.put(ConsumerConfig.GROUP_ID_CONFIG,&quot;test&quot;);
+
+        // 1 创建一个消费者
+        KafkaConsumer&lt;String, String&gt; kafkaConsumer = new KafkaConsumer&lt;&gt;(properties);
+
+        // 2 订阅主题对应的分区
+        ArrayList&lt;TopicPartition&gt; topicPartitions = new ArrayList&lt;&gt;();
+        topicPartitions.add(new TopicPartition(&quot;first&quot;,0));
+        kafkaConsumer.assign(topicPartitions);
+
+        // 3 消费数据
+        while (true){
+
+            ConsumerRecords&lt;String, String&gt; consumerRecords = kafkaConsumer.poll(Duration.ofSeconds(1));
+
+            for (ConsumerRecord&lt;String, String&gt; consumerRecord : consumerRecords) {
+                System.out.println(consumerRecord);
+            }
+        }
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br></div></div><h3 id="_5-3-3-消费者组案例"><a href="#_5-3-3-消费者组案例" class="header-anchor">#</a> 5.3.3 消费者组案例</h3> <p>1）需求：测试同一个主题的分区数据，只能由一个消费者组中的一个消费。</p> <p><img src="/assets/img/image-20230925232837204.d028aa41.png" alt="消费者组案例"></p> <div class="language- line-numbers-mode"><pre class="language-text"><code>public class CustomConsumer1 {
+
+    public static void main(String[] args) {
+
+        // 0 配置
+        Properties properties = new Properties();
+
+        // 连接 bootstrap.servers
+        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,&quot;hadoop102:9092,hadoop103:9092&quot;);
+
+        // 反序列化
+        properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+        properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+
+        // 配置消费者组id
+        properties.put(ConsumerConfig.GROUP_ID_CONFIG,&quot;test5&quot;);
+        // 设置分区分配策略
+        properties.put(ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG,&quot;org.apache.kafka.clients.consumer.StickyAssignor&quot;);
+
+        // 1 创建一个消费者  &quot;&quot;, &quot;hello&quot;
+        KafkaConsumer&lt;String, String&gt; kafkaConsumer = new KafkaConsumer&lt;&gt;(properties);
+
+        // 2 订阅主题 first
+        ArrayList&lt;String&gt; topics = new ArrayList&lt;&gt;();
+        topics.add(&quot;first&quot;);
+        kafkaConsumer.subscribe(topics);
+
+        // 3 消费数据
+        while (true){
+
+            ConsumerRecords&lt;String, String&gt; consumerRecords = kafkaConsumer.poll(Duration.ofSeconds(1));
+
+            for (ConsumerRecord&lt;String, String&gt; consumerRecord : consumerRecords) {
+                System.out.println(consumerRecord);
+            }
+        }
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br></div></div><h2 id="_5-4-生产经验-分区的分配以及再平衡"><a href="#_5-4-生产经验-分区的分配以及再平衡" class="header-anchor">#</a> 5.4 生产经验——分区的分配以及再平衡</h2> <p>1、一个 consumer group 中有多个 consumer 组成，一个 topic 有多个 partition 组成，现在的问题是，<strong>到底由哪个 consumer 来消费哪个 partition 的数据。</strong></p> <p>2、Kafka 有四种主流的分区分配策略： Range、RoundRobin、Sticky、CooperativeSticky。 可以通过配置参数<strong>partition.assignment.strategy</strong>，修改分区的分配策略。默认策略是 Range + CooperativeSticky。Kafka 可以同时使用 多个分区分配策略。</p> <p><img src="/assets/img/image-20230925232042677.0f1783e1.png" alt="消费者组详细消费流程"></p> <table><thead><tr><th>参数名称</th> <th>描述</th></tr></thead> <tbody><tr><td>heartbeat.interval.ms</td> <td>Kafka 消费者和 coordinator 之间的心跳时间，默认 3s。 该条目的值必须小于 session.timeout.ms，也不应该高于 session.timeout.ms 的 1/3。</td></tr> <tr><td>session.timeout.ms</td> <td>Kafka 消费者和 coordinator 之间连接超时时间，默认 45s。超过该值，该消费者被移除，消费者组执行再平衡。</td></tr> <tr><td>max.poll.interval.ms</td> <td>消费者处理消息的最大时长，默认是 5 分钟。超过该值，该消费者被移除，消费者组执行再平衡。</td></tr> <tr><td>partition.assignment.strategy</td> <td>消 费 者 分 区 分 配 策 略 ， 默 认 策 略 是 Range + CooperativeSticky。Kafka 可以同时使用多个分区分配策略。 可 以 选 择 的 策 略 包 括 ： Range 、 RoundRobin 、 Sticky 、 CooperativeSticky</td></tr></tbody></table> <h3 id="_5-4-1-range-以及再平衡"><a href="#_5-4-1-range-以及再平衡" class="header-anchor">#</a> 5.4.1 Range 以及再平衡</h3> <h4 id="_1-range-分区策略原理"><a href="#_1-range-分区策略原理" class="header-anchor">#</a> 1）Range 分区策略原理</h4> <p>Range 是对每个 topic 而言的。</p> <p>首先对同一个 topic 里面的<strong>分区按照序号进行排序</strong>，并<strong>对消费者按照字母顺序进行排序。</strong></p> <p>假如现在有 7 个分区，3 个消费者，排序后的分区将会 是 0,1,2,3,4,5,6；消费者排序完之后将会是 C0,C1,C2。</p> <p>通过 <strong>partitions 数/consumer</strong> 数来决定每个消费者应该消费几个分区。如果除不尽，那么前面几个消费者将会多消费 1 个分区。</p> <p>例如，7/3 = 2 余 1 ，除不尽，那么消费者 C0 便会多消费 1 个分区。 8/3=2 余 2，除不尽，那么 C0 和 C1 分别多消费一个。</p> <p>注意：如果只是针对 1 个 topic 而言，C0 消费者多消费 1 个分区影响不是很大。但是如果有 N 多个 topic，那么针对每个 topic，消费者 C0 都将多消费 1 个分区，topic 越多，C0 消 费的分区会比其他消费者明显多消费 N 个分区。 <strong>容易产生数据倾斜！</strong></p> <p><img src="/assets/img/image-20230925233324839.d893d636.png" alt="image-20230925233324839"></p> <h4 id="_2-range-分区分配策略案例"><a href="#_2-range-分区分配策略案例" class="header-anchor">#</a> 2）Range 分区分配策略案例</h4> <p>（1）修改主题 first 为 7 个分区。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>[andanyoung@hadoop102 kafka]$ bin/kafka-topics.sh --bootstrap-server hadoop102:9092 --alter --topic first --partitions 7
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><blockquote><p>注意：分区数可以增加，但是不能减少。</p></blockquote> <p>（2）复制 CustomConsumer 类，创建 CustomConsumer2。这样可以由三个消费者 CustomConsumer、CustomConsumer1、CustomConsumer2 组成消费者组，组名都为“test”， 同时启动 3 个消费者。</p> <h4 id="_3-range-分区分配再平衡案例"><a href="#_3-range-分区分配再平衡案例" class="header-anchor">#</a> 3）Range 分区分配再平衡案例</h4> <p>（1）停止掉 0 号消费者，快速重新发送消息观看结果（45s 以内，越快越好）。</p> <ul><li><p>1 号消费者：消费到 3、4 号分区数据。</p></li> <li><p>2 号消费者：消费到 5、6 号分区数据。</p></li> <li><p>0 号消费者的任务会整体被分配到 1 号消费者或者 2 号消费者。</p></li></ul> <blockquote><p>说明：0 号消费者挂掉后，消费者组需要按照超时时间 45s 来判断它是否退出，所以需要等待，时间到了 45s 后，判断它真的退出就会把任务分配给其他 消费者 执行。</p></blockquote> <p>（2）再次重新发送消息观看结果（45s 以后）。</p> <ul><li><p>1 号消费者：消费到 0、1、2、3 号分区数据。</p></li> <li><p>2 号消费者：消费到 4、5、6 号分区数据。</p></li></ul> <blockquote><p>说明：消费者 0 已经被踢出消费者组，所以重新按照 range 方式分配。</p></blockquote> <h3 id="_5-4-2-roundrobin-以及再平衡"><a href="#_5-4-2-roundrobin-以及再平衡" class="header-anchor">#</a> 5.4.2 RoundRobin 以及再平衡</h3> <p><img src="/assets/img/image-20230925233324839.d893d636.png" alt="分区分配策略之RoundRobin"></p> <p>RoundRobin 针对集群中<strong>所有 Topic 而言。</strong></p> <p>RoundRobin 轮询分区策略，是把所有的 partition 和所有的 consumer 都列出来，然后按照 hashcode 进行排序，最后通过轮询算法来分配 partition 给到各个消费者。</p> <h3 id="_5-4-3-sticky-以及再平衡"><a href="#_5-4-3-sticky-以及再平衡" class="header-anchor">#</a> 5.4.3 Sticky 以及再平衡</h3> <p><strong>粘性分区定义</strong>：可以理解为分配的结果带有“粘性的”。即在执行一次新的分配之前， 考虑上一次分配的结果，尽量少的调整分配的变动，可以节省大量的开销。</p> <p>粘性分区是 Kafka 从 0.11.x 版本开始引入这种分配策略，<strong>首先会尽量均衡的放置分区 到消费者上面</strong>，在出现同一消费者组内消费者出现问题的时候，会<strong>尽量保持原有分配的分区不变化。</strong></p> <h2 id="_5-5-offset-位移"><a href="#_5-5-offset-位移" class="header-anchor">#</a> 5.5 offset 位移</h2> <h3 id="_5-5-1-offset-的默认维护位置"><a href="#_5-5-1-offset-的默认维护位置" class="header-anchor">#</a> 5.5.1 offset 的默认维护位置</h3> <p><img src="/assets/img/image-20230925234103771.90ff1c99.png" alt="offset的默认维护位置"></p> <blockquote><p>__consumer_offsets 主题里面采用 key 和 value 的方式存储数据。key 是 group.id+topic+ 分区号，value 就是当前 offset 的值。每隔一段时间，kafka 内部会对这个 topic 进行 compact，也就是每个 group.id+topic+分区号就保留最新数据。</p></blockquote> <h4 id="_1-消费-offset-案例"><a href="#_1-消费-offset-案例" class="header-anchor">#</a> 1）消费 offset 案例</h4> <p>（0）思想：__consumer_offsets 为 Kafka 中的 topic，那就可以通过消费者进行消费。</p> <p>（1）在配置文件 config/consumer.properties 中添加配置 <code>exclude.internal.topics=false</code>，默认是 true，表示不能消费系统主题。为了查看该系统主题数据，所以该参数修改为 false。</p> <p>（2）采用命令行方式，创建一个新的 topic。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>[andanyoung@hadoop102 kafka]$ bin/kafka-topics.sh --bootstrap-server hadoop102:9092 --create --topic andanyoung --partitions 2 --replication-factor 2
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>（3）启动生产者往 andanyoung 生产数据。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>[andanyoung@hadoop102 kafka]$ bin/kafka-console-producer.sh --topic andanyoung --bootstrap-server hadoop102:9092
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>（4）启动消费者消费 andanyoung 数据。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>[andanyoung@hadoop104 kafka]$ bin/kafka-console-consumer.sh --bootstrap-server hadoop102:9092 --topic andanyoung --group test
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><blockquote><p>注意：指定消费者组名称，更好观察数据存储位置（key 是 group.id+topic+分区号）。</p></blockquote> <p>（5）查看消费者消费主题__consumer_offsets。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>andanyoung@hadoop102 kafka]$ bin/kafka-console-consumer.sh --topic __consumer_offsets --bootstrap-server hadoop102:9092 --consumer.config config/consumer.properties --formatter &quot;kafka.coordinator.group.GroupMetadataManager\$OffsetsMessageFormatter&quot; --from-beginning
+
+[offset,andanyoung,1]::OffsetAndMetadata(offset=7, leaderEpoch=Optional[0], metadata=, commitTimestamp=1622442520203, expireTimestamp=None)
+[offset,andanyoung,0]::OffsetAndMetadata(offset=8, leaderEpoch=Optional[0], metadata=, commitTimestamp=1622442520203, expireTimestamp=None)
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><h3 id="_5-5-2-自动提交-offset"><a href="#_5-5-2-自动提交-offset" class="header-anchor">#</a> 5.5.2 自动提交 offset</h3> <p>为了使我们能够专注于自己的业务逻辑，Kafka 提供了自动提交 offset 的功能。</p> <p>自动提交 offset 的相关参数：</p> <ul><li><code>enable.auto.commit</code>：是否开启自动提交 offset 功能，默认是 true</li> <li><code>auto.commit.interval.ms</code>: 自动提交 offset 的时间间隔，默认是 5s</li></ul> <p><img src="/assets/img/image-20230926223907577.76dd86eb.png" alt="image-20230926223907577"></p> <table><thead><tr><th>参数名称</th> <th>描述</th></tr></thead> <tbody><tr><td>enable.auto.commit</td> <td>默认值为 true，消费者会自动周期性地向服务器提交偏移量。</td></tr> <tr><td>auto.commit.interval.ms</td> <td>如果设置了 enable.auto.commit 的值为 true， 则该值定义了消费者偏移量向 Kafka 提交的频率，默认 5s。</td></tr></tbody></table> <h4 id="_1-消费者自动提交-offset"><a href="#_1-消费者自动提交-offset" class="header-anchor">#</a> 1）消费者自动提交 offset</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>public class CustomConsumerAutoOffset {
+
+    public static void main(String[] args) {
+
+        // 0 配置
+        Properties properties = new Properties();
+
+        // 连接 bootstrap.servers
+        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,&quot;hadoop102:9092,hadoop103:9092&quot;);
+
+        // 反序列化
+        properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+        properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+
+        // 配置消费者组id
+        properties.put(ConsumerConfig.GROUP_ID_CONFIG,&quot;test&quot;);
+
+        // 自动提交
+        properties.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG,true);
+
+        // 提交时间间隔
+        properties.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG,1000);
+
+        // 1 创建一个消费者  &quot;&quot;, &quot;hello&quot;
+        KafkaConsumer&lt;String, String&gt; kafkaConsumer = new KafkaConsumer&lt;&gt;(properties);
+
+        // 2 订阅主题 first
+        ArrayList&lt;String&gt; topics = new ArrayList&lt;&gt;();
+        topics.add(&quot;first&quot;);
+        kafkaConsumer.subscribe(topics);
+
+        // 3 消费数据
+        while (true){
+
+            ConsumerRecords&lt;String, String&gt; consumerRecords = kafkaConsumer.poll(Duration.ofSeconds(1));
+
+            for (ConsumerRecord&lt;String, String&gt; consumerRecord : consumerRecords) {
+                System.out.println(consumerRecord);
+            }
+        }
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br></div></div><h3 id="_5-5-3-手动提交-offset"><a href="#_5-5-3-手动提交-offset" class="header-anchor">#</a> 5.5.3 手动提交 offset</h3> <p>虽然自动提交 offset 十分简单便利，但由于其是基于时间提交的，开发人员难以把握 offset 提交的时机。因此 Kafka 还提供了手动提交 offset 的 API。</p> <p>手动提交 offset 的方法有两种：分别是<strong>commitSync（同步提交）</strong> 和<strong>commitAsync（异步提交）</strong>。两者的相 点是，都会将本次提交的一批数据最高的偏移量提交；不同点是，同步提交阻塞当前线程，一直到提交成功，并且会自动失败重试（由不可控因素导致，也会出现提交失败）；而异步提交则没有失败重试机制，故有可能提交失败。</p> <ul><li><p>commitSync（同步提交）：必须等待 offset 提交完毕，再去消费下一批数据。</p></li> <li><p>commitAsync（异步提交） ：发送完提交 offset 请求后，就开始消费下一批数据了。</p> <p><img src="/assets/img/image-20230926224307338.edd91082.png" alt="image-20230926224307338"></p></li></ul> <h4 id="_1-同步提交-offset"><a href="#_1-同步提交-offset" class="header-anchor">#</a> 1）同步提交 offset</h4> <p>由于同步提交 offset 有失败重试机制，故更加可靠，但是由于一直等待提交结果，提交的效率比较低。以下为同步提交 offset 的示例。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>public class CustomConsumerByHandSync {
+
+    public static void main(String[] args) {
+
+        // 0 配置
+        Properties properties = new Properties();
+
+        // 连接 bootstrap.servers
+        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,&quot;hadoop102:9092,hadoop103:9092&quot;);
+
+        // 反序列化
+        properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+        properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+
+        // 配置消费者组id
+        properties.put(ConsumerConfig.GROUP_ID_CONFIG,&quot;test&quot;);
+
+        // 手动提交
+        properties.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG,false);
+
+        // 1 创建一个消费者  &quot;&quot;, &quot;hello&quot;
+        KafkaConsumer&lt;String, String&gt; kafkaConsumer = new KafkaConsumer&lt;&gt;(properties);
+
+        // 2 订阅主题 first
+        ArrayList&lt;String&gt; topics = new ArrayList&lt;&gt;();
+        topics.add(&quot;first&quot;);
+        kafkaConsumer.subscribe(topics);
+
+        // 3 消费数据
+        while (true){
+
+            ConsumerRecords&lt;String, String&gt; consumerRecords = kafkaConsumer.poll(Duration.ofSeconds(1));
+
+            for (ConsumerRecord&lt;String, String&gt; consumerRecord : consumerRecords) {
+                System.out.println(consumerRecord);
+            }
+
+            // 手动提交offset
+            kafkaConsumer.commitSync();
+        }
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br></div></div><h4 id="_2-异步提交-offset"><a href="#_2-异步提交-offset" class="header-anchor">#</a> 2）异步提交 offset</h4> <p>虽然同步提交 offset 更可靠一些，但是由于其会阻塞当前线程，直到提交成功。因此吞吐量会受到很大的影响。因此更多的情况下，会选用异步提交 offset 的方式。 以下为异步提交 offset 的示例：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>public class CustomConsumerByHandSync {
+
+    public static void main(String[] args) {
+
+        // 0 配置
+        Properties properties = new Properties();
+
+        // 连接 bootstrap.servers
+        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,&quot;hadoop102:9092,hadoop103:9092&quot;);
+
+        // 反序列化
+        properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+        properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+
+        // 配置消费者组id
+        properties.put(ConsumerConfig.GROUP_ID_CONFIG,&quot;test&quot;);
+
+        // 手动提交
+        properties.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG,false);
+
+        // 1 创建一个消费者  &quot;&quot;, &quot;hello&quot;
+        KafkaConsumer&lt;String, String&gt; kafkaConsumer = new KafkaConsumer&lt;&gt;(properties);
+
+        // 2 订阅主题 first
+        ArrayList&lt;String&gt; topics = new ArrayList&lt;&gt;();
+        topics.add(&quot;first&quot;);
+        kafkaConsumer.subscribe(topics);
+
+        // 3 消费数据
+        while (true){
+
+            ConsumerRecords&lt;String, String&gt; consumerRecords = kafkaConsumer.poll(Duration.ofSeconds(1));
+
+            for (ConsumerRecord&lt;String, String&gt; consumerRecord : consumerRecords) {
+                System.out.println(consumerRecord);
+            }
+
+            // 异步提交 offset
+            kafkaConsumer.commitAsync();
+        }
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br></div></div><h3 id="_5-5-4-指定-offset-消费"><a href="#_5-5-4-指定-offset-消费" class="header-anchor">#</a> 5.5.4 指定 Offset 消费</h3> <p><strong>auto.offset.reset = earliest | latest | none</strong> 默认是 latest。</p> <p>当 Kafka 中没有初始偏移量（消费者组第一次消费）或服务器上不再存在当前偏移量时（例如该数据已被删除），该怎么办？</p> <ul><li>（1）<strong>earliest</strong>：自动将偏移量重置为最早的偏移量，--from-beginning。</li> <li>（2）<strong>latest</strong>（默认值）：自动将偏移量重置为最新偏移量</li> <li>（3）<strong>none</strong>：如果未找到消费者组的先前偏移量，则向消费者抛出异常。</li></ul> <p><img src="/assets/img/image-20230926225712671.1e6fe3c1.png" alt="指定 Offset 消费"></p> <ul><li>（4）任意指定 offset 位移开始消费</li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>    public class CustomConsumerSeek {
+
+        public static void main(String[] args) {
+
+            // 0 配置信息
+            Properties properties = new Properties();
+
+            // 连接
+            properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,&quot;hadoop102:9092,hadoop103:9092&quot;);
+
+            // 反序列化
+            properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+            properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+
+            // 组id
+            properties.put(ConsumerConfig.GROUP_ID_CONFIG,&quot;test3&quot;);
+
+            // 1 创建消费者
+            KafkaConsumer&lt;String, String&gt; kafkaConsumer = new KafkaConsumer&lt;&gt;(properties);
+
+            // 2 订阅主题
+            ArrayList&lt;String&gt; topics = new ArrayList&lt;&gt;();
+            topics.add(&quot;first&quot;);
+            kafkaConsumer.subscribe(topics);
+
+            // 指定位置进行消费
+            Set&lt;TopicPartition&gt; assignment = kafkaConsumer.assignment();
+
+            //  保证分区分配方案已经制定完毕
+            while (assignment.size() == 0){
+                kafkaConsumer.poll(Duration.ofSeconds(1));
+
+                assignment = kafkaConsumer.assignment();
+            }
+
+            // 指定消费的offset
+            for (TopicPartition topicPartition : assignment) {
+                kafkaConsumer.seek(topicPartition,600);
+            }
+
+            // 3  消费数据
+            while (true){
+
+                ConsumerRecords&lt;String, String&gt; consumerRecords = kafkaConsumer.poll(Duration.ofSeconds(1));
+
+                for (ConsumerRecord&lt;String, String&gt; consumerRecord : consumerRecords) {
+
+                    System.out.println(consumerRecord);
+                }
+            }
+        }
+    }
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br></div></div><blockquote><p>注意：每次执行完，需要修改消费者组名；</p></blockquote> <h3 id="_5-5-5-指定时间消费"><a href="#_5-5-5-指定时间消费" class="header-anchor">#</a> 5.5.5 指定时间消费</h3> <p>需求：在生产环境中，会遇到最近消费的几个小时数据异常，想重新按照时间消费。 例如要求按照时间消费前一天的数据，怎么处理？</p> <p>操作步骤：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>    public class CustomConsumerSeekTime {
+
+        public static void main(String[] args) {
+
+            // 0 配置信息
+            Properties properties = new Properties();
+
+            // 连接
+            properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,&quot;hadoop102:9092,hadoop103:9092&quot;);
+
+            // 反序列化
+            properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+            properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+
+            // 组id
+            properties.put(ConsumerConfig.GROUP_ID_CONFIG,&quot;test3&quot;);
+
+            // 1 创建消费者
+            KafkaConsumer&lt;String, String&gt; kafkaConsumer = new KafkaConsumer&lt;&gt;(properties);
+
+            // 2 订阅主题
+            ArrayList&lt;String&gt; topics = new ArrayList&lt;&gt;();
+            topics.add(&quot;first&quot;);
+            kafkaConsumer.subscribe(topics);
+
+            // 指定位置进行消费
+            Set&lt;TopicPartition&gt; assignment = kafkaConsumer.assignment();
+
+            //  保证分区分配方案已经制定完毕
+            while (assignment.size() == 0){
+                kafkaConsumer.poll(Duration.ofSeconds(1));
+
+                assignment = kafkaConsumer.assignment();
+            }
+
+            // 希望把时间转换为对应的offset
+            HashMap&lt;TopicPartition, Long&gt; topicPartitionLongHashMap = new HashMap&lt;&gt;();
+
+            // 封装对应集合
+            for (TopicPartition topicPartition : assignment) {
+                topicPartitionLongHashMap.put(topicPartition,System.currentTimeMillis() - 1 * 24 * 3600 * 1000);
+            }
+
+            Map&lt;TopicPartition, OffsetAndTimestamp&gt; topicPartitionOffsetAndTimestampMap = kafkaConsumer.offsetsForTimes(topicPartitionLongHashMap);
+
+            // 指定消费的offset
+            for (TopicPartition topicPartition : assignment) {
+
+                OffsetAndTimestamp offsetAndTimestamp = topicPartitionOffsetAndTimestampMap.get(topicPartition);
+
+                kafkaConsumer.seek(topicPartition,offsetAndTimestamp.offset());
+            }
+
+            // 3  消费数据
+            while (true){
+
+                ConsumerRecords&lt;String, String&gt; consumerRecords = kafkaConsumer.poll(Duration.ofSeconds(1));
+
+                for (ConsumerRecord&lt;String, String&gt; consumerRecord : consumerRecords) {
+
+                    System.out.println(consumerRecord);
+                }
+            }
+        }
+    }
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br></div></div><h3 id="_5-5-6-漏消费和重复消费"><a href="#_5-5-6-漏消费和重复消费" class="header-anchor">#</a> 5.5.6 漏消费和重复消费</h3> <p><strong>重复消费</strong>：已经消费了数据，但是 offset 没提交。</p> <p><strong>漏消费</strong>：先提交 offset 后消费，有可能会造成数据的漏消费。</p> <p>（1）场景 1：<strong>重复消费</strong>。自动提交 offset 引起。</p> <p><img src="/assets/img/image-20230926230257679.fc653cbc.png" alt="重复消费"></p> <p>（2）场景 1：<strong>漏消费</strong>。设置 offset 为手动提交，当 offset 被提交时，数据还在内存中未落盘，此时刚好消费者线 程被 kill 掉，那么 offset 已经提交，但是数据未处理，导致这部分内存中的数据丢失。</p> <p><img src="/assets/img/image-20230926230352858.3b205818.png" alt="漏消费"></p> <h2 id="_5-6-生产经验-消费者事务"><a href="#_5-6-生产经验-消费者事务" class="header-anchor">#</a> 5.6 生产经验——消费者事务</h2> <p>如果想完成 Consumer 端的精准一次性消费，那么需要<strong>Kafka 消费端将消费过程和提交 offset 过程做原子绑定</strong>。此时我们需要将 Kafka 的 offset 保存到支持事务的自定义介质（比如 MySQL）。这部分知识会在后续项目部分涉及。</p> <p><img src="/assets/img/image-20230926230451776.3505611c.png" alt="生产经验——消费者事务"></p> <h2 id="_5-7-生产经验-数据积压-消费者如何提高吞吐量"><a href="#_5-7-生产经验-数据积压-消费者如何提高吞吐量" class="header-anchor">#</a> 5.7 生产经验——数据积压（消费者如何提高吞吐量）</h2> <p>1）如果是 Kafka 消费能力不足，则可以考虑增 加 Topic 的分区数，并且同时提升消费组的消费者数量，消费者数 = 分区数。（两者缺一不可）</p> <p>2）如果是下游的数据处理不及时：提高每批次拉取的数量。批次拉取数据过少（拉取数据/处理时间 &lt; 生产速度）， 使处理的数据小于生产的数据，也会造成数据积压。</p> <table><thead><tr><th>参数名称</th> <th>描述</th></tr></thead> <tbody><tr><td>fetch.max.bytes</td> <td><strong>默认 Default: 52428800（50 m）</strong>。消费者获取服务器端一批消息最大的字节数。如果服务器端一批次的数据大于该值 （50m）仍然可以拉取回来这批数据，因此，这不是一个绝对最大值。一批次的大小受 message.max.bytes （broker config）or max.message.bytes （topic config）影响。</td></tr> <tr><td>ax.poll.records</td> <td>一次 poll 拉取数据返回消息的最大条数，默认是 500 条</td></tr></tbody></table> <h2 id="第-6-章-kafka-eagle-监控"><a href="#第-6-章-kafka-eagle-监控" class="header-anchor">#</a> 第 6 章 Kafka-Eagle 监控</h2> <p>Kafka-Eagle 框架可以监控 Kafka 集群的整体运行情况，在生产环境中经常使用。</p> <p><img src="/assets/img/image-20230926231508936.18a6dec9.png" alt="Kafka-Eagle 监控"></p></div></div>  <div class="page-edit"><div class="edit-link"><a href="https://github.com/andanyang/vuepress-theme-vdoing/edit/master/docs/大数据/002.kafka/0004.Kafka 消费者.md" target="_blank" rel="noopener noreferrer">编辑</a> <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></div> <!----> <div class="last-updated"><span class="prefix">上次更新:</span> <span class="time">2024/03/11, 02:40:47</span></div></div> <div class="page-nav-wapper"><div class="page-nav-centre-wrap"><a href="/kafka/broker/" class="page-nav-centre page-nav-centre-prev"><div class="tooltip">kafka3.0 broker</div></a> <a href="/kafka/Kafka_Kraft/" class="page-nav-centre page-nav-centre-next"><div class="tooltip">Kafka-Kraft 模式</div></a></div> <div class="page-nav"><p class="inner"><span class="prev">
+        ←
+        <a href="/kafka/broker/" class="prev">kafka3.0 broker</a></span> <span class="next"><a href="/kafka/Kafka_Kraft/">Kafka-Kraft 模式</a>→
+      </span></p></div></div></div> <div class="article-list"><div class="article-title"><a href="/archives/" class="iconfont icon-bi">最近更新</a></div> <div class="article-wrapper"><dl><dd>01</dd> <dt><a href="/bigdata/spark/SparkStreaming_Driver_Executer/"><div>
+            spark中代码的执行位置（Driver or Executer）
+            <!----></div></a> <span class="date">12-12</span></dt></dl><dl><dd>02</dd> <dt><a href="/bigdata/spark/SparkStreaming/"><div>
+            大数据技术之 SparkStreaming
+            <!----></div></a> <span class="date">12-12</span></dt></dl><dl><dd>03</dd> <dt><a href="/bigdata/spark/sql/"><div>
+            Spark 核心编程之 RDD 累加器与广播变量
+            <!----></div></a> <span class="date">12-06</span></dt></dl> <dl><dd></dd> <dt><a href="/archives/" class="more">更多文章&gt;</a></dt></dl></div></div></main></div> <div class="footer"><div class="icons"><a href="mailto:1218853253@qq.com" title="发邮件" target="_blank" class="iconfont icon-youjian"></a><a href="https://github.com/andanyang" title="GitHub" target="_blank" class="iconfont icon-github"></a><a href="https://music.163.com/#/playlist?id=755597173" title="听音乐" target="_blank" class="iconfont icon-erji"></a></div> 
+  Theme by
+  <a href="https://github.com/xugaoyi/vuepress-theme-vdoing" target="_blank" title="本站主题">Vdoing</a> 
+    | Copyright © 2019-2024
+    <span>Young | <a href="https://github.com/andanyoung/young-blog/blob/master/LICENSE" target="_blank">MIT License</a> <br/> <a  href="https://beian.miit.gov.cn/" target="_blank">浙ICP备20002744号</a></span></div> <div class="buttons"><div title="返回顶部" class="button blur go-to-top iconfont icon-fanhuidingbu" style="display:none;"></div> <div title="去评论" class="button blur go-to-comment iconfont icon-pinglun" style="display:none;"></div> <div title="主题模式" class="button blur theme-mode-but iconfont icon-zhuti"><ul class="select-box" style="display:none;"><li class="iconfont icon-zidong">
+          跟随系统
+        </li><li class="iconfont icon-rijianmoshi">
+          浅色模式
+        </li><li class="iconfont icon-yejianmoshi">
+          深色模式
+        </li><li class="iconfont icon-yuedu">
+          阅读模式
+        </li></ul></div></div> <!----> <!----> <!----></div><div class="global-ui"><div></div></div></div>
+    <script src="/assets/js/app.e4caa6db.js" defer></script><script src="/assets/js/2.d1be14c5.js" defer></script><script src="/assets/js/17.b0356f05.js" defer></script>
+  </body>
+</html>

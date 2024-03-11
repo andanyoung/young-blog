@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Scala 入 门 | Young&#39;s blog</title>
+    <meta name="generator" content="VuePress 1.9.5">
+    <link rel="icon" href="/img/favicon.ico">
+    <meta name="description" content="Young丶java后端技术博客,专注后端学习与总结。擅长spring boot,JAVA基础总结,等方面的知识,关注spring,架构,elasticsearch,mysql领域.">
+    <meta name="keywords" content="前端博客,个人技术博客,前端,前端开发,前端框架,web前端,前端面试题,技术文档,学习,面试,JavaScript,js,ES6,TypeScript,vue,python,css3,html5,Node,git,github,markdown">
+    <meta name="baidu-site-verification" content="7F55weZDDc">
+    <meta name="theme-color" content="#11a8cd">
+    
+    <link rel="preload" href="/assets/css/0.styles.53c04193.css" as="style"><link rel="preload" href="/assets/js/app.e4caa6db.js" as="script"><link rel="preload" href="/assets/js/2.d1be14c5.js" as="script"><link rel="preload" href="/assets/js/19.51c97d4c.js" as="script"><link rel="prefetch" href="/assets/js/10.20449a2b.js"><link rel="prefetch" href="/assets/js/100.f25e73b5.js"><link rel="prefetch" href="/assets/js/101.3180ba9d.js"><link rel="prefetch" href="/assets/js/102.fcd415ea.js"><link rel="prefetch" href="/assets/js/103.522869bb.js"><link rel="prefetch" href="/assets/js/104.5da1e4e4.js"><link rel="prefetch" href="/assets/js/105.e5a40fe8.js"><link rel="prefetch" href="/assets/js/106.627d6279.js"><link rel="prefetch" href="/assets/js/107.606beca1.js"><link rel="prefetch" href="/assets/js/108.100e1cb2.js"><link rel="prefetch" href="/assets/js/109.9765392e.js"><link rel="prefetch" href="/assets/js/11.da3512b5.js"><link rel="prefetch" href="/assets/js/110.b73cf0d9.js"><link rel="prefetch" href="/assets/js/111.3f77dd60.js"><link rel="prefetch" href="/assets/js/112.0c7d547d.js"><link rel="prefetch" href="/assets/js/113.1827c266.js"><link rel="prefetch" href="/assets/js/114.daf1d8a5.js"><link rel="prefetch" href="/assets/js/115.e7dca24d.js"><link rel="prefetch" href="/assets/js/116.11b303de.js"><link rel="prefetch" href="/assets/js/117.203cefba.js"><link rel="prefetch" href="/assets/js/118.61d8527b.js"><link rel="prefetch" href="/assets/js/119.1f959a37.js"><link rel="prefetch" href="/assets/js/12.11f18e06.js"><link rel="prefetch" href="/assets/js/120.c268b7aa.js"><link rel="prefetch" href="/assets/js/121.64318c96.js"><link rel="prefetch" href="/assets/js/122.cbddb70d.js"><link rel="prefetch" href="/assets/js/123.b49b84fb.js"><link rel="prefetch" href="/assets/js/124.392f030b.js"><link rel="prefetch" href="/assets/js/125.45f631c4.js"><link rel="prefetch" href="/assets/js/126.700cc575.js"><link rel="prefetch" href="/assets/js/127.d649cb2a.js"><link rel="prefetch" href="/assets/js/128.bc018411.js"><link rel="prefetch" href="/assets/js/129.d0a74611.js"><link rel="prefetch" href="/assets/js/13.1cb33dc8.js"><link rel="prefetch" href="/assets/js/130.45b1f75c.js"><link rel="prefetch" href="/assets/js/131.45ba93df.js"><link rel="prefetch" href="/assets/js/132.c58bbbd7.js"><link rel="prefetch" href="/assets/js/133.7f53922e.js"><link rel="prefetch" href="/assets/js/134.ddf0d780.js"><link rel="prefetch" href="/assets/js/135.ada3af13.js"><link rel="prefetch" href="/assets/js/136.4097c2be.js"><link rel="prefetch" href="/assets/js/137.fc910ac9.js"><link rel="prefetch" href="/assets/js/138.9628f460.js"><link rel="prefetch" href="/assets/js/139.3125ef74.js"><link rel="prefetch" href="/assets/js/14.1004ce43.js"><link rel="prefetch" href="/assets/js/140.bb53ac81.js"><link rel="prefetch" href="/assets/js/141.a002ac19.js"><link rel="prefetch" href="/assets/js/142.540d19e4.js"><link rel="prefetch" href="/assets/js/143.4cbccfca.js"><link rel="prefetch" href="/assets/js/144.8a217b6a.js"><link rel="prefetch" href="/assets/js/145.9c7bc0de.js"><link rel="prefetch" href="/assets/js/146.3dfd0773.js"><link rel="prefetch" href="/assets/js/147.bc0f0d42.js"><link rel="prefetch" href="/assets/js/148.e0cdc4d5.js"><link rel="prefetch" href="/assets/js/149.8486db6e.js"><link rel="prefetch" href="/assets/js/15.703e8784.js"><link rel="prefetch" href="/assets/js/150.5f3b7fb5.js"><link rel="prefetch" href="/assets/js/151.98a3f202.js"><link rel="prefetch" href="/assets/js/152.2940f2ba.js"><link rel="prefetch" href="/assets/js/153.75f3a085.js"><link rel="prefetch" href="/assets/js/154.fa2da83b.js"><link rel="prefetch" href="/assets/js/155.113be5c8.js"><link rel="prefetch" href="/assets/js/156.0667e7f5.js"><link rel="prefetch" href="/assets/js/157.0b3e5dfa.js"><link rel="prefetch" href="/assets/js/158.a338bdd7.js"><link rel="prefetch" href="/assets/js/159.33c9771c.js"><link rel="prefetch" href="/assets/js/16.71e3d898.js"><link rel="prefetch" href="/assets/js/160.e868c8b3.js"><link rel="prefetch" href="/assets/js/161.cf61955e.js"><link rel="prefetch" href="/assets/js/162.baee00ca.js"><link rel="prefetch" href="/assets/js/163.183cde82.js"><link rel="prefetch" href="/assets/js/164.c1eadef5.js"><link rel="prefetch" href="/assets/js/165.70ee8a24.js"><link rel="prefetch" href="/assets/js/166.8e185ff2.js"><link rel="prefetch" href="/assets/js/167.0881cf57.js"><link rel="prefetch" href="/assets/js/168.88caf424.js"><link rel="prefetch" href="/assets/js/169.e7e984ff.js"><link rel="prefetch" href="/assets/js/17.b0356f05.js"><link rel="prefetch" href="/assets/js/170.c7052d81.js"><link rel="prefetch" href="/assets/js/171.2ab773fd.js"><link rel="prefetch" href="/assets/js/172.0e39f858.js"><link rel="prefetch" href="/assets/js/173.76661218.js"><link rel="prefetch" href="/assets/js/174.0ac9f795.js"><link rel="prefetch" href="/assets/js/175.da30bba2.js"><link rel="prefetch" href="/assets/js/176.0f230688.js"><link rel="prefetch" href="/assets/js/177.040e0937.js"><link rel="prefetch" href="/assets/js/178.68852030.js"><link rel="prefetch" href="/assets/js/179.c998f0ca.js"><link rel="prefetch" href="/assets/js/18.2e77c8d1.js"><link rel="prefetch" href="/assets/js/180.4f6b395f.js"><link rel="prefetch" href="/assets/js/181.577a5325.js"><link rel="prefetch" href="/assets/js/182.6b43cbf2.js"><link rel="prefetch" href="/assets/js/183.cf9e9cca.js"><link rel="prefetch" href="/assets/js/184.f0e76def.js"><link rel="prefetch" href="/assets/js/185.2d3d8eea.js"><link rel="prefetch" href="/assets/js/186.4db71601.js"><link rel="prefetch" href="/assets/js/187.8b6a6829.js"><link rel="prefetch" href="/assets/js/188.4a0b8f41.js"><link rel="prefetch" href="/assets/js/189.0a28241b.js"><link rel="prefetch" href="/assets/js/190.5001309c.js"><link rel="prefetch" href="/assets/js/191.42778cf1.js"><link rel="prefetch" href="/assets/js/192.fabd1cb0.js"><link rel="prefetch" href="/assets/js/193.cbc113b8.js"><link rel="prefetch" href="/assets/js/194.4cf24763.js"><link rel="prefetch" href="/assets/js/195.ea5d1afb.js"><link rel="prefetch" href="/assets/js/196.16115ce4.js"><link rel="prefetch" href="/assets/js/197.b90179d1.js"><link rel="prefetch" href="/assets/js/198.456ceb51.js"><link rel="prefetch" href="/assets/js/199.a28de97a.js"><link rel="prefetch" href="/assets/js/20.79989fc4.js"><link rel="prefetch" href="/assets/js/200.72102ac7.js"><link rel="prefetch" href="/assets/js/201.e2b3a297.js"><link rel="prefetch" href="/assets/js/202.d4283e12.js"><link rel="prefetch" href="/assets/js/203.6e5e6596.js"><link rel="prefetch" href="/assets/js/204.363863cf.js"><link rel="prefetch" href="/assets/js/205.d16c5a36.js"><link rel="prefetch" href="/assets/js/206.dc867263.js"><link rel="prefetch" href="/assets/js/207.acfeaaaa.js"><link rel="prefetch" href="/assets/js/208.22c49054.js"><link rel="prefetch" href="/assets/js/209.0f7c526b.js"><link rel="prefetch" href="/assets/js/21.1b619a3f.js"><link rel="prefetch" href="/assets/js/210.b247a678.js"><link rel="prefetch" href="/assets/js/211.fe8629a4.js"><link rel="prefetch" href="/assets/js/212.48b672e5.js"><link rel="prefetch" href="/assets/js/213.08f571a8.js"><link rel="prefetch" href="/assets/js/214.04da1824.js"><link rel="prefetch" href="/assets/js/215.f60b57f4.js"><link rel="prefetch" href="/assets/js/216.4383ceb6.js"><link rel="prefetch" href="/assets/js/217.3b1ce286.js"><link rel="prefetch" href="/assets/js/218.1534ef52.js"><link rel="prefetch" href="/assets/js/219.6901e38c.js"><link rel="prefetch" href="/assets/js/22.349d3a16.js"><link rel="prefetch" href="/assets/js/220.22e0c5ea.js"><link rel="prefetch" href="/assets/js/221.2e7a5a4f.js"><link rel="prefetch" href="/assets/js/222.76b63073.js"><link rel="prefetch" href="/assets/js/223.500a058f.js"><link rel="prefetch" href="/assets/js/224.7f7c1250.js"><link rel="prefetch" href="/assets/js/225.2f183cbe.js"><link rel="prefetch" href="/assets/js/23.712dd5ac.js"><link rel="prefetch" href="/assets/js/24.77ae5052.js"><link rel="prefetch" href="/assets/js/25.e95f81fb.js"><link rel="prefetch" href="/assets/js/26.82cdd880.js"><link rel="prefetch" href="/assets/js/27.427a5aec.js"><link rel="prefetch" href="/assets/js/28.e245952d.js"><link rel="prefetch" href="/assets/js/29.50596e31.js"><link rel="prefetch" href="/assets/js/3.4f4335cf.js"><link rel="prefetch" href="/assets/js/30.016e73a0.js"><link rel="prefetch" href="/assets/js/31.fb0b0b40.js"><link rel="prefetch" href="/assets/js/32.8e7d8efe.js"><link rel="prefetch" href="/assets/js/33.f05f242b.js"><link rel="prefetch" href="/assets/js/34.893b8c3e.js"><link rel="prefetch" href="/assets/js/35.f98d31b7.js"><link rel="prefetch" href="/assets/js/36.6a5744a0.js"><link rel="prefetch" href="/assets/js/37.67e8976d.js"><link rel="prefetch" href="/assets/js/38.2d8447e0.js"><link rel="prefetch" href="/assets/js/39.3b3fde85.js"><link rel="prefetch" href="/assets/js/4.93e1dc89.js"><link rel="prefetch" href="/assets/js/40.8cde36eb.js"><link rel="prefetch" href="/assets/js/41.9df0f821.js"><link rel="prefetch" href="/assets/js/42.c9f1a26b.js"><link rel="prefetch" href="/assets/js/43.fa088c07.js"><link rel="prefetch" href="/assets/js/44.121055e3.js"><link rel="prefetch" href="/assets/js/45.7995c3a0.js"><link rel="prefetch" href="/assets/js/46.17d53a2e.js"><link rel="prefetch" href="/assets/js/47.4a374966.js"><link rel="prefetch" href="/assets/js/48.733e5b6c.js"><link rel="prefetch" href="/assets/js/49.0fb92742.js"><link rel="prefetch" href="/assets/js/5.f52855e6.js"><link rel="prefetch" href="/assets/js/50.50fc5031.js"><link rel="prefetch" href="/assets/js/51.69d8d52a.js"><link rel="prefetch" href="/assets/js/52.d84cedc3.js"><link rel="prefetch" href="/assets/js/53.a64ddaf4.js"><link rel="prefetch" href="/assets/js/54.15e09103.js"><link rel="prefetch" href="/assets/js/55.0f7e8fd5.js"><link rel="prefetch" href="/assets/js/56.6cb5bf13.js"><link rel="prefetch" href="/assets/js/57.d90d9da6.js"><link rel="prefetch" href="/assets/js/58.2c03a905.js"><link rel="prefetch" href="/assets/js/59.02cf613a.js"><link rel="prefetch" href="/assets/js/6.0ff35647.js"><link rel="prefetch" href="/assets/js/60.bb6d2b2f.js"><link rel="prefetch" href="/assets/js/61.ef2abfd3.js"><link rel="prefetch" href="/assets/js/62.b09e5f81.js"><link rel="prefetch" href="/assets/js/63.6ca85ec7.js"><link rel="prefetch" href="/assets/js/64.77eab656.js"><link rel="prefetch" href="/assets/js/65.65b00883.js"><link rel="prefetch" href="/assets/js/66.040b5d23.js"><link rel="prefetch" href="/assets/js/67.23318ab1.js"><link rel="prefetch" href="/assets/js/68.5c29433f.js"><link rel="prefetch" href="/assets/js/69.90978695.js"><link rel="prefetch" href="/assets/js/7.463451e9.js"><link rel="prefetch" href="/assets/js/70.0c585fbd.js"><link rel="prefetch" href="/assets/js/71.120e4ae5.js"><link rel="prefetch" href="/assets/js/72.53bf1e3a.js"><link rel="prefetch" href="/assets/js/73.282f5b35.js"><link rel="prefetch" href="/assets/js/74.4f1cb67d.js"><link rel="prefetch" href="/assets/js/75.f5d3ea1e.js"><link rel="prefetch" href="/assets/js/76.fb173587.js"><link rel="prefetch" href="/assets/js/77.8064b022.js"><link rel="prefetch" href="/assets/js/78.d26f8075.js"><link rel="prefetch" href="/assets/js/79.6cff2fa5.js"><link rel="prefetch" href="/assets/js/8.d5f74857.js"><link rel="prefetch" href="/assets/js/80.29d746c7.js"><link rel="prefetch" href="/assets/js/81.c0a214a2.js"><link rel="prefetch" href="/assets/js/82.f0c93ca2.js"><link rel="prefetch" href="/assets/js/83.db6f55e1.js"><link rel="prefetch" href="/assets/js/84.b0a7a28c.js"><link rel="prefetch" href="/assets/js/85.db7376d4.js"><link rel="prefetch" href="/assets/js/86.96ec3402.js"><link rel="prefetch" href="/assets/js/87.ae41a109.js"><link rel="prefetch" href="/assets/js/88.d83c21c8.js"><link rel="prefetch" href="/assets/js/89.33868490.js"><link rel="prefetch" href="/assets/js/9.2680f96d.js"><link rel="prefetch" href="/assets/js/90.ed48459a.js"><link rel="prefetch" href="/assets/js/91.e1ee23ba.js"><link rel="prefetch" href="/assets/js/92.8b354527.js"><link rel="prefetch" href="/assets/js/93.0682d2e4.js"><link rel="prefetch" href="/assets/js/94.105580aa.js"><link rel="prefetch" href="/assets/js/95.d378d658.js"><link rel="prefetch" href="/assets/js/96.a6460598.js"><link rel="prefetch" href="/assets/js/97.a4cc955f.js"><link rel="prefetch" href="/assets/js/98.9a600d4f.js"><link rel="prefetch" href="/assets/js/99.45007523.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.53c04193.css">
+  </head>
+  <body class="theme-mode-light">
+    <div id="app" data-server-rendered="true"><div class="theme-container sidebar-open have-rightmenu"><header class="navbar blur"><div title="目录" class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/img/logo.png" alt="Young's blog" class="logo"> <span class="site-name can-hide">Young's blog</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><a href="/Spring/" class="nav-link">Spring</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="前端" class="dropdown-title"><a href="/web/" class="link-title">前端</a> <span class="title" style="display:none;">前端</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>前端文章1</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/pages/8143cc480faf9a11/" class="nav-link">JavaScript</a></li></ul></li><li class="dropdown-item"><h4>学习笔记</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/note/javascript/" class="nav-link">《JavaScript教程》</a></li><li class="dropdown-subitem"><a href="/note/js/" class="nav-link">《JavaScript高级程序设计》</a></li><li class="dropdown-subitem"><a href="/note/es6/" class="nav-link">《ES6 教程》</a></li><li class="dropdown-subitem"><a href="/note/vue/" class="nav-link">《Vue》</a></li><li class="dropdown-subitem"><a href="/note/react/" class="nav-link">《React》</a></li><li class="dropdown-subitem"><a href="/note/typescript-axios/" class="nav-link">《TypeScript 从零实现 axios》</a></li><li class="dropdown-subitem"><a href="/note/git/" class="nav-link">《Git》</a></li><li class="dropdown-subitem"><a href="/pages/51afd6/" class="nav-link">TypeScript</a></li><li class="dropdown-subitem"><a href="/pages/4643cd/" class="nav-link">JS设计模式总结</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="页面" class="dropdown-title"><a href="/ui/" class="link-title">页面</a> <span class="title" style="display:none;">页面</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/8309a5b876fc95e3/" class="nav-link">HTML</a></li><li class="dropdown-item"><!----> <a href="/pages/0a83b083bdf257cb/" class="nav-link">CSS</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="技术" class="dropdown-title"><a href="/technology/" class="link-title">技术</a> <span class="title" style="display:none;">技术</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/9a7ee40fc232253e/" class="nav-link">技术文档</a></li><li class="dropdown-item"><!----> <a href="/pages/4c778760be26d8b3/" class="nav-link">GitHub技巧</a></li><li class="dropdown-item"><!----> <a href="/pages/117708e0af7f0bd9/" class="nav-link">Nodejs</a></li><li class="dropdown-item"><!----> <a href="/pages/41f87d890d0a02af/" class="nav-link">博客搭建</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="更多" class="dropdown-title"><a href="/more/" class="link-title">更多</a> <span class="title" style="display:none;">更多</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/f2a556/" class="nav-link">学习</a></li><li class="dropdown-item"><!----> <a href="/pages/aea6571b7a8bae86/" class="nav-link">面试</a></li><li class="dropdown-item"><!----> <a href="/pages/2d615df9a36a98ed/" class="nav-link">心情杂货</a></li><li class="dropdown-item"><!----> <a href="/pages/baaa02/" class="nav-link">实用技巧</a></li><li class="dropdown-item"><!----> <a href="/friends/" class="nav-link">友情链接</a></li></ul></div></div><div class="nav-item"><a href="/about/" class="nav-link">关于</a></div><div class="nav-item"><a href="/pages/beb6c0bd8a66cea6/" class="nav-link">收藏</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="索引" class="dropdown-title"><a href="/archives/" class="link-title">索引</a> <span class="title" style="display:none;">索引</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/" class="nav-link">分类</a></li><li class="dropdown-item"><!----> <a href="/tags/" class="nav-link">标签</a></li><li class="dropdown-item"><!----> <a href="/archives/" class="nav-link">归档</a></li></ul></div></div> <a href="https://github.com/andanyang/vuepress-theme-vdoing" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <div class="sidebar-hover-trigger"></div> <aside class="sidebar" style="display:none;"><div class="blogger"><img src="/img/logo.png"> <div class="blogger-info"><h3>Young</h3> <span></span></div></div> <nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><a href="/Spring/" class="nav-link">Spring</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="前端" class="dropdown-title"><a href="/web/" class="link-title">前端</a> <span class="title" style="display:none;">前端</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>前端文章1</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/pages/8143cc480faf9a11/" class="nav-link">JavaScript</a></li></ul></li><li class="dropdown-item"><h4>学习笔记</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/note/javascript/" class="nav-link">《JavaScript教程》</a></li><li class="dropdown-subitem"><a href="/note/js/" class="nav-link">《JavaScript高级程序设计》</a></li><li class="dropdown-subitem"><a href="/note/es6/" class="nav-link">《ES6 教程》</a></li><li class="dropdown-subitem"><a href="/note/vue/" class="nav-link">《Vue》</a></li><li class="dropdown-subitem"><a href="/note/react/" class="nav-link">《React》</a></li><li class="dropdown-subitem"><a href="/note/typescript-axios/" class="nav-link">《TypeScript 从零实现 axios》</a></li><li class="dropdown-subitem"><a href="/note/git/" class="nav-link">《Git》</a></li><li class="dropdown-subitem"><a href="/pages/51afd6/" class="nav-link">TypeScript</a></li><li class="dropdown-subitem"><a href="/pages/4643cd/" class="nav-link">JS设计模式总结</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="页面" class="dropdown-title"><a href="/ui/" class="link-title">页面</a> <span class="title" style="display:none;">页面</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/8309a5b876fc95e3/" class="nav-link">HTML</a></li><li class="dropdown-item"><!----> <a href="/pages/0a83b083bdf257cb/" class="nav-link">CSS</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="技术" class="dropdown-title"><a href="/technology/" class="link-title">技术</a> <span class="title" style="display:none;">技术</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/9a7ee40fc232253e/" class="nav-link">技术文档</a></li><li class="dropdown-item"><!----> <a href="/pages/4c778760be26d8b3/" class="nav-link">GitHub技巧</a></li><li class="dropdown-item"><!----> <a href="/pages/117708e0af7f0bd9/" class="nav-link">Nodejs</a></li><li class="dropdown-item"><!----> <a href="/pages/41f87d890d0a02af/" class="nav-link">博客搭建</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="更多" class="dropdown-title"><a href="/more/" class="link-title">更多</a> <span class="title" style="display:none;">更多</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/f2a556/" class="nav-link">学习</a></li><li class="dropdown-item"><!----> <a href="/pages/aea6571b7a8bae86/" class="nav-link">面试</a></li><li class="dropdown-item"><!----> <a href="/pages/2d615df9a36a98ed/" class="nav-link">心情杂货</a></li><li class="dropdown-item"><!----> <a href="/pages/baaa02/" class="nav-link">实用技巧</a></li><li class="dropdown-item"><!----> <a href="/friends/" class="nav-link">友情链接</a></li></ul></div></div><div class="nav-item"><a href="/about/" class="nav-link">关于</a></div><div class="nav-item"><a href="/pages/beb6c0bd8a66cea6/" class="nav-link">收藏</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="索引" class="dropdown-title"><a href="/archives/" class="link-title">索引</a> <span class="title" style="display:none;">索引</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/" class="nav-link">分类</a></li><li class="dropdown-item"><!----> <a href="/tags/" class="nav-link">标签</a></li><li class="dropdown-item"><!----> <a href="/archives/" class="nav-link">归档</a></li></ul></div></div> <a href="https://github.com/andanyang/vuepress-theme-vdoing" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Hadoop</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>kafka</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Flume</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>hive</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>scala</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/bigdata/scala/" aria-current="page" class="active sidebar-link">Scala 入 门</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level2"><a href="/bigdata/scala/#_1-1概述" class="sidebar-link">1.1概述</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/bigdata/scala/#_1-1-1为什么学习-scala" class="sidebar-link">1.1.1为什么学习 Scala</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/scala/#_1-1-2scala-发展历史" class="sidebar-link">1.1.2Scala 发展历史</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/scala/#_1-1-3scala-和-java-关系" class="sidebar-link">1.1.3Scala 和 Java 关系</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/scala/#_1-1-4scala-语言特点" class="sidebar-link">1.1.4Scala 语言特点</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/bigdata/scala/#_1-2scala-环境搭建" class="sidebar-link">1.2Scala 环境搭建</a></li><li class="sidebar-sub-header level2"><a href="/bigdata/scala/#_1-3-scala-插件安装" class="sidebar-link">1.3 Scala 插件安装</a></li><li class="sidebar-sub-header level2"><a href="/bigdata/scala/#_1-4helloworld-案例" class="sidebar-link">1.4HelloWorld 案例</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/bigdata/scala/#_1-4-1创建idea-项目工程" class="sidebar-link">1.4.1创建IDEA 项目工程</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/scala/#_1-4-2-class-和object-说明" class="sidebar-link">1.4.2 class 和object 说明</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/scala/#_1-4-3-scala-程序反编译" class="sidebar-link">1.4.3 Scala 程序反编译</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/bigdata/scala/#_1-5官方编程指南" class="sidebar-link">1.5官方编程指南</a></li><li class="sidebar-sub-header level2"><a href="/bigdata/scala/#_2-1-注释" class="sidebar-link">2.1 注释</a></li><li class="sidebar-sub-header level2"><a href="/bigdata/scala/#_2-2-变量和常量-重点" class="sidebar-link">2.2 变量和常量（重点）</a></li><li class="sidebar-sub-header level2"><a href="/bigdata/scala/#_2-3-标识符的命名规范" class="sidebar-link">2.3 标识符的命名规范</a></li><li class="sidebar-sub-header level2"><a href="/bigdata/scala/#_2-4-字符串输出" class="sidebar-link">2.4 字符串输出</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level4"><a href="/bigdata/scala/#_2-4-1-符号字面量" class="sidebar-link">2.4.1 符号字面量</a></li><li class="sidebar-sub-header level4"><a href="/bigdata/scala/#_2-4-2-插值表达式" class="sidebar-link">2.4.2 插值表达式</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/bigdata/scala/#_2-5-键盘输入" class="sidebar-link">2.5 键盘输入</a></li><li class="sidebar-sub-header level2"><a href="/bigdata/scala/#_2-6-数据类型-重点" class="sidebar-link">2.6 数据类型（重点）</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/bigdata/scala/#回顾-java数据类型" class="sidebar-link">回顾：Java数据类型</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/bigdata/scala/#重点" class="sidebar-link">重点</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/bigdata/scala/#scala数据类型" class="sidebar-link">Scala数据类型</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/bigdata/scala/#_2-7-整数类型-byte、short、int、long" class="sidebar-link">2.7 整数类型（Byte、Short、Int、Long）</a></li><li class="sidebar-sub-header level2"><a href="/bigdata/scala/#_2-8-浮点类型-float、double" class="sidebar-link">2.8 浮点类型（Float、Double）</a></li><li class="sidebar-sub-header level2"><a href="/bigdata/scala/#_2-9-字符类型-char" class="sidebar-link">2.9 字符类型（Char）</a></li><li class="sidebar-sub-header level2"><a href="/bigdata/scala/#_2-10-布尔类型-boolean" class="sidebar-link">2.10 布尔类型：Boolean</a></li><li class="sidebar-sub-header level2"><a href="/bigdata/scala/#_2-11-unit-类型、null-类型和nothing-类型-重点" class="sidebar-link">2.11 Unit 类型、Null 类型和Nothing 类型（重点）</a></li><li class="sidebar-sub-header level2"><a href="/bigdata/scala/#_2-12-类型转换" class="sidebar-link">2.12 类型转换</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/bigdata/scala/#_2-12-1-数值类型自动转换" class="sidebar-link">2.12.1 数值类型自动转换</a></li><li class="sidebar-sub-header level4"><a href="/bigdata/scala/#_1-基本说明" class="sidebar-link">1）基本说明</a></li><li class="sidebar-sub-header level4"><a href="/bigdata/scala/#_2-案例实操" class="sidebar-link">2） 案例实操</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/scala/#_2-12-2-强制类型转换" class="sidebar-link">2.12.2 强制类型转换</a></li><li class="sidebar-sub-header level5"><a href="/bigdata/scala/#_1-基本说明-2" class="sidebar-link">1）基本说明</a></li><li class="sidebar-sub-header level5"><a href="/bigdata/scala/#_2-案例实操-2" class="sidebar-link">2）案例实操</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/scala/#_2-12-3-数值类型和string-类型间转换" class="sidebar-link">2.12.3 数值类型和String 类型间转换</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/scala/#_2-12-3-数值类型和string-类型间转换-2" class="sidebar-link">2.12.3 数值类型和String 类型间转换</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/bigdata/scala/#_3-1-算术运算符" class="sidebar-link">3.1 算术运算符</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level4"><a href="/bigdata/scala/#_1-基本语法" class="sidebar-link">1）基本语法</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/bigdata/scala/#_3-2-关系运算符-比较运算符" class="sidebar-link">3.2 关系运算符（比较运算符）</a></li><li class="sidebar-sub-header level2"><a href="/bigdata/scala/#_3-3-逻辑运算符" class="sidebar-link">3.3 逻辑运算符</a></li><li class="sidebar-sub-header level2"><a href="/bigdata/scala/#_3-4-赋值运算符" class="sidebar-link">3.4 赋值运算符</a></li><li class="sidebar-sub-header level2"><a href="/bigdata/scala/#_3-5位运算符" class="sidebar-link">3.5位运算符</a></li><li class="sidebar-sub-header level2"><a href="/bigdata/scala/#_3-6-scala-运算符本质" class="sidebar-link">3.6 Scala 运算符本质</a></li><li class="sidebar-sub-header level2"><a href="/bigdata/scala/#_4-1-分支控制if-else" class="sidebar-link">4.1 分支控制if-else</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/bigdata/scala/#_4-1-1-单分支" class="sidebar-link">4.1.1 单分支</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/scala/#_4-1-2-双分支" class="sidebar-link">4.1.2 双分支</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/scala/#_4-1-3-多分支" class="sidebar-link">4.1.3 多分支</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/bigdata/scala/#_4-2-嵌套分支" class="sidebar-link">4.2 嵌套分支</a></li><li class="sidebar-sub-header level2"><a href="/bigdata/scala/#_4-3-switch-分支结构" class="sidebar-link">4.3 Switch 分支结构</a></li><li class="sidebar-sub-header level2"><a href="/bigdata/scala/#_4-4-for-循环控制" class="sidebar-link">4.4 For 循环控制</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/bigdata/scala/#_4-4-1范围数据循环-to" class="sidebar-link">4.4.1范围数据循环（To）</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/scala/#_4-4-2-范围数据循环-until" class="sidebar-link">4.4.2 范围数据循环（Until）</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/scala/#_4-4-3-循环守卫" class="sidebar-link">4.4.3 循环守卫</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/scala/#_4-4-4-循环步长" class="sidebar-link">4.4.4 循环步长</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/scala/#_4-4-5嵌套循环" class="sidebar-link">4.4.5嵌套循环</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/scala/#_4-4-6-引入变量" class="sidebar-link">4.4.6 引入变量</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/scala/#_4-4-7-循环返回值" class="sidebar-link">4.4.7 循环返回值</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/scala/#_4-4-8-倒序打印" class="sidebar-link">4.4.8 倒序打印</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/bigdata/scala/#_4-5-while-和-do-while-循环控制" class="sidebar-link">4.5 While 和 do..While 循环控制</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/bigdata/scala/#_4-5-1while-循环控制" class="sidebar-link">4.5.1While 循环控制</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/scala/#_4-5-2-do-while-循环控制" class="sidebar-link">4.5.2 do..while 循环控制</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/bigdata/scala/#_4-6-循环中断" class="sidebar-link">4.6 循环中断</a></li><li class="sidebar-sub-header level2"><a href="/bigdata/scala/#_4-7-多重循环" class="sidebar-link">4.7 多重循环</a></li></ul></li><li><a href="/bigdata/scala/Functional_programming/" class="sidebar-link">scala 函数式编程</a></li><li><a href="/bigdata/scala/OOP/" class="sidebar-link">scala 面向对象</a></li><li><a href="/bigdata/scala/collection/" class="sidebar-link">scala 集合</a></li><li><a href="/bigdata/scala/Pattern_Matching/" class="sidebar-link">scala 第 8 章 模式匹配</a></li><li><a href="/bigdata/scala/Exception/" class="sidebar-link">scala 第 9 章 异 常</a></li><li><section class="sidebar-group collapsable is-sub-group depth-1"><p class="sidebar-heading"><span>进阶</span> <span class="arrow right"></span></p> <!----></section></li><li><a href="/bigdata/scala/generic/" class="sidebar-link">scala 第 11 章 泛 型</a></li><li><a href="/bigdata/scala/summary/" class="sidebar-link">scala 第 12 章 总结</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>spark</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <div><main class="page"><div class="theme-vdoing-wrapper "><div class="articleInfo-wrap" data-v-06225672><div class="articleInfo" data-v-06225672><ul class="breadcrumbs" data-v-06225672><li data-v-06225672><a href="/" title="首页" class="iconfont icon-home router-link-active" data-v-06225672></a></li> <li data-v-06225672><a href="/categories/?category=%E5%A4%A7%E6%95%B0%E6%8D%AE" title="分类" data-v-06225672>大数据</a></li><li data-v-06225672><a href="/categories/?category=scala" title="分类" data-v-06225672>scala</a></li></ul> <div class="info" data-v-06225672><div title="作者" class="author iconfont icon-touxiang" data-v-06225672><a href="https://github.com/andanyoung" target="_blank" title="作者" class="beLink" data-v-06225672>andanyang</a></div> <div title="创建时间" class="date iconfont icon-riqi" data-v-06225672><a href="javascript:;" data-v-06225672>2023-11-01</a></div> <!----></div></div></div> <!----> <div class="content-wrapper"><div class="right-menu-wrapper"><div class="right-menu-margin"><div class="right-menu-title">目录</div> <div class="right-menu-content"></div></div></div> <h1><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAABH1JREFUSA3tVl1oHFUUPmdmd2ltklqbpJDiNnXFmgbFktho7YMPNiJSSZM0+CAYSkUELVhM6YuwIPpgoOKDqOBDC0XE2CQoNtQXBUFTTcCi+Wlh1V2TQExsUzcltd3M9Tt3ZjZzZ2fT+OJTL8yeM+eee757fmeJbq//KQL8X3DUSFOcfr7cRsRtxNQMWueeVzOkaITIGqQHNg5y8+jNW9ldM7A6nTpAjuolUikAwq7CE3WcM2RRDz+XGVgN3FptU/aUSlvq9Pa3iZ1+sgAqJyyAFqkipd9dqiwHF3P65YycLWc/6sqGrvoEoIp6DOFaX5h6+dnfjkWprwqsPk0dUGq5vySwDImC10KxFHgGL1SWoc92O3eVht09qdXNH11I2SsTsJYqMWzihqGMi+A+Garf3BAuuLI5oGlULyNfyB/HYNujwktOfRrMr5t77NmevqaUopx0grnKAyvVpmwUDB4x6FPXuGvYLTDwWsejwgtgkYKPqRJg8SV6xaiZ3ZTppGneS4yfH5/66fZSDHv+QZci/+h5c5UHtpy67JUqGppM0sh0Nc1dW6/N1W5Yoqat8/TU/VnadmdeW2PLLSyh0cvxBs3KbqTmwYPpxN4do/mzE8nEpvX/UMu2Wbp74zUAK5q6WkHns7V0eWkdPbPzd3rxkTGybadYySumVzhcaJFbs5UrEkQ/+CK8gF5dnh/6ciIZ73gwQ927L1IitoxKLXYP3SjYdOrHHfTZhRRlFyrorafPk20B3HPD1y2G3qKZME5Jcf3t/HUC13/8tSd++vqFveMUTwAUxSUFI1QekR1+bIze3D9MF2aq6cPvG72CgnldWCFqyRw3lwH8ZMerjTD9ElRO7Gv44wNpC90aASqGfVlz/Rx17srQ57/UU26hkhQqUB7dBR71WmzQhHUnblGmVOEw0jhbV1n9OlXUDCIRGaNV5Jp43N516fN7JmnTHdfp7Hgy0luO4aMhtkLL8Bi3bUWYvzh5Mn1dTxrL6QmGuRhGL/TiTTxRoEdTszSaq9GR0NGA3KdkOz3hqSV3MIDhQ5IVX/Ivx3umBti2es2h4eZby7x8br1rkf7Mo90AqC8aQ3sJeNzqFRu+vSANAQe3PL7l0HGOAdwDCeZYvNKeoZp1Qfs6Aipndh86HmFRi0LAnEO47wsqM6cdfjh3jBPUzhZy7nvlUfFsamED1VQt6aISHVymXZ/B2aCtIG8AI8xfobj2d3en1wWVhOeHELKmLQ1s211s88comkv4UCwWyF787mJdYXtNfhKAXVqnKTq8QZvGAGGOfaTo5pGZ/PwbUCr5+DPr/1J92JNHr9aOl/F3iI5+O1nfybsGxoimvZ3ViWSluDITw3P37mypheDIPY0tw7+O/5ApbkYw+zpfaUVu32Pi98+defdUhEpZkRFq0aqyNh9FuL9hpYbEm6iwi0z2REd09ZmyENEbuhjDWzKvZXTqKYaBIr3tt5kuPtQBZFvEUwHt60vfCNu41XsksH9Ij1BMMz1Y0OOunHNShFIP5868g5zeXmuLwL9T4b6Q2+KejgAAAABJRU5ErkJggg==">Scala 入 门<!----></h1>  <div class="theme-vdoing-content content__default"><h1 id="第-1-章-scala-入-门"><a href="#第-1-章-scala-入-门" class="header-anchor">#</a> 第 1 章 Scala 入 门</h1> <h2 id="_1-1概述"><a href="#_1-1概述" class="header-anchor">#</a> 1.1概述</h2> <h3 id="_1-1-1为什么学习-scala"><a href="#_1-1-1为什么学习-scala" class="header-anchor">#</a> 1.1.1为什么学习 Scala</h3> <p>1）Spark—新一代内存级大数据计算框架，是大数据的重要内容。</p> <p>2）Spark就是使用Scala编写的。因此为了更好的学习Spark, 需要掌握Scala这门语言。</p> <p>3）Spark的兴起，带动Scala语言的发展！</p> <h3 id="_1-1-2scala-发展历史"><a href="#_1-1-2scala-发展历史" class="header-anchor">#</a> 1.1.2Scala 发展历史</h3> <p>联邦理工学院的马丁·奥德斯基（Martin Odersky）于2001年开始设计Scala。
+马丁·奥德斯基是编译器及编程的狂热爱好者，长时间的编程之后，希望发明一种语言，能够让写程序这样的基础工作变得高效，简单。所以当接触到JAVA语言后，对JAVA这门便携式，运行在网络，且存在垃圾回收的语言产生了极大的兴趣，所以决定将函数式编程语言的特点融合到JAVA中，由此发明了两种语言（Pizza &amp; Scala）。
+Pizza和Scala极大地推动了Java编程语言的发展。</p> <ul><li><p>JDK5.0 的泛型、增强for循环、自动类型转换等，都是从Pizza引入的新特性。</p></li> <li><p>JDK8.0  的类型推断、Lambda表达式就是从Scala引入的特性。</p> <p>JDK5.0和JDK8.0的编辑器就是马丁·奥德斯基写的，因此马丁·奥德斯基一个人的战斗力抵得上一个Java开发团队。</p></li></ul> <h3 id="_1-1-3scala-和-java-关系"><a href="#_1-1-3scala-和-java-关系" class="header-anchor">#</a> 1.1.3Scala 和 Java 关系</h3> <p>一般来说，学 Scala 的人，都会 Java，而 Scala 是基于 Java 的，因此我们需要将 Scala和 Java 以及 JVM 之间的关系搞清楚，否则学习 Scala 你会蒙圈。</p> <p><img src="/assets/img/image-20231101172515134.f8796b36.png" alt="3Scala 和 Java 关系"></p> <h3 id="_1-1-4scala-语言特点"><a href="#_1-1-4scala-语言特点" class="header-anchor">#</a> 1.1.4Scala 语言特点</h3> <p>Scala是一门以Java虚拟机（JVM）为运行环境并将面向对象和函数式编程的最佳特性结合在一起的   静态类型编程语言（静态语言需要提前编译的如：Java、c、c++等，动态语言如：js）。
+1）Scala是一门<strong>多范式</strong>的编程语言，Scala支持<strong>面向对象和函数式编程</strong>。（多范式，就是多种编程方法的意思。有面向过程、面向对象、泛型、函数式四种程序设计方法。）
+2）Scala源代码（.scala）会被编译成Java字节码（.class），然后运行于JVM之上，并可以调用现有   的Java类库，实现两种语言的无缝对接。
+3）Scala单作为一门语言来看，非常的简洁高效。</p> <p>Scala在设计时，马丁·奥德斯基是参考了Java的设计思想，可以说Scala是源于Java，同时马丁·奥   德斯基也加入了自己的思想，将函数式编程语言的特点融合到JAVA中,    因此，对于学习过Java的同学， 只要在学习Scala的过程中，搞清楚Scala和Java相同点和不同点，就可以快速的掌握Scala这门语言。</p> <h2 id="_1-2scala-环境搭建"><a href="#_1-2scala-环境搭建" class="header-anchor">#</a> 1.2Scala 环境搭建</h2> <p>1）安装步骤
+（1）首先确保 JDK1.8 安装成功
+（2）下载对应的Scala 安装文件 scala-2.12.11.zip (<a href="https://www.scala-lang.org/download/" target="_blank" rel="noopener noreferrer">https://www.scala-lang.org/download/<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>)
+（3）解压 scala-2.12.11.zip，我这里解压到D:\Tools
+（4）配置 Scala 的环境变量</p> <p><img src="/assets/img/image-20231101173002056.dbf8593b.png" alt="Scala 环境搭建"></p> <p><img src="/assets/img/image-20231101173010731.545c8df2.png" alt="image-20231101173010731"></p> <p>注意 1：解压路径不能有任何中文路径，最好不要有空格。</p> <p>注意 2：环境变量要大写SCALA_HOME</p> <p>1） 测试</p> <p>需求：计算两数 a 和b 的和。步骤</p> <p>（1） 在键盘上同时按win+r 键，并在运行窗口输入cmd 命令</p> <p><img src="data:image/png;base64,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" alt="image-20231101173214057"></p> <h2 id="_1-3-scala-插件安装"><a href="#_1-3-scala-插件安装" class="header-anchor">#</a> 1.3 Scala 插件安装</h2> <p>默认情况下 IDEA 不支持Scala 的开发，需要安装Scala 插件。</p> <p><img src="/assets/img/image-20231102083929394.cd29f6aa.png" alt="Scala 插件安装"></p> <h2 id="_1-4helloworld-案例"><a href="#_1-4helloworld-案例" class="header-anchor">#</a> 1.4HelloWorld 案例</h2> <h3 id="_1-4-1创建idea-项目工程"><a href="#_1-4-1创建idea-项目工程" class="header-anchor">#</a> 1.4.1创建IDEA 项目工程</h3> <p>1）打开 IDEA-&gt;点击左侧的 Flie-&gt;选择 New-&gt;选择Project…</p> <p>2）创建一个 Maven 工程，并点击 next</p> <p><img src="/assets/img/image-20231102084157999.58f58425.png" alt="image-20231102084157999"></p> <p>3）默认下，Maven 不支持 Scala 的开发，需要引入 Scala 框架。</p> <p><img src="/assets/img/image-20231102084345704.3df83f4c.png" alt="image-20231102084345704"></p> <p><img src="/assets/img/image-20231102084410310.e8356aca.png" alt="image-20231102084410310"></p> <p>4）创建项目的源文件目录</p> <p>右键点击 main 目录-&gt;New-&gt;点击 Diretory -&gt;  写个名字（比如 scala）。
+右键点击 scala 目录-&gt;Mark Directory as-&gt;选择 Sources root，观察文件夹颜色发生变化。</p> <p><img src="/assets/img/image-20231102084511295.47fb17c0.png" alt="image-20231102084511295"></p> <p>5）在 scala 包下，创建包 com.admin4j.chapter01 包名和 Hello 类名，
+右键点击 scala 目录-&gt;New-&gt;Package-&gt;输入 com.admin4j.chapter01-&gt;点击 OK。
+右键点击 com.admin4j.chapter01-&gt;New-&gt;Scala Class-&gt;Kind 项选择 Object-&gt;Name 项输入
+Hello。</p> <p><img src="/assets/img/image-20231102084656110.2e3984a7.png" alt="image-20231102084656110"></p> <p>6）编写输出Hello Scala 案例</p> <p>在类中中输入 main，然后回车可以快速生成 main 方法； 在 main 方法中输入println(&quot;hello scala&quot;)</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>object Hello {
+
+  def main(args: Array[String]): Unit = {
+
+    println(&quot;Hello scala&quot;)
+    System.out.println(&quot;Hello Java&quot;)
+  }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><p>运行后，观察控制台打印输出：
+hello scala</p> <p>hello scala
+说明：Java 中部分代码也是可以在 Scala 中运行。</p> <h3 id="_1-4-2-class-和object-说明"><a href="#_1-4-2-class-和object-说明" class="header-anchor">#</a> 1.4.2 class 和object 说明</h3> <p>对第一个程序进行说明</p> <p><img src="/assets/img/image-20231102085111005.bb1f2324.png" alt="class 和object 说明"></p> <div class="language- line-numbers-mode"><pre class="language-text"><code>package com.atguigu.chapter01
+
+object Hello {
+	def main(args: Array[String]): Unit = { 
+		println(&quot;hello scala&quot;)
+	}
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><p>Scala完全面向对象，故Scala去掉了Java中非面向对象的元素，如static关键字，void类型</p> <p>1）static
+Scala无static关键字，由object实现类似静态方法的功能（类名.方法名）。
+class关键字和Java中的class关键字作用相同，用来定义一个类；</p> <p>2）void
+对于无返回值的函数，Scala定义其返回值类型为Unit类</p> <h3 id="_1-4-3-scala-程序反编译"><a href="#_1-4-3-scala-程序反编译" class="header-anchor">#</a> 1.4.3 Scala 程序反编译</h3> <p>1）在项目的 target 目录 Hello 文件上点击右键-&gt;Show in Explorer-&gt;看到 object 底层生成 <code>Hello$.class</code> 和 <code>Hello.class</code> 两个文件</p> <p>2） 采用 Java 反编译工具 jd-gui.exe 反编译代码，将 Hello.class 拖到 jd-gui.exe 页面</p> <p><strong>1）Hello源代码</strong></p> <div class="language- line-numbers-mode"><pre class="language-text"><code>object Hello {
+	def main(args: Array[String]): Unit = { println(&quot;hello,scala&quot;)
+	}
+}
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p>（1）Object编译后生成Hello$.class和Hello.class两个文件</p> <p><strong>2）Hello.class类</strong></p> <div class="language- line-numbers-mode"><pre class="language-text"><code>public final class Hello
+{
+    public static void main(String[] paramArrayOfString)
+    {
+        Hello$.MODULE$.main(paramArrayOfString);
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><p>（2）Hello中有个main函数，调用 Hello$ 类的一个静态对象MODULES$</p> <p><strong>3）Hello$.class类</strong></p> <div class="language- line-numbers-mode"><pre class="language-text"><code>public final class Hello$
+{
+    public static final MODULE$;
+
+    static
+    {
+    	new ();
+    }
+    
+    public void main(String[] args)
+    {
+    	Predef..MODULE$.println(&quot;hello,scala&quot;);
+    }
+    
+    private Hello$()
+    {
+    	MODULE$ = this;
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br></div></div><p>（3）Hello$.MODULE$. 对象是静态的，通过该对象调用Hello$的main函数</p> <h2 id="_1-5官方编程指南"><a href="#_1-5官方编程指南" class="header-anchor">#</a> 1.5官方编程指南</h2> <p>在使用 Scala 过程中，为了搞清楚 Scala 底层的机制，需要查看源码，下面看看如何关联和查看 Scala 的源码包。</p> <p>1）在线查看：https://www.scala-lang.org/</p> <h1 id="第-2-章-变量和数据类型"><a href="#第-2-章-变量和数据类型" class="header-anchor">#</a> 第 2 章 变量和数据类型</h1> <h2 id="_2-1-注释"><a href="#_2-1-注释" class="header-anchor">#</a> 2.1 注释</h2> <p><strong>Scala 注释使用和 Java 完全一样。</strong></p> <p>注释是一个程序员必须要具有的良好编程习惯。将自己的思想通过注释先整理出来，再用代码去体现。</p> <p>1） 基本语法</p> <p>（1）单行注释：//</p> <p>（2）多行注释：/* */</p> <p>（3）文档注释：/**</p> <p>​								*</p> <p>​								*/</p> <h2 id="_2-2-变量和常量-重点"><a href="#_2-2-变量和常量-重点" class="header-anchor">#</a> 2.2 变量和常量（重点）</h2> <p>常量：在程序执行的过程中，其值不会被改变的变量
+0）回顾：Java 变量和常量语法</p> <ul><li>变量类型 变量名称 =  初始值	int a = 10</li> <li>final 常量类型 常量名称 =  初始值	final int b = 20</li></ul> <p>1）基本语法</p> <ul><li><p>var  变量名 [: 变量类型] =  初始值	var i:Int = 10</p></li> <li><p>val  常量名 [:  常量类型] =  初始值	val j:Int = 20</p> <p>注意：能用常量的地方不用变量</p></li></ul> <p>2）案例实操</p> <ul><li>（1）声明变量时，类型可以省略，编译器自动推导，即类型推导</li> <li>（2）类型确定后，就不能修改，说明 Scala 是强数据类型语言。</li> <li>（3）变量声明时，必须要有初始值</li> <li>（4）在声明/定义一个变量时，可以使用 var 或者 val 来修饰，var 修饰的变量可改变，val 修饰的变量不可改。</li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>object TestVar {
+ def main(args: Array[String]): Unit = {
+ 
+     //（1）声明变量时，类型可以省略，编译器自动推导，即类型推导
+     var age = 18
+     age = 30
+     
+     //（2）类型确定后，就不能修改，说明 Scala 是强数据类型语言。
+     // age = &quot;tom&quot; // 错误
+     
+     //（3）变量声明时，必须要有初始值
+     // var name //错误
+     
+     //（4）在声明/定义一个变量时，可以使用 var 或者 val 来修饰，var 修饰的变量可改变，val 修饰的变量不可改。
+     var num1 = 10 // 可变
+     val num2 = 20 // 不可变
+     num1 = 30 // 正确
+     //num2 = 100 //错误，因为 num2 是 val 修饰的
+ }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br></div></div><p>（5）var 修饰的对象引用可以改变，val 修饰的对象则不可改变，但对象的状态（值） 却是可以改变的。（比如：自定义对象、数组、集合等等）</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>object TestVar {
+
+def main(args: Array[String]): Unit = {
+
+    // p1 是 var 修饰的，p1 的属性可以变，而且p1 本身也可以变
+    var p1 = new Person() 
+    p1.name = &quot;dalang&quot;
+    p1 = null
+
+    // p2 是 val 修饰的，那么 p2 本身就不可变（即 p2 的内存地址不能变）， 但是，p2 的属性是可以变，因为属性并没有用 val 修饰。
+    val p2 = new Person() 
+    p2.name=&quot;jinlian&quot;
+     // p2 = null // 错误的，因为p2 是 val 修饰的
+    }
+}
+
+class Person{
+    var name : String = &quot;jinlian&quot;
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br></div></div><h2 id="_2-3-标识符的命名规范"><a href="#_2-3-标识符的命名规范" class="header-anchor">#</a> 2.3 标识符的命名规范</h2> <p>Scala 对<strong>各种变量、方法、函数</strong>等命名时使用的字符序列称为**标识符。**即：凡是自己可以起名字的地方都叫标识符。</p> <p>1）命名规则</p> <p>Scala 中的标识符声明，基本和 Java 是一致的，但是细节上会有所变化，有以下三种规则：</p> <p>（1）以字母或者下划线开头，后接字母、数字、下划线</p> <p>（2）以操作符开头，且只包含操作符（+ - * / # !等）</p> <p>（3）用反引号<code></code>包括的任意字符串，即使是 Scala 关键字（39 个）也可以</p> <ul><li><p>package, import, class, object, trait, extends, with, type, for</p></li> <li><p>private, protected, abstract, sealed, final, implicit, lazy, override</p></li> <li><p>try, catch, finally, throw</p></li> <li><p>if, else, match, case, do, while, for, return, yield</p></li> <li><p>def, val, var</p></li> <li><p>this, super</p></li> <li><p>new</p></li> <li><p>true, false, null</p></li></ul> <p>1） 案例实操</p> <p>需求：判断 hello、Hello12、1hello、h-b、x h、h_4、<em>ab、Int、</em>、+<em>-/#!、+</em>-/#!1、if、</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>object Test03_Identifier {
+  def main(args: Array[String]): Unit = {
+    //（1）以字母或者下划线开头，后接字母、数字、下划线
+    val hello: String = &quot;&quot;
+    var Hello123 = &quot;&quot;
+    val _abc = 123
+
+//    val h-b = &quot;&quot;
+//    val 123abc = 234
+
+    //（2）以操作符开头，且只包含操作符（+ - * / # !等）
+    val -+/% = &quot;hello&quot;
+    println(-+/%)
+
+    //（3）用反引号`....`包括的任意字符串，即使是Scala关键字（39个）也可以
+    val `if` = &quot;if&quot;
+    println(`if`)
+  }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br></div></div><h2 id="_2-4-字符串输出"><a href="#_2-4-字符串输出" class="header-anchor">#</a> 2.4 字符串输出</h2> <p>1）基本语法
+（1）字符串，通过+号连接</p> <p>（2）printf 用法：字符串，通过%传值。</p> <p>（3）字符串模板（插值字符串）：通过$获取变量值</p> <p>（4）Scala 提供了 <code>&quot;&quot;&quot; ... &quot;&quot;&quot;</code> 语法，通过三个双引号来表示原生字符串和多行字符串，使用该种方式，原生字符串中的特殊字符不会被转义。</p> <p>2）案例实操</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>object Test04_String {
+  def main(args: Array[String]): Unit = {
+    //（1）字符串，通过+号连接
+    val name: String = &quot;alice&quot;
+    val age: Int = 18
+    println(age + &quot;岁的&quot; + name + &quot;在北京学习&quot;)
+
+    // *用于将一个字符串复制多次并拼接
+    println(name * 3)
+
+    //（2）printf用法：字符串，通过%传值。
+    printf(&quot;%d岁的%s在北京学习&quot;, age, name)
+    println()
+
+    //（3）字符串模板（插值字符串）：通过$获取变量值
+    println(s&quot;${age}岁的${name}在北京学习&quot;)
+
+    val num: Double = 2.3456
+    println(f&quot;The num is ${num}%2.2f&quot;)    // 格式化模板字符串
+    println(raw&quot;The num is ${num}%2.2f&quot;)
+
+    // 三引号表示字符串，保持多行字符串的原格式输出
+    val sql = s&quot;&quot;&quot;
+       |select *
+       |from
+       |  student
+       |where
+       |  name = ${name}
+       |and
+       |  age &gt; ${age}
+       |&quot;&quot;&quot;.stripMargin
+    println(sql)
+  }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br></div></div><h4 id="_2-4-1-符号字面量"><a href="#_2-4-1-符号字面量" class="header-anchor">#</a> 2.4.1 符号字面量</h4> <h4 id="_2-4-2-插值表达式"><a href="#_2-4-2-插值表达式" class="header-anchor">#</a> 2.4.2 插值表达式</h4> <p>Scala 支持插值表达式。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>scala&gt; val name=&quot;xiaoming&quot;
+name: String = xiaoming
+
+scala&gt; println(s&quot;My name is $name,I'm ${2*9}.&quot;)
+My name is xiaoming,I'm 18.
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><h2 id="_2-5-键盘输入"><a href="#_2-5-键盘输入" class="header-anchor">#</a> 2.5 键盘输入</h2> <p>在编程中，需要接收用户输入的数据，就可以使用键盘输入语句来获取。
+1）基本语法
+StdIn.readLine()、StdIn.readShort()、StdIn.readDouble() 2）案例实操
+需求：可以从控制台接收用户信息，【姓名，年龄】。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>
+object Test05_StdIn {
+  def main(args: Array[String]): Unit = {
+    // 输入信息
+    println(&quot;请输入您的大名：&quot;)
+    val name: String = StdIn.readLine()
+    println(&quot;请输入您的芳龄：&quot;)
+    val age: Int = StdIn.readInt()
+
+    // 控制台打印输出
+    println(s&quot;欢迎${age}岁的${name}来到北京学习&quot;)
+  }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><h2 id="_2-6-数据类型-重点"><a href="#_2-6-数据类型-重点" class="header-anchor">#</a> 2.6 数据类型（重点）</h2> <h3 id="回顾-java数据类型"><a href="#回顾-java数据类型" class="header-anchor">#</a> 回顾：Java数据类型</h3> <ul><li><p>Java基本类型：char、byte、short、int、long、float、double、boolean</p></li> <li><p>Java引用类型：（对象类型）</p> <p><strong>由于Java有基本类型，而且基本类型不是真正意义的对象</strong>，即使后面产生了基本类型的包装类，但是仍然存在基本数据类型，所以Java语言并不是真正意思的面向对象。</p></li></ul> <p>java基本类型的包装类：Character、Byte、Short、Integer、Long、Float、Double、Boolean</p> <p><strong>注意：Java中基本类型和引用类型没有共同的祖先。</strong></p> <h2 id="重点"><a href="#重点" class="header-anchor">#</a> 重点</h2> <ul><li><p>自动转换（隐式转换）：低精度的值类型向高精度值类型，自动转换（隐式转换）</p> <ul><li><p>自动提升原则：有多种类型的数据混合运算时，系统首先自动将所有数据转换成精度大的那种数据类型，然后再进行计算。</p></li> <li><p>把精度大的数值类型赋值给精度小的数值类型时，就会报错，反之就会进行自动类型转换。</p></li> <li><p>（byte，short）和char之间不会相互自动转换。</p></li> <li><p>byte，short，char他们三者可以计算，在计算时首先转换为int类型。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>    val a4: Byte = 12
+    val b4: Short = 25
+    val c4: Char = 'c'
+    val result4: Int = a4 + b4
+    val result44: Int = a4 + b4 + c4
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div></li></ul></li> <li><p>强制类型转换：将数据由高精度转换为低精度，就需要使用到强制转换</p> <ul><li>val n1: Int = -2.9.toInt</li></ul></li></ul> <h3 id="scala数据类型"><a href="#scala数据类型" class="header-anchor">#</a> Scala数据类型</h3> <ol><li>Scala中一切数据都是对象，<strong>都是Any的子类。</strong></li></ol> <ol start="2"><li><p>Scala中数据类型分为两大类：数值类型（AnyVal）、 引用类型（AnyRef），<strong>不管是值类型还是引用类型都是对象。</strong></p></li> <li><p>Scala数据类型仍然遵守，<mark><strong>低精度的值类型向高精度值类型，自动转换（隐式转换）</strong></mark></p></li> <li><p>Scala中的StringOps是对Java中的String增强</p></li> <li><p>Unit：对应Java中的void，用于方法返回值的位置，表示方法没有返回值。<strong>Unit是一个数据类型，只有一个对象就是()</strong>。Void不是数据类型，只是一个关键</p></li> <li><p>Null是一个类型，只有一个对象就是null。<strong>它是所有引用类型（AnyRef）的子类。</strong></p></li> <li><p><strong>Nothing，是所有数据类型的子类</strong>，主要用在一个函数没有明确返回值时使用，因为这样我们可以把抛出的返回值，返回给任何的变量或者函数。</p> <p><img src="/assets/img/image-20231102093912178.79a64a0b.png" alt="image-20231102093912178"></p></li></ol> <p><img src="/assets/img/image-20231102093810668.4c25f769.png" alt="image-20231102093810668"></p> <h2 id="_2-7-整数类型-byte、short、int、long"><a href="#_2-7-整数类型-byte、short、int、long" class="header-anchor">#</a> 2.7 整数类型（Byte、Short、Int、Long）</h2> <p>Scala 的整数类型就是用于存放整数值的，比如 12，30，3456 等等。</p> <p>1）整型分类</p> <table><thead><tr><th><strong>数据类型</strong></th> <th><strong>描述</strong></th></tr></thead> <tbody><tr><td>Byte [1]</td> <td>8 位有符号补码整数。数值区间为 -128 到 127</td></tr> <tr><td>Short [2]</td> <td>16 位有符号补码整数。数值区间为 -32768 到 32767</td></tr> <tr><td>Int [4]</td> <td>32 位有符号补码整数。数值区间为 -2147483648 到 2147483647</td></tr> <tr><td>Long [8]</td> <td>64 位有符号补码整数。数值区间为 -9223372036854775808 到9223372036854775807 = 2 的(64-1)次方-1</td></tr></tbody></table> <p>2） 案例实操</p> <p>（1）Scala 各整数类型有固定的表示范围和字段长度，不受具体操作的影响，以保证Scala 程序的可移植性。</p> <p>（2）Scala 的整型，默认为Int 型，声明 Long 型，须后加‘l’或‘L’</p> <p>（3）Scala 程序中变量常声明为Int 型，除非不足以表示大数，才使用Long</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>object Test07_DataType {
+  def main(args: Array[String]): Unit = {
+    // 1. 整数类型
+    val a1: Byte = 127
+    val a2: Byte = -128
+
+//    val a2: Byte = 128    // error
+
+    val a3 = 12    // 整数默认类型为Int
+    val a4: Long = 1324135436436L    // 长整型数值定义
+
+    val b1: Byte = 10
+    val b2: Byte = 10 + 20
+    println(b2)
+
+//    val b3: Byte = b1 + 20
+    val b3: Byte = (b1 + 20).toByte
+    println(b3)
+
+    // 2. 浮点类型
+    val f1: Float = 1.2345f
+    val d1 = 34.2245
+
+    // 3. 字符类型
+    val c1: Char = 'a'
+    println(c1)
+
+    val c2: Char = '9'
+    println(c2)
+
+    // 控制字符
+    val c3: Char = '\t'    // 制表符
+    val c4: Char = '\n'    // 换行符
+    println(&quot;abc&quot; + c3 + &quot;def&quot;)
+    println(&quot;abc&quot; + c4 + &quot;def&quot;)
+
+    // 转义字符
+    val c5 = '\\'    // 表示\自身
+    val c6 = '\&quot;'    // 表示&quot;
+    println(&quot;abc&quot; + c5 + &quot;def&quot;)
+    println(&quot;abc&quot; + c6 + &quot;def&quot;)
+
+    // 字符变量底层保存ASCII码
+    val i1: Int = c1
+    println(&quot;i1: &quot; + i1)
+    val i2: Int = c2
+    println(&quot;i2: &quot; + i2)
+
+    val c7: Char = (i1 + 1).toChar
+    println(c7)
+    val c8: Char = (i2 - 1).toChar
+    println(c8)
+
+    // 4. 布尔类型
+    val isTrue: Boolean = true
+    println(isTrue)
+
+    // 5. 空类型
+    // 5.1 空值Unit
+    def m1(): Unit = {
+      println(&quot;m1被调用执行&quot;)
+    }
+
+    val a: Unit = m1()
+    println(&quot;a: &quot; + a)
+
+    // 5.2 空引用Null
+//    val n: Int = null    // error
+    var student: Student = new Student(&quot;alice&quot;, 20)
+    student = null
+    println(student)
+
+    // 5.3 Nothing
+    def m2(n: Int): Int = {
+      if (n == 0)
+        throw new NullPointerException
+      else
+        return n
+    }
+
+
+    val b: Int = m2(2)
+    println(&quot;b: &quot; + b)
+  }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br></div></div><h2 id="_2-8-浮点类型-float、double"><a href="#_2-8-浮点类型-float、double" class="header-anchor">#</a> 2.8 浮点类型（Float、Double）</h2> <p>Scala 的浮点类型可以表示一个小数，比如 123.4f，7.8，0.12 等等。</p> <p>1）浮点型分类</p> <table><thead><tr><th><strong>数据类型</strong></th> <th><strong>描述</strong></th></tr></thead> <tbody><tr><td>Float [4]</td> <td>32 位, IEEE 754 标准的单精度浮点数</td></tr> <tr><td>Double [8]</td> <td>64 位 IEEE 754 标准的双精度浮点数</td></tr></tbody></table> <p>2）案例实操
+Scala 的浮点型常量默认为Double 型，声明 Float 型常量，须后加‘f’或‘F’。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>object TestDataType {
+
+    def main(args: Array[String]): Unit = {
+
+        // 建议，在开发中需要高精度小数时，请选择Double var n7 = 2.2345678912f
+        var n8 = 2.2345678912
+
+        println(&quot;n7=&quot; + n7) println(&quot;n8=&quot; + n8)
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div></div><p>//运行的结果</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>n7=2.2345679 
+n8=2.2345678912
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><h2 id="_2-9-字符类型-char"><a href="#_2-9-字符类型-char" class="header-anchor">#</a> 2.9 字符类型（Char）</h2> <p>1）基本说明
+字符类型可以表示单个字符，字符类型是 Char。</p> <p>2）案例实操
+（1）字符常量是用单引号 ' ' 括起来的单个字符。
+（2）\t ：一个制表位，实现对齐的功能
+（3）\n ：换行符</p> <p>（4）\ ：表示\</p> <p>（5）&quot; ：表示&quot;</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>object Test08_DataTypeConversion {
+  def main(args: Array[String]): Unit = {
+
+    // 1. 自动类型转换
+    //    （1）自动提升原则：有多种类型的数据混合运算时，系统首先自动将所有数据转换成精度大的那种数据类型，然后再进行计算。
+    val a1: Byte = 10
+    val b1: Long = 2353
+    val result1: Long = a1 + b1
+    val result11: Int = (a1 + b1.toInt) // 强转
+
+    //    （2）把精度大的数值类型赋值给精度小的数值类型时，就会报错，反之就会进行自动类型转换。
+    val a2: Byte = 10
+    val b2: Int = a2
+    //    val c2: Byte = b2    // error
+
+    //    （3）（byte，short）和char之间不会相互自动转换。
+    val a3: Byte = 10
+    val b3: Char = 'b'
+    //    val c3: Byte = b3    // error
+    val c3: Int = b3
+    println(c3)
+
+    //    （4）byte，short，char他们三者可以计算，在计算时首先转换为int类型。
+    val a4: Byte = 12
+    val b4: Short = 25
+    val c4: Char = 'c'
+    val result4: Int = a4 + b4
+    val result44: Int = a4 + b4 + c4
+    println(result44)
+
+    // 2. 强制类型转换
+    //    （1）将数据由高精度转换为低精度，就需要使用到强制转换
+    val n1: Int = -2.9.toInt
+    println(&quot;n1: &quot; + n1)
+
+    //    （2）强转符号只针对于最近的操作数有效，往往会使用小括号提升优先级
+    val n2: Int = 2.6.toInt + 3.7.toInt
+    val n3: Int = (2.6 + 3.7).toInt
+    println(&quot;n2: &quot; + n2)
+    println(&quot;n3: &quot; + n3)
+
+    // 3. 数值类型和String类型的转换
+    // (1) 数值转String
+    val n: Int = 27
+    val s: String = n + &quot;&quot;
+    println(s)
+
+    // (2) String转数值
+    val m: Int = &quot;12&quot;.toInt
+    val f: Float = &quot;12.3&quot;.toFloat
+    val f2: Int = &quot;12.3&quot;.toDouble.toInt
+    println(f2)
+  }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br></div></div><h2 id="_2-10-布尔类型-boolean"><a href="#_2-10-布尔类型-boolean" class="header-anchor">#</a> 2.10 布尔类型：Boolean</h2> <p>1）基本说明
+（1）布尔类型也叫Boolean 类型，Booolean 类型数据只允许取值 true 和 false
+（2）boolean 类型占 1 个字节。</p> <p>2）案例实操</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>object TestBooleanType {
+    def main(args: Array[String]): Unit = { 
+        var isResult : Boolean = false
+        var isResult2 : Boolean = true
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><h2 id="_2-11-unit-类型、null-类型和nothing-类型-重点"><a href="#_2-11-unit-类型、null-类型和nothing-类型-重点" class="header-anchor">#</a> 2.11 Unit 类型、Null 类型和Nothing 类型（重点）</h2> <p>1）基本说明</p> <table><thead><tr><th><strong>数据类型</strong></th> <th><strong>描述</strong></th></tr></thead> <tbody><tr><td><strong>Unit</strong></td> <td>表示无值，和其他语言中 void 等同。用作不返回任何结果的方法的结果类型。Unit 只有一个实例值，写成()。</td></tr> <tr><td><strong>Null</strong></td> <td>null , Null 类型只有一个实例值 null</td></tr> <tr><td><strong>Nothing</strong></td> <td>Nothing 类型在 Scala 的类层级最低端；它是任何其他类型的子类型。当一个函数，我们确定没有正常的返回值，可以用 Nothing 来指定返回类型，这样有一个好处，就是我们可以把返回的值（异常）赋给其它的函数或者变量（兼容性）</td></tr></tbody></table> <p>1） 案例实操</p> <p>（1） Unit 类型用来标识过程，也就是没有明确返回值的函数。</p> <p>由此可见，Unit 类似于 Java 里的void。Unit 只有一个实例——<strong>( )</strong>，这个实例也没有实质意义</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>object TestSpecialType {
+
+    def main(args: Array[String]): Unit = {
+
+        def sayOk : Unit = {// unit 表示没有返回值，即 void
+        }
+        println(sayOk)
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><p>（2）Null 类只有一个实例对象，Null 类似于 Java 中的 null 引用。Null 可以赋值给任意引用类型（AnyRef），但是不能赋值给值类型（AnyVal）</p> <p>（3）Nothing，可以作为没有正常返回值的方法的返回类型，非常直观的告诉你这个方法不会正常返回，而且由于 Nothing 是其他任意类型的子类，他还能跟要求返回值的方法兼容。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>object TestSpecialType {
+    def main(args: Array[String]): Unit = { def test() : Nothing={
+    	throw new Exception()
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><h2 id="_2-12-类型转换"><a href="#_2-12-类型转换" class="header-anchor">#</a> 2.12 类型转换</h2> <p>扩展 Java 面试题（隐式类型转换）：</p> <p><img src="/assets/img/image-20231102095218652.df1bbcc2.png" alt="类型转换"></p> <h3 id="_2-12-1-数值类型自动转换"><a href="#_2-12-1-数值类型自动转换" class="header-anchor">#</a> 2.12.1 数值类型自动转换</h3> <p>当 Scala 程序在进行赋值或者运算时，精度小的类型自动转换为精度大的数值类型，这个就是自动类型转换（隐式转换）。数据类型按精度（容量）大小排序为：</p> <p><img src="/assets/img/image-20231102095259270.e145eb1c.png" alt="image-20231102095259270"></p> <h4 id="_1-基本说明"><a href="#_1-基本说明" class="header-anchor">#</a> 1）基本说明</h4> <p>（1） 自动提升原则：有多种类型的数据混合运算时，系统首先<strong>自动将所有数据转换成精度大的那种数据类型</strong>，然后再进行计算。</p> <p>（2） 把精度大的数值类型赋值给精度小的数值类型时，就会报错，反之就会进行自动类型转换。</p> <p>（3）<strong>（byte，short）和 char 之间不会相互自动转换。</strong></p> <p>（4）<strong>byte，short，char 他们三者可以计算，在计算时首先转换为 int 类型。</strong></p> <h4 id="_2-案例实操"><a href="#_2-案例实操" class="header-anchor">#</a> 2） 案例实操</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>object TestValueTransfer {
+    def main(args: Array[String]): Unit = {
+
+        //（1）自动提升原则：有多种类型的数据混合运算时，系统首先自动将所有数据转换成精度大的那种数值类型，然后再进行计算。
+        var n = 1 + 2.0
+        println(n)	// n 就 是 Double
+        //（2）把精度大的数值类型赋值给精度小的数值类型时，就会报错，反之就会进行自动类型转换。
+        var n2 : Double= 1.0
+        //var n3 : Int = n2 //错误，原因不能把高精度的数据直接赋值和低
+        精度。
+        //（3）（byte，short）和 char 之间不会相互自动转换。
+        var n4 : Byte = 1
+        //var c1 : Char = n4	//错误var n5:Int = n4
+
+        //（4）byte，short，char 他们三者可以计算，在计算时首先转换为 int
+        类型。
+        var n6 : Byte = 1 var c2 : Char = 1
+        // var n : Short = n6 + c2 //当 n6 + c2 结果类型就是int
+        // var n7 : Short = 10 + 90 //错误
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br></div></div><blockquote><p>注意：Scala 还提供了非常强大的隐式转换机制（隐式函数，隐式类等），我们放在高级部分专门用一个章节来讲解。</p></blockquote> <h3 id="_2-12-2-强制类型转换"><a href="#_2-12-2-强制类型转换" class="header-anchor">#</a> 2.12.2 强制类型转换</h3> <h5 id="_1-基本说明-2"><a href="#_1-基本说明-2" class="header-anchor">#</a> 1）基本说明</h5> <p>自动类型转换的逆过程，<strong>将精度大的数值类型转换为精度小的数值类型</strong>。使用时要加上强制转函数，但可能造成精度降低或溢出，格外要注意。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>Java	:	int num = (int)2.5
+Scala :	var num : Int = 2.7.toInt
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><h5 id="_2-案例实操-2"><a href="#_2-案例实操-2" class="header-anchor">#</a> 2）案例实操</h5> <p>（1）将数据由高精度转换为低精度，就需要使用到强制转换
+（2）强转符号只针对于最近的操作数有效，往往会使用小括号提升优先级</p> <h3 id="_2-12-3-数值类型和string-类型间转换"><a href="#_2-12-3-数值类型和string-类型间转换" class="header-anchor">#</a> 2.12.3 数值类型和String 类型间转换</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>object TestForceTransfer {
+
+    def main(args: Array[String]): Unit = {
+
+        //（1）将数据由高精度转换为低精度，就需要使用到强制转换
+        var n1: Int = 2.5.toInt // 这个存在精度损失
+        //（2）强转符号只针对于最近的操作数有效，往往会使用小括号提升优先级
+        var r1: Int = 10 * 3.5.toInt + 6 * 1.5.toInt	// 10 *3 + 6*1 = 36
+        var r2: Int = (10 * 3.5 + 6 * 1.5).toInt	// 44.0.toInt = 44
+
+        println(&quot;r1=&quot; + r1 + &quot; r2=&quot; + r2)
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><h3 id="_2-12-3-数值类型和string-类型间转换-2"><a href="#_2-12-3-数值类型和string-类型间转换-2" class="header-anchor">#</a> 2.12.3 数值类型和String 类型间转换</h3> <p>1）基本说明
+在程序开发中，我们经常需要将基本数值类型转成 String 类型。或者将 String 类型转成基本数值类型。
+2）案例实操
+（1）基本类型转 String 类型（语法：将基本类型的值+&quot;&quot; 即可）
+（2）String 类型转基本数值类型（语法：s1.toInt、s1.toFloat、s1.toDouble、s1.toByte、s1.toLong、s1.toShort）</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>object TestStringTransfer {
+
+    def main(args: Array[String]): Unit = {
+
+        //（1）基本类型转 String 类型（语法：将基本类型的值+&quot;&quot; 即可）
+        var str1 : String = true + &quot;&quot; var str2 : String = 4.5 + &quot;&quot; var str3 : String = 100 +&quot;&quot;
+
+        //（2）String 类型转基本数值类型（语法：调用相关 API） var s1 : String = &quot;12&quot;
+
+        var n1 : Byte = s1.toByte var n2 : Short = s1.toShort var n3 : Int = s1.toInt  var n4 : Long = s1.toLong
+	}
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div></div><p>（3）注意事项</p> <p>在将 String 类型转成基本数值类型时，要确保 String 类型能够转成有效的数据，比如我们可以把&quot;123&quot;，转成一个整数，但是不能把&quot;hello&quot;转成一个整数。</p> <p>var n5:Int = &quot;12.6&quot;.toInt 会出现NumberFormatException 异常。</p> <p><strong>扩展面试题</strong></p> <p><img src="/assets/img/image-20231102095848254.faf862e1.png" alt="image-20231102095848254"></p> <h1 id="第-3-章-运算符"><a href="#第-3-章-运算符" class="header-anchor">#</a> 第 3 章 运算符</h1> <p>Scala 运算符的使用和 Java 运算符的使用基本相同，只有个别细节上不同。</p> <h2 id="_3-1-算术运算符"><a href="#_3-1-算术运算符" class="header-anchor">#</a> 3.1 算术运算符</h2> <h4 id="_1-基本语法"><a href="#_1-基本语法" class="header-anchor">#</a> 1）基本语法</h4> <table><thead><tr><th>运算符</th> <th>运算</th> <th>范例</th> <th>结果</th></tr></thead> <tbody><tr><td>+</td> <td>正号</td> <td>+3</td> <td>3</td></tr> <tr><td>-</td> <td>负号</td> <td>b=4; -b</td> <td>-4</td></tr> <tr><td>+</td> <td>加</td> <td>5+5</td> <td>10</td></tr> <tr><td>-</td> <td>减</td> <td>6-4</td> <td>2</td></tr> <tr><td>*</td> <td>乘</td> <td>3*4</td> <td>12</td></tr> <tr><td>/</td> <td>除</td> <td>5/5</td> <td>1</td></tr> <tr><td>%</td> <td>取模(取余)</td> <td>7%5</td> <td>2</td></tr> <tr><td>+</td> <td>字符串相加</td> <td>“He”+”llo”</td> <td>“Hello”</td></tr></tbody></table> <p>（1）对于除号“/”，它的整数除和小数除是有区别的：整数之间做除法时，只保留整数部分而舍弃小数部分。</p> <p>（2）对一个数取模 a%b，和 Java 的取模规则一样。</p> <p>2）案例实操</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>object TestArithmetic {
+
+    def main(args: Array[String]): Unit = {
+
+        //（1）对于除号“/”，它的整数除和小数除是有区别的：整数之间做除法   时，只保留整数部分而舍弃小数部分。
+        var r1: Int = 10 / 3 // 3 
+        println(&quot;r1=&quot; + r1)
+
+        var r2: Double = 10 / 3 // 3.0 
+        println(&quot;r2=&quot; + r2)
+
+        var r3: Double = 10.0 / 3 // 3.3333 
+        println(&quot;r3=&quot; + r3)
+        println(&quot;r3=&quot; + r3.formatted(&quot;%.2f&quot;)) // 含义：保留小数点 2位，使用四舍五入
+        //（2）对一个数取模 a%b，和 Java 的取模规则一样。
+        var r4 = 10 % 3 // 1 
+        println(&quot;r4=&quot; + r4)
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br></div></div><h2 id="_3-2-关系运算符-比较运算符"><a href="#_3-2-关系运算符-比较运算符" class="header-anchor">#</a> 3.2 关系运算符（比较运算符）</h2> <p>1）基本语法</p> <table><thead><tr><th>运算符</th> <th>运算</th> <th>范例</th> <th>结果</th></tr></thead> <tbody><tr><td>==</td> <td>相等于</td> <td>4==3</td> <td>false</td></tr> <tr><td>!=</td> <td>不等于</td> <td>4！=3</td> <td>true</td></tr> <tr><td>&lt;</td> <td>小于</td> <td>4&lt;3</td> <td>false</td></tr> <tr><td>&gt;</td> <td>大于</td> <td>4&gt;3</td> <td>true</td></tr> <tr><td>&lt;=</td> <td>小于等于</td> <td>4&lt;=3</td> <td>false</td></tr> <tr><td>&gt;=</td> <td>大于等于</td> <td>4&gt;=3</td> <td>true</td></tr></tbody></table> <p>2）案例实操
+（1）需求 1：</p> <p>（2）需求 2：Java 和Scala 中关于==的区别</p> <p>Java：
+==比较两个变量本身的值，即两个对象在内存中的首地址；</p> <p>equals 比较字符串中所包含的内容是否相同。</p> <p>Scala：==更加类似于 Java 中的 equals，参照 jd 工具</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>def main(args: Array[String]): Unit = { 
+	val s1 = &quot;abc&quot;
+	val s2 = new String(&quot;abc&quot;)
+	println(s1 == s2) 
+	println(s1.eq(s2))
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><p>输出结果：</p> <p>true</p> <p>false</p> <p><strong>scala中eq，equals，==，===经常搞混，这里总结一下</strong></p> <ul><li><p>equals比较的是值是否相等</p></li> <li><p>eq比较的是 地址是否相等</p></li> <li><p>==（等值符），如果比较的对象是null，==调用的是eq方法，如果比较的对象不是null，==调用的是equals方法。当等号两边的值为相同类型时比较值是否相同，类型不同时会发生类型的自动转换，转换为相同的类型后再作比较</p></li> <li><p>===一般用于spark中，是在Column类中定义的函数，对应的不等于是=!=</p></li></ul> <h2 id="_3-3-逻辑运算符"><a href="#_3-3-逻辑运算符" class="header-anchor">#</a> 3.3 逻辑运算符</h2> <p>1）基本语法
+用于连接多个条件（一般来讲就是关系表达式），最终的结果也是一个 Boolean 值。假定：变量A 为 true，B 为 false</p> <table><thead><tr><th>运算符</th> <th>描述</th> <th>实例</th></tr></thead> <tbody><tr><td>&amp;&amp;</td> <td>逻辑与</td> <td>(A &amp;&amp; B) 运算结果为 false</td></tr> <tr><td>||</td> <td>逻辑或</td> <td>(A || B) 运算结果为 true</td></tr> <tr><td>!</td> <td>逻辑非</td> <td>!(A &amp;&amp; B) 运算结果为 true</td></tr></tbody></table> <blockquote><p>扩展:避免逻辑与空指针异常</p></blockquote> <h2 id="_3-4-赋值运算符"><a href="#_3-4-赋值运算符" class="header-anchor">#</a> 3.4 赋值运算符</h2> <p>1）基本语法
+赋值运算符就是将某个运算后的值，赋给指定的变量。</p> <table><thead><tr><th>运算符</th> <th>描述</th> <th>实例</th></tr></thead> <tbody><tr><td>=</td> <td>简单的赋值运算符，将一个表达式的值赋给一个左值</td> <td>C = A + B 将 A + B 表达式结果赋值 给 C</td></tr> <tr><td>+=</td> <td>相加后再赋值</td> <td>C += A 等 于 C = C + A</td></tr> <tr><td>-=</td> <td>相减后再赋值</td> <td>C -= A 等 于 C = C - A</td></tr> <tr><td>*=</td> <td>相乘后再赋值</td> <td>C *= A 等 于 C = C * A</td></tr> <tr><td>/=</td> <td>相除后再赋值</td> <td>C /= A 等 于 C = C / A</td></tr> <tr><td>%=</td> <td>求余后再赋值</td> <td>C %= A 等 于 C = C % A</td></tr> <tr><td>&lt;&lt;=</td> <td>左移后赋值</td> <td>C &lt;&lt;= 2 等 于 C = C &lt;&lt; 2</td></tr> <tr><td>&gt;&gt;=</td> <td>右移后赋值</td> <td>C &gt;&gt;= 2 等 于 C = C &gt;&gt; 2</td></tr> <tr><td>&amp;=</td> <td>按位与后赋值</td> <td>C &amp;= 2	等 于 C = C &amp; 2</td></tr> <tr><td>^=</td> <td>按位异或后赋值</td> <td>C ^= 2	等 于 C = C ^ 2</td></tr> <tr><td>|=</td> <td>按位或后赋值</td> <td>C |= 2	等 于 C = C | 2</td></tr></tbody></table> <blockquote><p>注意：Scala 中没有++、--操作符，可以通过+=、-=来实现同样的效果；</p></blockquote> <h2 id="_3-5位运算符"><a href="#_3-5位运算符" class="header-anchor">#</a> 3.5位运算符</h2> <p>1）基本语法
+下 表 中 变 量 a 为 60，b 为 13 。</p> <table><thead><tr><th>运算符</th> <th>描述</th> <th>实例</th></tr></thead> <tbody><tr><td>&amp;</td> <td>按位与运算符</td> <td>(a &amp; b) 输出结果 12  ，二进制解释： 0000 1100</td></tr> <tr><td>|</td> <td>按位或运算符</td> <td>(a | b) 输出结果 61 ，二进制解释： 0011 1101</td></tr> <tr><td>^</td> <td>按位异或运算符</td> <td>(a ^ b) 输出结果 49 ，二进制解释： 0011 0001</td></tr> <tr><td>~</td> <td>按位取反运算符</td> <td>(~a ) 输出结果 -61 ，二进制解释： 1100 0011， 在一个有符号二进制数的补码形式。</td></tr> <tr><td>&lt;&lt;</td> <td>左移动运算符</td> <td>a &lt;&lt; 2  输出结果 240  ，二进制解释： 0011 0000</td></tr> <tr><td>&gt;&gt;</td> <td>右移动运算符</td> <td>a &gt;&gt; 2  输出结果 15 ，二进制解释： 0000 1111</td></tr> <tr><td>&gt;&gt;&gt;</td> <td>无符号右移</td> <td>a &gt;&gt;&gt;2 输出结果 15, 二进制解释: 0000 1111</td></tr></tbody></table> <h2 id="_3-6-scala-运算符本质"><a href="#_3-6-scala-运算符本质" class="header-anchor">#</a> 3.6 Scala 运算符本质</h2> <p><strong>在 Scala 中其实是没有运算符的，所有运算符都是方法</strong>。
+1）当调用对象的方法时，点.可以省略
+2）如果函数参数只有一个，或者没有参数，()可以省略</p> <blockquote><p>a + b 就是 a.+(b)  调用了a对象的 + 方法</p></blockquote> <div class="language- line-numbers-mode"><pre class="language-text"><code>object TestOpt {
+    def main(args: Array[String]): Unit = {
+
+        // 标准的加法运算
+        val i:Int = 1.+(1)
+
+        // （1）当调用对象的方法时，.可以省略
+        val j:Int = 1 + (1)
+
+        // （2）如果函数参数只有一个，或者没有参数，()可以省略
+        val k:Int = 1 + 1
+
+        println(1.toString()) 
+        println(1 toString()) 
+        println(1 toString)
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br></div></div><h1 id="第-4-章-流程控制"><a href="#第-4-章-流程控制" class="header-anchor">#</a> 第 4 章 流程控制</h1> <h2 id="_4-1-分支控制if-else"><a href="#_4-1-分支控制if-else" class="header-anchor">#</a> 4.1 分支控制if-else</h2> <p>让程序有选择的的执行，分支控制有三种：单分支、双分支、多分支</p> <h3 id="_4-1-1-单分支"><a href="#_4-1-1-单分支" class="header-anchor">#</a> 4.1.1 单分支</h3> <p>1）基本语法</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>if	(条件表达式)	{
+	执行代码块
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>说明：当条件表达式为 ture 时，就会执行{ }的代码。</p> <p>2）案例实操</p> <p>需求：输入人的年龄，如果该同志的年龄小于 18 岁，则输出“童年”</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>object TestIfElse {
+    def main(args: Array[String]): Unit = {
+
+        println(&quot;input age:&quot;)
+        var age = StdIn.readShort()
+
+        if (age &lt; 18){ 
+        	println(&quot;童年&quot;)
+        }
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br></div></div><h3 id="_4-1-2-双分支"><a href="#_4-1-2-双分支" class="header-anchor">#</a> 4.1.2 双分支</h3> <p>1）基本语法</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>if (条件表达式) {
+	执行代码块 1
+} else {
+	执行代码块 2
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><h3 id="_4-1-3-多分支"><a href="#_4-1-3-多分支" class="header-anchor">#</a> 4.1.3 多分支</h3> <p>1）基本语法</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>if (条件表达式 1) {
+	执行代码块 1
+}
+else if (条件表达式 2) {
+	执行代码块 2
+}
+	……
+else {
+	执行代码块 n
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div></div><p>（2）需求 2：Scala 中 if else 表达式其实是有返回值的，具体返回值取决于满足条件的代码体的最后一行内容。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>object TestIfElse	{
+    def main(args: Array[String]): Unit = {
+
+        println(&quot;input age&quot;)
+        var age = StdIn.readInt()
+
+        val res :String = if (age &lt; 18){ 
+        	&quot;童年&quot;
+        }else if(age&gt;=18 &amp;&amp; age&lt;30){ 
+        	&quot;中年&quot;
+        }else{
+        	&quot;老年&quot;
+        }
+
+        println(res)
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br></div></div><p>（3）需求 3：Scala 中返回值类型不一致，取它们共同的祖先类型。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>object TestIfElse	{
+    def main(args: Array[String]): Unit = {
+
+        println(&quot;input age&quot;)
+        var age = StdIn.readInt()
+
+        val res:Any = if (age &lt; 18){ 
+        	&quot;童年&quot;
+        }else if(age&gt;=18 &amp;&amp; age&lt;30){ 
+        	&quot;中年&quot;
+        }else{
+        	100
+        }
+
+        println(res)
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br></div></div><p>（4）需求 4：Java 中的三元运算符可以用 if else 实现</p> <p>如果大括号{}内的逻辑代码只有一行，大括号可以省略。如果省略大括号，if 只对最近的一行逻辑代码起作用。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>object TestIfElse {
+
+    def main(args: Array[String]): Unit = {
+
+        // Java
+        // int result = flag?1:0
+
+        // Scala println(&quot;input age&quot;)
+        var age = StdIn.readInt()
+        val res:Any = if (age &lt; 18)	&quot;童年&quot; else &quot;成年&quot; &quot;不起作用&quot;
+        println(res)
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><h2 id="_4-2-嵌套分支"><a href="#_4-2-嵌套分支" class="header-anchor">#</a> 4.2 嵌套分支</h2> <p>在一个分支结构中又完整的嵌套了另一个完整的分支结构，里面的分支的结构称为内层。分支外面的分支结构称为外层分支。嵌套分支不要超过 3 层。</p> <p>1）基本语法</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>if(){
+    if(){
+
+    }else{
+	}
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><p>2）案例实操</p> <p>需求：如果输入的年龄小于 18，返回“童年”。如果输入的年龄大于等于 18，需要再判断：如果年龄大于等于 18 且小于 30，返回“中年”；如果其他，返回“老年”。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>object TestIfElse	{
+    def main(args: Array[String]): Unit = {
+
+        println(&quot;input age&quot;)
+        var age = StdIn.readInt()
+
+        val res :String = if (age &lt; 18){ 
+        	&quot;童年&quot;
+        }else {
+        	if(age&gt;=18 &amp;&amp; age&lt;30){ 
+        		&quot;中年&quot;
+            }else{
+            	&quot;老年&quot;
+            }
+        }
+
+        println(res)
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br></div></div><h2 id="_4-3-switch-分支结构"><a href="#_4-3-switch-分支结构" class="header-anchor">#</a> 4.3 Switch 分支结构</h2> <p>在 Scala 中没有 Switch，而是使用<strong>模式匹配来处理。</strong>
+模式匹配涉及到的知识点较为综合，因此我们放在后面讲解。</p> <h2 id="_4-4-for-循环控制"><a href="#_4-4-for-循环控制" class="header-anchor">#</a> 4.4 For 循环控制</h2> <p>Scala 也为 for 循环这一常见的控制结构提供了非常多的特性，这些 for 循环的特性被称为 for 推导式或 for 表达式。</p> <h3 id="_4-4-1范围数据循环-to"><a href="#_4-4-1范围数据循环-to" class="header-anchor">#</a> 4.4.1范围数据循环（To）</h3> <p>1）基本语法</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>for(i &lt;- 1 to 3){
+	print(i + &quot; &quot;)
+}
+println()
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p>（1）i 表示循环的变量，&lt;- 规定 to</p> <p>（2）i 将会从 1-3 循环，前后闭合</p> <p>2）案例实操
+需求：输出 5 句  &quot;Hello world&quot;</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>object TestFor {
+    def main(args: Array[String]): Unit = { 
+        for(i &lt;- 1 to 5){
+        	println(&quot;Hello world &quot;+i)
+        }
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><h3 id="_4-4-2-范围数据循环-until"><a href="#_4-4-2-范围数据循环-until" class="header-anchor">#</a> 4.4.2 范围数据循环（Until）</h3> <p>1）基本语法</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>for(i &lt;- 1 until 3) { 
+	print(i + &quot; &quot;)
+}
+println()
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p>（1）这种方式和前面的区别在于 i 是从 1 到 3-1(2)
+（2）即使<strong>前闭合后开</strong>的范围</p> <h3 id="_4-4-3-循环守卫"><a href="#_4-4-3-循环守卫" class="header-anchor">#</a> 4.4.3 循环守卫</h3> <p>1）基本语法</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>for(i &lt;- 1 to 3 if i != 2) { 
+	print(i + &quot; &quot;)
+}
+println()
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p>说明：</p> <p>（1） 循环守卫，即循环保护式（也称条件判断式，守卫）。保护式为 true 则进入循环体内部，为false 则跳过，类似于continue。</p> <p>（2）上面的代码等价</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>for (i &lt;- 1 to 3){
+    if (i != 2) {
+    	print(i + &quot; &quot;)
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><h3 id="_4-4-4-循环步长"><a href="#_4-4-4-循环步长" class="header-anchor">#</a> 4.4.4 循环步长</h3> <p>1）基本语法</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>for (i &lt;- 1 to 10 by 2) { 
+	println(&quot;i=&quot; + i)
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>说明：by 表示步长</p> <p>2）案例实操</p> <p>需求：输出 1 到 10 以内的所有奇数</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>for (i &lt;- 1 to 10 by 2) { 
+	println(&quot;i=&quot; + i)
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>输出结果</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>i=1 
+i=3 
+i=5 
+i=7 
+i=9
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><h3 id="_4-4-5嵌套循环"><a href="#_4-4-5嵌套循环" class="header-anchor">#</a> 4.4.5嵌套循环</h3> <p>1）基本语法</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>for(i &lt;- 1 to 3; j &lt;- 1 to 3) { 
+  println(&quot; i =&quot; + i + &quot; j = &quot; + j)
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>说明：没有关键字，所以范围后一定要加；来隔断逻辑</p> <p>2）基本语法
+上面的代码等价</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>for (i &lt;- 1 to 3) {
+    for (j &lt;- 1 to 3) {
+    	println(&quot;i =&quot; + i + &quot; j=&quot; + j)
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><h3 id="_4-4-6-引入变量"><a href="#_4-4-6-引入变量" class="header-anchor">#</a> 4.4.6 引入变量</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>for(i &lt;- 1 to 3; j = 4 - i) { 
+	println(&quot;i=&quot; + i + &quot; j=&quot; + j)
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>说明：
+（1）for 推导式一行中有多个表达式时，所以要加 ; 来隔断逻辑</p> <p>（1） for 推导式有一个不成文的约定：当 for 推导式仅包含单一表达式时使用圆括号， 当包含多个表达式时，一般每行一个表达式，并用花括号代替圆括号，如下</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>for {
+	i &lt;- 1 to 3 
+	j = 4 - i
+} {
+	println(&quot;i=&quot; + i + &quot; j=&quot; + j)
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><p>上面的代码等价于</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>for (i &lt;- 1 to 3) { 
+	var j = 4 - i
+	println(&quot;i=&quot; + i + &quot; j=&quot; + j)
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><h3 id="_4-4-7-循环返回值"><a href="#_4-4-7-循环返回值" class="header-anchor">#</a> 4.4.7 循环返回值</h3> <p>1）基本语法</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>val res = for(i &lt;- 1 to 10) yield i 
+println(res)
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><p>说明：将遍历过程中处理的结果返回到一个新 Vector 集合中，使用 yield 关键字。</p> <p>注意：开发中很少使用。</p> <p>2）案例实操
+需求：将原数据中所有值乘以 2，并把数据返回到一个新的集合中。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>object TestFor {
+    def main(args: Array[String]): Unit = 
+    { 
+        var res = for(i &lt;-1 to 10) yield {
+        	i * 2
+        }
+
+    	println(res)
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div></div><p>输出结果：
+Vector(2, 4, 6, 8, 10, 12, 14, 16, 18, 20)</p> <h3 id="_4-4-8-倒序打印"><a href="#_4-4-8-倒序打印" class="header-anchor">#</a> 4.4.8 倒序打印</h3> <p>1）说明：如果想倒序打印一组数据，可以用 reverse。
+2）案例实操：
+需求：倒序打印 10 到 1</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>for(i &lt;- 1 to 10 reverse){ 
+	println(i)
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><h2 id="_4-5-while-和-do-while-循环控制"><a href="#_4-5-while-和-do-while-循环控制" class="header-anchor">#</a> 4.5 While 和 do..While 循环控制</h2> <p>While 和 do..While 的使用和 Java 语言中用法相同。</p> <h3 id="_4-5-1while-循环控制"><a href="#_4-5-1while-循环控制" class="header-anchor">#</a> 4.5.1While 循环控制</h3> <p>1）基本语法</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>循环变量初始化
+while (循环条件) {
+	循环体(语句) 
+	循环变量迭代
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p>说明：</p> <p>（1） 循环条件是返回一个布尔值的表达式</p> <p>（2） while 循环是先判断再执行语句</p> <p>（3） 与 for 语句不同，<strong>while 语句没有返回值</strong>，即整个 <strong>while 语句的结果是Unit 类型()</strong></p> <p>（4） <strong>因为 while 中没有返回值</strong>，所以当要用该语句来计算并返回结果时，就不可避免的使用变量，而变量需要声明在 while 循环的外部，那么就等同于循环的内部对外部的变量造成了影响，所以不推荐使用，而是推荐使用 for 循环。</p> <h3 id="_4-5-2-do-while-循环控制"><a href="#_4-5-2-do-while-循环控制" class="header-anchor">#</a> 4.5.2 do..while 循环控制</h3> <p>1）基本语法</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>循环变量初始化; 
+do{
+
+	循环体(语句) 
+	循环变量迭代
+} while(循环条件)
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><p>说明</p> <p>（1） 循环条件是返回一个布尔值的表达式</p> <p>（2） do..while 循环是先执行，再判断</p> <h2 id="_4-6-循环中断"><a href="#_4-6-循环中断" class="header-anchor">#</a> 4.6 循环中断</h2> <p>1） 基本说明</p> <p>Scala 内置控制结构特地<strong>去掉了</strong> <strong>break</strong> <strong>和</strong> <strong>continue</strong>，是为了更好的适应<strong>函数式编程</strong>，推荐使用函数式的风格解决break 和continue 的功能，而不是一个关键字。Scala 中使用breakable 控制结构来实现 break 和 continue 功能。</p> <p>1） 案例实操</p> <p>需求 1：采用异常的方式退出循环</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>def main(args: Array[String]): Unit = {
+
+    try {
+        for (elem &lt;- 1 to 10) { 
+        	println(elem)
+        	if (elem == 5) throw new RuntimeException
+    	}
+    }catch {
+        case e =&gt;
+    }
+    println(&quot;正常结束循环&quot;)
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div></div><p>需求 2：采用 Scala 自带的函数，退出循环</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>import scala.util.control.Breaks
+def main(args: Array[String]): Unit = { 
+	Breaks.breakable(
+        for (elem &lt;- 1 to 10) { 
+        	println(elem)
+        	if (elem == 5) Breaks.break()
+        }
+    )
+
+    println(&quot;正常结束循环&quot;)
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br></div></div><p>需求 3：对break 进行省略</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>import scala.util.control.Breaks._ 
+object TestBreak {
+    def main(args: Array[String]): Unit = {
+
+        breakable {
+            for (elem &lt;- 1 to 10) { 
+                println(elem)
+                if (elem == 5) break
+            }
+        }
+
+        println(&quot;正常结束循环&quot;)
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div></div><p>需求 4：循环遍历 10 以内的所有数据，奇数打印，偶数跳过（continue）</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>object TestBreak {
+    def main(args: Array[String]): Unit = { 
+        for (elem &lt;- 1 to 10) {
+            if (elem % 2 == 1) { 
+                println(elem)
+            } else {
+                println(&quot;continue&quot;)
+            }
+        }
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br></div></div><h2 id="_4-7-多重循环"><a href="#_4-7-多重循环" class="header-anchor">#</a> 4.7 多重循环</h2> <p>1） 基本说明</p> <p>（1） 将 一 个 循 环 放 在 另 一 个 循 环 体 内 ， 就 形 成 了 嵌 套 循 环 。 其 中 ，for，while，do…while均可以作为外层循环和内层循环。【<strong>建议一般使用两层，最多不要</strong> <strong>超过</strong> <strong>3</strong> <strong>层</strong>】</p> <p>设外层循环次数为m 次，内层为 n 次，则内层循环体实际上需要执行 <strong>m*n</strong> 次。</p> <p>2）案例实操
+需求：打印出九九乘法表</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>object TestWhile {
+
+    def main(args: Array[String]): Unit = { 
+    for (i &lt;- 1 to 9) {
+        for (j &lt;- 1 to i) {
+        	print(j + &quot;*&quot; + i + &quot;=&quot; + (i * j) + &quot;\t&quot;)
+        }
+
+        println()
+        }
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div></div><p>输出结果：</p> <p><img src="/assets/img/image-20231102110013365.2eb7db6a.png" alt="image-20231102110013365"></p> <h1 id="官方文档"><a href="#官方文档" class="header-anchor">#</a> 官方文档</h1> <p><a href="https://docs.scala-lang.org/zh-cn/scala3/book/scala-features.html" target="_blank" rel="noopener noreferrer">https://docs.scala-lang.org/zh-cn/scala3/book/scala-features.html<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p></div></div>  <div class="page-edit"><div class="edit-link"><a href="https://github.com/andanyang/vuepress-theme-vdoing/edit/master/docs/大数据/005.scala/01.scala.md" target="_blank" rel="noopener noreferrer">编辑</a> <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></div> <!----> <div class="last-updated"><span class="prefix">上次更新:</span> <span class="time">2024/03/11, 02:40:47</span></div></div> <div class="page-nav-wapper"><div class="page-nav-centre-wrap"><a href="/bigdata/hive_trap/" class="page-nav-centre page-nav-centre-prev"><div class="tooltip">Hive入门 的坑</div></a> <a href="/bigdata/scala/Functional_programming/" class="page-nav-centre page-nav-centre-next"><div class="tooltip">scala 函数式编程</div></a></div> <div class="page-nav"><p class="inner"><span class="prev">
+        ←
+        <a href="/bigdata/hive_trap/" class="prev">Hive入门 的坑</a></span> <span class="next"><a href="/bigdata/scala/Functional_programming/">scala 函数式编程</a>→
+      </span></p></div></div></div> <div class="article-list"><div class="article-title"><a href="/archives/" class="iconfont icon-bi">最近更新</a></div> <div class="article-wrapper"><dl><dd>01</dd> <dt><a href="/bigdata/spark/SparkStreaming_Driver_Executer/"><div>
+            spark中代码的执行位置（Driver or Executer）
+            <!----></div></a> <span class="date">12-12</span></dt></dl><dl><dd>02</dd> <dt><a href="/bigdata/spark/SparkStreaming/"><div>
+            大数据技术之 SparkStreaming
+            <!----></div></a> <span class="date">12-12</span></dt></dl><dl><dd>03</dd> <dt><a href="/bigdata/spark/sql/"><div>
+            Spark 核心编程之 RDD 累加器与广播变量
+            <!----></div></a> <span class="date">12-06</span></dt></dl> <dl><dd></dd> <dt><a href="/archives/" class="more">更多文章&gt;</a></dt></dl></div></div></main></div> <div class="footer"><div class="icons"><a href="mailto:1218853253@qq.com" title="发邮件" target="_blank" class="iconfont icon-youjian"></a><a href="https://github.com/andanyang" title="GitHub" target="_blank" class="iconfont icon-github"></a><a href="https://music.163.com/#/playlist?id=755597173" title="听音乐" target="_blank" class="iconfont icon-erji"></a></div> 
+  Theme by
+  <a href="https://github.com/xugaoyi/vuepress-theme-vdoing" target="_blank" title="本站主题">Vdoing</a> 
+    | Copyright © 2019-2024
+    <span>Young | <a href="https://github.com/andanyoung/young-blog/blob/master/LICENSE" target="_blank">MIT License</a> <br/> <a  href="https://beian.miit.gov.cn/" target="_blank">浙ICP备20002744号</a></span></div> <div class="buttons"><div title="返回顶部" class="button blur go-to-top iconfont icon-fanhuidingbu" style="display:none;"></div> <div title="去评论" class="button blur go-to-comment iconfont icon-pinglun" style="display:none;"></div> <div title="主题模式" class="button blur theme-mode-but iconfont icon-zhuti"><ul class="select-box" style="display:none;"><li class="iconfont icon-zidong">
+          跟随系统
+        </li><li class="iconfont icon-rijianmoshi">
+          浅色模式
+        </li><li class="iconfont icon-yejianmoshi">
+          深色模式
+        </li><li class="iconfont icon-yuedu">
+          阅读模式
+        </li></ul></div></div> <!----> <!----> <!----></div><div class="global-ui"><div></div></div></div>
+    <script src="/assets/js/app.e4caa6db.js" defer></script><script src="/assets/js/2.d1be14c5.js" defer></script><script src="/assets/js/19.51c97d4c.js" defer></script>
+  </body>
+</html>

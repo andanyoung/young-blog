@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>scala 函数式编程 | Young&#39;s blog</title>
+    <meta name="generator" content="VuePress 1.9.5">
+    <link rel="icon" href="/img/favicon.ico">
+    <meta name="description" content="Young丶java后端技术博客,专注后端学习与总结。擅长spring boot,JAVA基础总结,等方面的知识,关注spring,架构,elasticsearch,mysql领域.">
+    <meta name="keywords" content="前端博客,个人技术博客,前端,前端开发,前端框架,web前端,前端面试题,技术文档,学习,面试,JavaScript,js,ES6,TypeScript,vue,python,css3,html5,Node,git,github,markdown">
+    <meta name="baidu-site-verification" content="7F55weZDDc">
+    <meta name="theme-color" content="#11a8cd">
+    
+    <link rel="preload" href="/assets/css/0.styles.53c04193.css" as="style"><link rel="preload" href="/assets/js/app.e4caa6db.js" as="script"><link rel="preload" href="/assets/js/2.d1be14c5.js" as="script"><link rel="preload" href="/assets/js/114.daf1d8a5.js" as="script"><link rel="prefetch" href="/assets/js/10.20449a2b.js"><link rel="prefetch" href="/assets/js/100.f25e73b5.js"><link rel="prefetch" href="/assets/js/101.3180ba9d.js"><link rel="prefetch" href="/assets/js/102.fcd415ea.js"><link rel="prefetch" href="/assets/js/103.522869bb.js"><link rel="prefetch" href="/assets/js/104.5da1e4e4.js"><link rel="prefetch" href="/assets/js/105.e5a40fe8.js"><link rel="prefetch" href="/assets/js/106.627d6279.js"><link rel="prefetch" href="/assets/js/107.606beca1.js"><link rel="prefetch" href="/assets/js/108.100e1cb2.js"><link rel="prefetch" href="/assets/js/109.9765392e.js"><link rel="prefetch" href="/assets/js/11.da3512b5.js"><link rel="prefetch" href="/assets/js/110.b73cf0d9.js"><link rel="prefetch" href="/assets/js/111.3f77dd60.js"><link rel="prefetch" href="/assets/js/112.0c7d547d.js"><link rel="prefetch" href="/assets/js/113.1827c266.js"><link rel="prefetch" href="/assets/js/115.e7dca24d.js"><link rel="prefetch" href="/assets/js/116.11b303de.js"><link rel="prefetch" href="/assets/js/117.203cefba.js"><link rel="prefetch" href="/assets/js/118.61d8527b.js"><link rel="prefetch" href="/assets/js/119.1f959a37.js"><link rel="prefetch" href="/assets/js/12.11f18e06.js"><link rel="prefetch" href="/assets/js/120.c268b7aa.js"><link rel="prefetch" href="/assets/js/121.64318c96.js"><link rel="prefetch" href="/assets/js/122.cbddb70d.js"><link rel="prefetch" href="/assets/js/123.b49b84fb.js"><link rel="prefetch" href="/assets/js/124.392f030b.js"><link rel="prefetch" href="/assets/js/125.45f631c4.js"><link rel="prefetch" href="/assets/js/126.700cc575.js"><link rel="prefetch" href="/assets/js/127.d649cb2a.js"><link rel="prefetch" href="/assets/js/128.bc018411.js"><link rel="prefetch" href="/assets/js/129.d0a74611.js"><link rel="prefetch" href="/assets/js/13.1cb33dc8.js"><link rel="prefetch" href="/assets/js/130.45b1f75c.js"><link rel="prefetch" href="/assets/js/131.45ba93df.js"><link rel="prefetch" href="/assets/js/132.c58bbbd7.js"><link rel="prefetch" href="/assets/js/133.7f53922e.js"><link rel="prefetch" href="/assets/js/134.ddf0d780.js"><link rel="prefetch" href="/assets/js/135.ada3af13.js"><link rel="prefetch" href="/assets/js/136.4097c2be.js"><link rel="prefetch" href="/assets/js/137.fc910ac9.js"><link rel="prefetch" href="/assets/js/138.9628f460.js"><link rel="prefetch" href="/assets/js/139.3125ef74.js"><link rel="prefetch" href="/assets/js/14.1004ce43.js"><link rel="prefetch" href="/assets/js/140.bb53ac81.js"><link rel="prefetch" href="/assets/js/141.a002ac19.js"><link rel="prefetch" href="/assets/js/142.540d19e4.js"><link rel="prefetch" href="/assets/js/143.4cbccfca.js"><link rel="prefetch" href="/assets/js/144.8a217b6a.js"><link rel="prefetch" href="/assets/js/145.9c7bc0de.js"><link rel="prefetch" href="/assets/js/146.3dfd0773.js"><link rel="prefetch" href="/assets/js/147.bc0f0d42.js"><link rel="prefetch" href="/assets/js/148.e0cdc4d5.js"><link rel="prefetch" href="/assets/js/149.8486db6e.js"><link rel="prefetch" href="/assets/js/15.703e8784.js"><link rel="prefetch" href="/assets/js/150.5f3b7fb5.js"><link rel="prefetch" href="/assets/js/151.98a3f202.js"><link rel="prefetch" href="/assets/js/152.2940f2ba.js"><link rel="prefetch" href="/assets/js/153.75f3a085.js"><link rel="prefetch" href="/assets/js/154.fa2da83b.js"><link rel="prefetch" href="/assets/js/155.113be5c8.js"><link rel="prefetch" href="/assets/js/156.0667e7f5.js"><link rel="prefetch" href="/assets/js/157.0b3e5dfa.js"><link rel="prefetch" href="/assets/js/158.a338bdd7.js"><link rel="prefetch" href="/assets/js/159.33c9771c.js"><link rel="prefetch" href="/assets/js/16.71e3d898.js"><link rel="prefetch" href="/assets/js/160.e868c8b3.js"><link rel="prefetch" href="/assets/js/161.cf61955e.js"><link rel="prefetch" href="/assets/js/162.baee00ca.js"><link rel="prefetch" href="/assets/js/163.183cde82.js"><link rel="prefetch" href="/assets/js/164.c1eadef5.js"><link rel="prefetch" href="/assets/js/165.70ee8a24.js"><link rel="prefetch" href="/assets/js/166.8e185ff2.js"><link rel="prefetch" href="/assets/js/167.0881cf57.js"><link rel="prefetch" href="/assets/js/168.88caf424.js"><link rel="prefetch" href="/assets/js/169.e7e984ff.js"><link rel="prefetch" href="/assets/js/17.b0356f05.js"><link rel="prefetch" href="/assets/js/170.c7052d81.js"><link rel="prefetch" href="/assets/js/171.2ab773fd.js"><link rel="prefetch" href="/assets/js/172.0e39f858.js"><link rel="prefetch" href="/assets/js/173.76661218.js"><link rel="prefetch" href="/assets/js/174.0ac9f795.js"><link rel="prefetch" href="/assets/js/175.da30bba2.js"><link rel="prefetch" href="/assets/js/176.0f230688.js"><link rel="prefetch" href="/assets/js/177.040e0937.js"><link rel="prefetch" href="/assets/js/178.68852030.js"><link rel="prefetch" href="/assets/js/179.c998f0ca.js"><link rel="prefetch" href="/assets/js/18.2e77c8d1.js"><link rel="prefetch" href="/assets/js/180.4f6b395f.js"><link rel="prefetch" href="/assets/js/181.577a5325.js"><link rel="prefetch" href="/assets/js/182.6b43cbf2.js"><link rel="prefetch" href="/assets/js/183.cf9e9cca.js"><link rel="prefetch" href="/assets/js/184.f0e76def.js"><link rel="prefetch" href="/assets/js/185.2d3d8eea.js"><link rel="prefetch" href="/assets/js/186.4db71601.js"><link rel="prefetch" href="/assets/js/187.8b6a6829.js"><link rel="prefetch" href="/assets/js/188.4a0b8f41.js"><link rel="prefetch" href="/assets/js/189.0a28241b.js"><link rel="prefetch" href="/assets/js/19.51c97d4c.js"><link rel="prefetch" href="/assets/js/190.5001309c.js"><link rel="prefetch" href="/assets/js/191.42778cf1.js"><link rel="prefetch" href="/assets/js/192.fabd1cb0.js"><link rel="prefetch" href="/assets/js/193.cbc113b8.js"><link rel="prefetch" href="/assets/js/194.4cf24763.js"><link rel="prefetch" href="/assets/js/195.ea5d1afb.js"><link rel="prefetch" href="/assets/js/196.16115ce4.js"><link rel="prefetch" href="/assets/js/197.b90179d1.js"><link rel="prefetch" href="/assets/js/198.456ceb51.js"><link rel="prefetch" href="/assets/js/199.a28de97a.js"><link rel="prefetch" href="/assets/js/20.79989fc4.js"><link rel="prefetch" href="/assets/js/200.72102ac7.js"><link rel="prefetch" href="/assets/js/201.e2b3a297.js"><link rel="prefetch" href="/assets/js/202.d4283e12.js"><link rel="prefetch" href="/assets/js/203.6e5e6596.js"><link rel="prefetch" href="/assets/js/204.363863cf.js"><link rel="prefetch" href="/assets/js/205.d16c5a36.js"><link rel="prefetch" href="/assets/js/206.dc867263.js"><link rel="prefetch" href="/assets/js/207.acfeaaaa.js"><link rel="prefetch" href="/assets/js/208.22c49054.js"><link rel="prefetch" href="/assets/js/209.0f7c526b.js"><link rel="prefetch" href="/assets/js/21.1b619a3f.js"><link rel="prefetch" href="/assets/js/210.b247a678.js"><link rel="prefetch" href="/assets/js/211.fe8629a4.js"><link rel="prefetch" href="/assets/js/212.48b672e5.js"><link rel="prefetch" href="/assets/js/213.08f571a8.js"><link rel="prefetch" href="/assets/js/214.04da1824.js"><link rel="prefetch" href="/assets/js/215.f60b57f4.js"><link rel="prefetch" href="/assets/js/216.4383ceb6.js"><link rel="prefetch" href="/assets/js/217.3b1ce286.js"><link rel="prefetch" href="/assets/js/218.1534ef52.js"><link rel="prefetch" href="/assets/js/219.6901e38c.js"><link rel="prefetch" href="/assets/js/22.349d3a16.js"><link rel="prefetch" href="/assets/js/220.22e0c5ea.js"><link rel="prefetch" href="/assets/js/221.2e7a5a4f.js"><link rel="prefetch" href="/assets/js/222.76b63073.js"><link rel="prefetch" href="/assets/js/223.500a058f.js"><link rel="prefetch" href="/assets/js/224.7f7c1250.js"><link rel="prefetch" href="/assets/js/225.2f183cbe.js"><link rel="prefetch" href="/assets/js/23.712dd5ac.js"><link rel="prefetch" href="/assets/js/24.77ae5052.js"><link rel="prefetch" href="/assets/js/25.e95f81fb.js"><link rel="prefetch" href="/assets/js/26.82cdd880.js"><link rel="prefetch" href="/assets/js/27.427a5aec.js"><link rel="prefetch" href="/assets/js/28.e245952d.js"><link rel="prefetch" href="/assets/js/29.50596e31.js"><link rel="prefetch" href="/assets/js/3.4f4335cf.js"><link rel="prefetch" href="/assets/js/30.016e73a0.js"><link rel="prefetch" href="/assets/js/31.fb0b0b40.js"><link rel="prefetch" href="/assets/js/32.8e7d8efe.js"><link rel="prefetch" href="/assets/js/33.f05f242b.js"><link rel="prefetch" href="/assets/js/34.893b8c3e.js"><link rel="prefetch" href="/assets/js/35.f98d31b7.js"><link rel="prefetch" href="/assets/js/36.6a5744a0.js"><link rel="prefetch" href="/assets/js/37.67e8976d.js"><link rel="prefetch" href="/assets/js/38.2d8447e0.js"><link rel="prefetch" href="/assets/js/39.3b3fde85.js"><link rel="prefetch" href="/assets/js/4.93e1dc89.js"><link rel="prefetch" href="/assets/js/40.8cde36eb.js"><link rel="prefetch" href="/assets/js/41.9df0f821.js"><link rel="prefetch" href="/assets/js/42.c9f1a26b.js"><link rel="prefetch" href="/assets/js/43.fa088c07.js"><link rel="prefetch" href="/assets/js/44.121055e3.js"><link rel="prefetch" href="/assets/js/45.7995c3a0.js"><link rel="prefetch" href="/assets/js/46.17d53a2e.js"><link rel="prefetch" href="/assets/js/47.4a374966.js"><link rel="prefetch" href="/assets/js/48.733e5b6c.js"><link rel="prefetch" href="/assets/js/49.0fb92742.js"><link rel="prefetch" href="/assets/js/5.f52855e6.js"><link rel="prefetch" href="/assets/js/50.50fc5031.js"><link rel="prefetch" href="/assets/js/51.69d8d52a.js"><link rel="prefetch" href="/assets/js/52.d84cedc3.js"><link rel="prefetch" href="/assets/js/53.a64ddaf4.js"><link rel="prefetch" href="/assets/js/54.15e09103.js"><link rel="prefetch" href="/assets/js/55.0f7e8fd5.js"><link rel="prefetch" href="/assets/js/56.6cb5bf13.js"><link rel="prefetch" href="/assets/js/57.d90d9da6.js"><link rel="prefetch" href="/assets/js/58.2c03a905.js"><link rel="prefetch" href="/assets/js/59.02cf613a.js"><link rel="prefetch" href="/assets/js/6.0ff35647.js"><link rel="prefetch" href="/assets/js/60.bb6d2b2f.js"><link rel="prefetch" href="/assets/js/61.ef2abfd3.js"><link rel="prefetch" href="/assets/js/62.b09e5f81.js"><link rel="prefetch" href="/assets/js/63.6ca85ec7.js"><link rel="prefetch" href="/assets/js/64.77eab656.js"><link rel="prefetch" href="/assets/js/65.65b00883.js"><link rel="prefetch" href="/assets/js/66.040b5d23.js"><link rel="prefetch" href="/assets/js/67.23318ab1.js"><link rel="prefetch" href="/assets/js/68.5c29433f.js"><link rel="prefetch" href="/assets/js/69.90978695.js"><link rel="prefetch" href="/assets/js/7.463451e9.js"><link rel="prefetch" href="/assets/js/70.0c585fbd.js"><link rel="prefetch" href="/assets/js/71.120e4ae5.js"><link rel="prefetch" href="/assets/js/72.53bf1e3a.js"><link rel="prefetch" href="/assets/js/73.282f5b35.js"><link rel="prefetch" href="/assets/js/74.4f1cb67d.js"><link rel="prefetch" href="/assets/js/75.f5d3ea1e.js"><link rel="prefetch" href="/assets/js/76.fb173587.js"><link rel="prefetch" href="/assets/js/77.8064b022.js"><link rel="prefetch" href="/assets/js/78.d26f8075.js"><link rel="prefetch" href="/assets/js/79.6cff2fa5.js"><link rel="prefetch" href="/assets/js/8.d5f74857.js"><link rel="prefetch" href="/assets/js/80.29d746c7.js"><link rel="prefetch" href="/assets/js/81.c0a214a2.js"><link rel="prefetch" href="/assets/js/82.f0c93ca2.js"><link rel="prefetch" href="/assets/js/83.db6f55e1.js"><link rel="prefetch" href="/assets/js/84.b0a7a28c.js"><link rel="prefetch" href="/assets/js/85.db7376d4.js"><link rel="prefetch" href="/assets/js/86.96ec3402.js"><link rel="prefetch" href="/assets/js/87.ae41a109.js"><link rel="prefetch" href="/assets/js/88.d83c21c8.js"><link rel="prefetch" href="/assets/js/89.33868490.js"><link rel="prefetch" href="/assets/js/9.2680f96d.js"><link rel="prefetch" href="/assets/js/90.ed48459a.js"><link rel="prefetch" href="/assets/js/91.e1ee23ba.js"><link rel="prefetch" href="/assets/js/92.8b354527.js"><link rel="prefetch" href="/assets/js/93.0682d2e4.js"><link rel="prefetch" href="/assets/js/94.105580aa.js"><link rel="prefetch" href="/assets/js/95.d378d658.js"><link rel="prefetch" href="/assets/js/96.a6460598.js"><link rel="prefetch" href="/assets/js/97.a4cc955f.js"><link rel="prefetch" href="/assets/js/98.9a600d4f.js"><link rel="prefetch" href="/assets/js/99.45007523.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.53c04193.css">
+  </head>
+  <body class="theme-mode-light">
+    <div id="app" data-server-rendered="true"><div class="theme-container sidebar-open have-rightmenu"><header class="navbar blur"><div title="目录" class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/img/logo.png" alt="Young's blog" class="logo"> <span class="site-name can-hide">Young's blog</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><a href="/Spring/" class="nav-link">Spring</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="前端" class="dropdown-title"><a href="/web/" class="link-title">前端</a> <span class="title" style="display:none;">前端</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>前端文章1</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/pages/8143cc480faf9a11/" class="nav-link">JavaScript</a></li></ul></li><li class="dropdown-item"><h4>学习笔记</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/note/javascript/" class="nav-link">《JavaScript教程》</a></li><li class="dropdown-subitem"><a href="/note/js/" class="nav-link">《JavaScript高级程序设计》</a></li><li class="dropdown-subitem"><a href="/note/es6/" class="nav-link">《ES6 教程》</a></li><li class="dropdown-subitem"><a href="/note/vue/" class="nav-link">《Vue》</a></li><li class="dropdown-subitem"><a href="/note/react/" class="nav-link">《React》</a></li><li class="dropdown-subitem"><a href="/note/typescript-axios/" class="nav-link">《TypeScript 从零实现 axios》</a></li><li class="dropdown-subitem"><a href="/note/git/" class="nav-link">《Git》</a></li><li class="dropdown-subitem"><a href="/pages/51afd6/" class="nav-link">TypeScript</a></li><li class="dropdown-subitem"><a href="/pages/4643cd/" class="nav-link">JS设计模式总结</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="页面" class="dropdown-title"><a href="/ui/" class="link-title">页面</a> <span class="title" style="display:none;">页面</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/8309a5b876fc95e3/" class="nav-link">HTML</a></li><li class="dropdown-item"><!----> <a href="/pages/0a83b083bdf257cb/" class="nav-link">CSS</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="技术" class="dropdown-title"><a href="/technology/" class="link-title">技术</a> <span class="title" style="display:none;">技术</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/9a7ee40fc232253e/" class="nav-link">技术文档</a></li><li class="dropdown-item"><!----> <a href="/pages/4c778760be26d8b3/" class="nav-link">GitHub技巧</a></li><li class="dropdown-item"><!----> <a href="/pages/117708e0af7f0bd9/" class="nav-link">Nodejs</a></li><li class="dropdown-item"><!----> <a href="/pages/41f87d890d0a02af/" class="nav-link">博客搭建</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="更多" class="dropdown-title"><a href="/more/" class="link-title">更多</a> <span class="title" style="display:none;">更多</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/f2a556/" class="nav-link">学习</a></li><li class="dropdown-item"><!----> <a href="/pages/aea6571b7a8bae86/" class="nav-link">面试</a></li><li class="dropdown-item"><!----> <a href="/pages/2d615df9a36a98ed/" class="nav-link">心情杂货</a></li><li class="dropdown-item"><!----> <a href="/pages/baaa02/" class="nav-link">实用技巧</a></li><li class="dropdown-item"><!----> <a href="/friends/" class="nav-link">友情链接</a></li></ul></div></div><div class="nav-item"><a href="/about/" class="nav-link">关于</a></div><div class="nav-item"><a href="/pages/beb6c0bd8a66cea6/" class="nav-link">收藏</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="索引" class="dropdown-title"><a href="/archives/" class="link-title">索引</a> <span class="title" style="display:none;">索引</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/" class="nav-link">分类</a></li><li class="dropdown-item"><!----> <a href="/tags/" class="nav-link">标签</a></li><li class="dropdown-item"><!----> <a href="/archives/" class="nav-link">归档</a></li></ul></div></div> <a href="https://github.com/andanyang/vuepress-theme-vdoing" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <div class="sidebar-hover-trigger"></div> <aside class="sidebar" style="display:none;"><div class="blogger"><img src="/img/logo.png"> <div class="blogger-info"><h3>Young</h3> <span></span></div></div> <nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><a href="/Spring/" class="nav-link">Spring</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="前端" class="dropdown-title"><a href="/web/" class="link-title">前端</a> <span class="title" style="display:none;">前端</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>前端文章1</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/pages/8143cc480faf9a11/" class="nav-link">JavaScript</a></li></ul></li><li class="dropdown-item"><h4>学习笔记</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/note/javascript/" class="nav-link">《JavaScript教程》</a></li><li class="dropdown-subitem"><a href="/note/js/" class="nav-link">《JavaScript高级程序设计》</a></li><li class="dropdown-subitem"><a href="/note/es6/" class="nav-link">《ES6 教程》</a></li><li class="dropdown-subitem"><a href="/note/vue/" class="nav-link">《Vue》</a></li><li class="dropdown-subitem"><a href="/note/react/" class="nav-link">《React》</a></li><li class="dropdown-subitem"><a href="/note/typescript-axios/" class="nav-link">《TypeScript 从零实现 axios》</a></li><li class="dropdown-subitem"><a href="/note/git/" class="nav-link">《Git》</a></li><li class="dropdown-subitem"><a href="/pages/51afd6/" class="nav-link">TypeScript</a></li><li class="dropdown-subitem"><a href="/pages/4643cd/" class="nav-link">JS设计模式总结</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="页面" class="dropdown-title"><a href="/ui/" class="link-title">页面</a> <span class="title" style="display:none;">页面</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/8309a5b876fc95e3/" class="nav-link">HTML</a></li><li class="dropdown-item"><!----> <a href="/pages/0a83b083bdf257cb/" class="nav-link">CSS</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="技术" class="dropdown-title"><a href="/technology/" class="link-title">技术</a> <span class="title" style="display:none;">技术</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/9a7ee40fc232253e/" class="nav-link">技术文档</a></li><li class="dropdown-item"><!----> <a href="/pages/4c778760be26d8b3/" class="nav-link">GitHub技巧</a></li><li class="dropdown-item"><!----> <a href="/pages/117708e0af7f0bd9/" class="nav-link">Nodejs</a></li><li class="dropdown-item"><!----> <a href="/pages/41f87d890d0a02af/" class="nav-link">博客搭建</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="更多" class="dropdown-title"><a href="/more/" class="link-title">更多</a> <span class="title" style="display:none;">更多</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/f2a556/" class="nav-link">学习</a></li><li class="dropdown-item"><!----> <a href="/pages/aea6571b7a8bae86/" class="nav-link">面试</a></li><li class="dropdown-item"><!----> <a href="/pages/2d615df9a36a98ed/" class="nav-link">心情杂货</a></li><li class="dropdown-item"><!----> <a href="/pages/baaa02/" class="nav-link">实用技巧</a></li><li class="dropdown-item"><!----> <a href="/friends/" class="nav-link">友情链接</a></li></ul></div></div><div class="nav-item"><a href="/about/" class="nav-link">关于</a></div><div class="nav-item"><a href="/pages/beb6c0bd8a66cea6/" class="nav-link">收藏</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="索引" class="dropdown-title"><a href="/archives/" class="link-title">索引</a> <span class="title" style="display:none;">索引</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/" class="nav-link">分类</a></li><li class="dropdown-item"><!----> <a href="/tags/" class="nav-link">标签</a></li><li class="dropdown-item"><!----> <a href="/archives/" class="nav-link">归档</a></li></ul></div></div> <a href="https://github.com/andanyang/vuepress-theme-vdoing" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Hadoop</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>kafka</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Flume</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>hive</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>scala</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/bigdata/scala/" aria-current="page" class="sidebar-link">Scala 入 门</a></li><li><a href="/bigdata/scala/Functional_programming/" aria-current="page" class="active sidebar-link">scala 函数式编程</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level2"><a href="/bigdata/scala/Functional_programming/#_5-1-函数基础" class="sidebar-link">5.1 函数基础</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/bigdata/scala/Functional_programming/#_5-1-1-函数基本语法" class="sidebar-link">5.1.1 函数基本语法</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/scala/Functional_programming/#_5-1-2-函数和方法的区别" class="sidebar-link">5.1.2 函数和方法的区别</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/scala/Functional_programming/#_5-1-3-函数定义" class="sidebar-link">5.1.3 函数定义</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/scala/Functional_programming/#_5-1-4-函数参数" class="sidebar-link">5.1.4 函数参数</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/scala/Functional_programming/#_5-1-5-函数至简原则-重点" class="sidebar-link">5.1.5 函数至简原则（重点）</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/bigdata/scala/Functional_programming/#_5-2-函数高级" class="sidebar-link">5.2 函数高级</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/bigdata/scala/Functional_programming/#_5-2-1-高阶函数" class="sidebar-link">5.2.1 高阶函数</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/scala/Functional_programming/#_5-2-2-匿名函数" class="sidebar-link">5.2.2 匿名函数</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/scala/Functional_programming/#_5-2-4-函数柯里化-闭包" class="sidebar-link">5.2.4 函数柯里化&amp;闭包</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/scala/Functional_programming/#_5-2-5-递归" class="sidebar-link">5.2.5 递归</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/scala/Functional_programming/#_5-2-6-控制抽象" class="sidebar-link">5.2.6 控制抽象</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/scala/Functional_programming/#_5-2-7-惰性加载" class="sidebar-link">5.2.7 惰性加载</a></li></ul></li></ul></li><li><a href="/bigdata/scala/OOP/" class="sidebar-link">scala 面向对象</a></li><li><a href="/bigdata/scala/collection/" class="sidebar-link">scala 集合</a></li><li><a href="/bigdata/scala/Pattern_Matching/" class="sidebar-link">scala 第 8 章 模式匹配</a></li><li><a href="/bigdata/scala/Exception/" class="sidebar-link">scala 第 9 章 异 常</a></li><li><section class="sidebar-group collapsable is-sub-group depth-1"><p class="sidebar-heading"><span>进阶</span> <span class="arrow right"></span></p> <!----></section></li><li><a href="/bigdata/scala/generic/" class="sidebar-link">scala 第 11 章 泛 型</a></li><li><a href="/bigdata/scala/summary/" class="sidebar-link">scala 第 12 章 总结</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>spark</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <div><main class="page"><div class="theme-vdoing-wrapper "><div class="articleInfo-wrap" data-v-06225672><div class="articleInfo" data-v-06225672><ul class="breadcrumbs" data-v-06225672><li data-v-06225672><a href="/" title="首页" class="iconfont icon-home router-link-active" data-v-06225672></a></li> <li data-v-06225672><a href="/categories/?category=%E5%A4%A7%E6%95%B0%E6%8D%AE" title="分类" data-v-06225672>大数据</a></li><li data-v-06225672><a href="/categories/?category=scala" title="分类" data-v-06225672>scala</a></li></ul> <div class="info" data-v-06225672><div title="作者" class="author iconfont icon-touxiang" data-v-06225672><a href="https://github.com/andanyoung" target="_blank" title="作者" class="beLink" data-v-06225672>andanyang</a></div> <div title="创建时间" class="date iconfont icon-riqi" data-v-06225672><a href="javascript:;" data-v-06225672>2023-11-02</a></div> <!----></div></div></div> <!----> <div class="content-wrapper"><div class="right-menu-wrapper"><div class="right-menu-margin"><div class="right-menu-title">目录</div> <div class="right-menu-content"></div></div></div> <h1><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAABKFJREFUSA3tVl1oFVcQnrMbrak3QUgkya1akpJYcrUtIqW1JvFBE9LiQ5v6JmJpolbMg32rVrhgoYK0QiMY6i9Y6EMaW5D+xFJaTYItIuK2Kr3+BJNwkxBj05sQY3b3nM6cs2dv9t7NT/vQJw/sndk5M/PNzJkzewGerP+pAmy+ON8lLzUJgA8ZYxYIYZmGYRnctDaWvJJAmTtfP1pvXsBCCPP8QFcCaRkZYACgDZFO4stNIcBCajEOlmmC9XpJ9bAGCaPaPmzPl32dvLSVu3BWCTQs0XQQ6g0DYgwLIoAZbBCdW/i+781o1VVlm/410mw4h06Y7bIPHNyWDyL4FHkX03Q8SrzNhZTZriieckWt7cL6MM85YcLpsi/7O9/iXFT6MswI0DmmpkSaJ0qLxFIm3+i1THHB3zmBH3PYx9CcykcLOeQVVa7QtdxTgQgEleX2AjHYfwA+2ddV77ruGoJUbhGDI09YSNXyMpUt5ylOzxgbUmtOp7NmbNt8v3arjTBfYELmLUV+M+nSawNNAUqpT3ClJWg5I3BLT+cGW/DXNGCa6tx1aakCGEigArTn4TDIPdrXXYKCZNrHLMCOEPvHBlLQ99s9eHB7EB6NTki73CVPQ2F5MSx/uRQixfmq7rK0wYD8w8E905bnPDfwoWs/rfv93NWN/ZfvwsLIU7A09gxECyISeGJkHAau98L97tuw7NXnoPyNF8FcYGLGKsOs0mN3OEyec9esGW/ZEl945dTP34wlR2FZVQWU1q0Cw8Tr7p+hgLLNL0FPxx/Q35mA8aEUrH6nCgwEl0tn7wUiZYJnNRh6DK4UH/k0lfyrsBKdPVv/AriGIQcEDQZ65LBAGe2Rzui9Ybjz7XUppz1/uKBbyVPGkN3ZAeC6hr0x7Nr38N5+EqkoOm17xpoqR9ohQF55ERSvr4Dkr3chNfC3DMzGJlNBElW8w9nsGQvhNGIzDkXzCg8cLK951xHsFBlTJspJNi3ZFIMF2AeDV3q8DNOB+YHi6QTrChDIWDBRi5U5f+ZMfJLu3ccrqxtdxk4SKH336LFxSmkqefwU5T8fhdSdQf9IVKD6aNiwI/hnmcAZ91isYMJIaCUCx9W098+LgruikeTqzqqxKPUwqJyCPJiyemVVZBOijDGjD38Os0jOiSPL1z3SPjXNANbiNPXAdzTfukjjuknNBbyz3nwgTd3AVFqUJ5hpHlq9MveLnWwttUfoygBmvVjuikxND3znrhsELnZk7k+OjIGxeNEkomyLVta0xxn+HZhjBc4YZ/AFjHjz9u3xRZl2BN4aq9nFwWh16IrQ1aHHEd3j1+4/dB9OtH4e29A2H1DyHQRmOSfQZ1Fy7MHBTGB6J/Djq6p3OxyO2cB+4Car7v/o3GXgfAkj23+x9ID1Teoamo/SXcbvSf2PX7Vc8DdCmE1vN9di+32P9/5YR3vLnhCVGUWBjEkr3yh4H8v9CzmsbdhzOKzsJKM90iFdaTMjRPhGVsakRvOaRidljo6H6G7j+ctrJpsP+4COhDIl0La2+FS4+5mlocBaXY5QnGZysIBYoeSsl5qQzrSj/cgNrfuEzlWBfwA+EjrZyWUvpAAAAABJRU5ErkJggg==">scala 函数式编程<!----></h1>  <div class="theme-vdoing-content content__default"><h1 id="第-5-章-函数式编程"><a href="#第-5-章-函数式编程" class="header-anchor">#</a> 第 5 章 函数式编程</h1> <p>1）面向对象编程
+解决问题，分解对象，行为，属性，然后通过对象的关系以及行为的调用来解决问题。</p> <p>对象：用户
+行为：登录、连接 JDBC、读取数据库</p> <p>属性：用户名、密码</p> <p>Scala 语言是一个完全面向对象编程语言。万物皆对象</p> <p>对象的本质：对数据和行为的一个封装</p> <p>2）函数式编程
+解决问题时，将问题分解成一个一个的步骤，将每个步骤进行封装（函数），通过调用这些封装好的步骤，解决问题。</p> <p>例如：请求-&gt;用户名、密码-&gt;连接 JDBC-&gt;读取数据库Scala 语言是一个完全函数式编程语言。万物皆函数。函数的本质：函数可以当做一个值进行传递</p> <p>3）在Scala 中函数式编程和面向对象编程完美融合在一起了。</p> <h2 id="_5-1-函数基础"><a href="#_5-1-函数基础" class="header-anchor">#</a> 5.1 函数基础</h2> <h3 id="_5-1-1-函数基本语法"><a href="#_5-1-1-函数基本语法" class="header-anchor">#</a> 5.1.1 函数基本语法</h3> <p>1）基本语法</p> <p><img src="/assets/img/image-20231102110425628.8797fb99.png" alt=" 函数基本语法"></p> <p>2）案例实操</p> <p>需求：定义一个函数，实现将传入的名称打印出来。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>object TestFunction {
+
+    def main(args: Array[String]): Unit = {
+
+        // （1）函数定义
+        def f(arg: String): Unit = {
+            println(arg)
+        }
+
+        // （2）函数调用
+        // 函数名（参数）
+        f(&quot;hello world&quot;)
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div></div><h3 id="_5-1-2-函数和方法的区别"><a href="#_5-1-2-函数和方法的区别" class="header-anchor">#</a> 5.1.2 函数和方法的区别</h3> <p>1）核心概念
+（1）为完成某一功能的程序语句的集合，称为函数。
+（2）类中的函数称之方法。
+2）案例实操
+（1）Scala 语言可以在任何的语法结构中声明任何的语法
+（2）函数没有重载和重写的概念；方法可以进行重载和重写
+（3）Scala 中函数可以嵌套定义</p> <div class="language-scala line-numbers-mode"><pre class="language-scala"><code><span class="token keyword">object</span> TestFunction <span class="token punctuation">{</span>
+
+    <span class="token comment">// (2)方法可以进行重载和重写，程序可以执行</span>
+    <span class="token keyword">def</span> main<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">Unit</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">def</span> main<span class="token punctuation">(</span>args<span class="token operator">:</span> Array<span class="token punctuation">[</span><span class="token builtin">String</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">Unit</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+        <span class="token comment">// （1）Scala 语言可以在任何的语法结构中声明任何的语法</span>
+        <span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span>Date <span class="token keyword">new</span> Date<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+        <span class="token comment">// (2)函数没有重载和重写的概念，程序报错</span>
+        <span class="token keyword">def</span> test<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">Unit</span> <span class="token operator">=</span><span class="token punctuation">{</span>
+            println<span class="token punctuation">(</span><span class="token string">&quot;无参，无返回值&quot;</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        test<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+        <span class="token keyword">def</span> test<span class="token punctuation">(</span>name<span class="token operator">:</span><span class="token builtin">String</span><span class="token punctuation">)</span><span class="token operator">:</span><span class="token builtin">Unit</span><span class="token operator">=</span><span class="token punctuation">{</span> 
+        	println<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment">//（3）Scala 中函数可以嵌套定义</span>
+        <span class="token keyword">def</span> test2<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">Unit</span> <span class="token operator">=</span><span class="token punctuation">{</span>
+        	println<span class="token punctuation">(</span><span class="token string">&quot;函数可以嵌套定义&quot;</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br></div></div><h3 id="_5-1-3-函数定义"><a href="#_5-1-3-函数定义" class="header-anchor">#</a> 5.1.3 函数定义</h3> <p>1） 函数定义</p> <p>（1） 函数 1：无参，无返回值</p> <p>（2） 函数 2：无参，有返回值</p> <p>（3） 函数 3：有参，无返回值</p> <p>（4） 函数 4：有参，有返回值</p> <p>（5） 函数 5：多参，无返回值</p> <p>（6） 函数 6：多参，有返回值</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>object TestFunctionDeclare {
+    def main(args: Array[String]): Unit = {
+
+        // 函数 1：无参，无返回值
+        def test1(): Unit ={
+        	println(&quot;无参，无返回值&quot;)
+        }
+        test1()
+
+        // 函数 2：无参，有返回值
+        def test2():String={
+        	return &quot;无参，有返回值&quot;
+        }
+        println(test2())
+
+        // 函数 3：有参，无返回值
+        def test3(s:String):Unit={ 
+        	println(s)
+        }
+        test3(&quot;jinlian&quot;)
+        // 函数 4：有参，有返回值
+        def test4(s:String):String={ 
+        	return s+&quot;有参，有返回值&quot;
+        }
+        println(test4(&quot;hello &quot;))
+
+        // 函数 5：多参，无返回值
+        def test5(name:String, age:Int):Unit={ 
+        	println(s&quot;$name, $age&quot;)
+        }
+        test5(&quot;dalang&quot;,40)
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br></div></div><h3 id="_5-1-4-函数参数"><a href="#_5-1-4-函数参数" class="header-anchor">#</a> 5.1.4 函数参数</h3> <p>1）案例实操
+（1）可变参数
+（2）如果参数列表中存在多个参数，那么可变参数一般放置在最后
+（3）参数默认值，一般将有默认值的参数放置在参数列表的后面
+（4）带名参数</p> <div class="language-scala line-numbers-mode"><pre class="language-scala"><code><span class="token keyword">object</span> TestFunction <span class="token punctuation">{</span>
+
+    <span class="token keyword">def</span> main<span class="token punctuation">(</span>args<span class="token operator">:</span> Array<span class="token punctuation">[</span><span class="token builtin">String</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">Unit</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+
+        <span class="token comment">// （1）可变参数</span>
+        <span class="token keyword">def</span> test<span class="token punctuation">(</span> s <span class="token operator">:</span> <span class="token builtin">String</span><span class="token operator">*</span> <span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">Unit</span> <span class="token operator">=</span> <span class="token punctuation">{</span> 
+            println<span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment">// 有输入参数：输出 Array test(&quot;Hello&quot;, &quot;Scala&quot;)</span>
+
+        <span class="token comment">// 无输入参数：输出List() test()</span>
+
+        <span class="token comment">// (2)如果参数列表中存在多个参数，那么可变参数一般放置在最后</span>
+        <span class="token keyword">def</span> test2<span class="token punctuation">(</span> name <span class="token operator">:</span> <span class="token builtin">String</span><span class="token punctuation">,</span> s<span class="token operator">:</span> <span class="token builtin">String</span><span class="token operator">*</span> <span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">Unit</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+        	println<span class="token punctuation">(</span>name <span class="token operator">+</span> <span class="token string">&quot;,&quot;</span> <span class="token operator">+</span> s<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+
+        test2<span class="token punctuation">(</span><span class="token string">&quot;jinlian&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;dalang&quot;</span><span class="token punctuation">)</span>
+
+        <span class="token comment">// (3)参数默认值</span>
+        <span class="token keyword">def</span> test3<span class="token punctuation">(</span> name <span class="token operator">:</span> <span class="token builtin">String</span><span class="token punctuation">,</span> age <span class="token operator">:</span> <span class="token builtin">Int</span> <span class="token operator">=</span> <span class="token number">30</span> <span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">Unit</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+        	println<span class="token punctuation">(</span><span class="token string-interpolation"><span class="token id function">s</span><span class="token string">&quot;</span><span class="token interpolation"><span class="token punctuation">$</span><span class="token expression">name</span></span><span class="token string">, </span><span class="token interpolation"><span class="token punctuation">$</span><span class="token expression">age</span></span><span class="token string">&quot;</span></span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment">// 如果参数传递了值，那么会覆盖默认值</span>
+        test3<span class="token punctuation">(</span><span class="token string">&quot;jinlian&quot;</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">)</span>
+
+        <span class="token comment">// 如果参数有默认值，在调用的时候，可以省略这个参数</span>
+        test3<span class="token punctuation">(</span><span class="token string">&quot;dalang&quot;</span><span class="token punctuation">)</span>
+
+        <span class="token comment">// 一般情况下，将有默认值的参数放置在参数列表的后面</span>
+        <span class="token keyword">def</span> test4<span class="token punctuation">(</span> sex <span class="token operator">:</span> <span class="token builtin">String</span> <span class="token operator">=</span> <span class="token string">&quot;男&quot;</span><span class="token punctuation">,</span> name <span class="token operator">:</span> <span class="token builtin">String</span> <span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">Unit</span> <span class="token operator">=</span><span class="token punctuation">{</span>
+            println<span class="token punctuation">(</span><span class="token string-interpolation"><span class="token id function">s</span><span class="token string">&quot;</span><span class="token interpolation"><span class="token punctuation">$</span><span class="token expression">name</span></span><span class="token string">, </span><span class="token interpolation"><span class="token punctuation">$</span><span class="token expression">sex</span></span><span class="token string">&quot;</span></span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment">// Scala 函数中参数传递是，从左到右</span>
+        <span class="token comment">//test4(&quot;wusong&quot;)</span>
+        <span class="token comment">//（4）带名参数</span>
+        test4<span class="token punctuation">(</span>name<span class="token operator">=</span><span class="token string">&quot;ximenqing&quot;</span><span class="token punctuation">)</span>
+     <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br></div></div><h3 id="_5-1-5-函数至简原则-重点"><a href="#_5-1-5-函数至简原则-重点" class="header-anchor">#</a> 5.1.5 函数至简原则（重点）</h3> <p>函数至简原则：能省则省</p> <p>1）至简原则细节
+（1）return 可以省略，Scala 会使用函数体的最后一行代码作为返回值
+（2）如果函数体只有一行代码，可以省略花括号
+（3）返回值类型如果能够推断出来，那么可以省略（:和返回值类型一起省略）
+（4）如果有 return，则不能省略返回值类型，必须指定
+（5）如果函数明确声明unit，那么即使函数体中使用 return 关键字也不起作用
+（6）Scala 如果期望是无返回值类型，可以省略等号
+（7）如果函数无参，但是声明了参数列表，那么调用时，小括号，可加可不加
+（8）如果函数没有参数列表，那么小括号可以省略，调用时小括号必须省略
+（9）如果不关心名称，只关心逻辑处理，那么函数名（def）可以省略</p> <p>2）案例实操</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>object TestFunction {
+
+    def main(args: Array[String]): Unit = {
+
+        // （0）函数标准写法
+        def f( s : String ): String = { 
+        	return s + &quot; jinlian&quot;
+        }
+        println(f(&quot;Hello&quot;))
+
+        // 至简原则:能省则省
+        //（1） return 可以省略,Scala 会使用函数体的最后一行代码作为返回值
+        def f1( s : String ): String =	{ 
+        	s + &quot; jinlian&quot;
+        }
+        println(f1(&quot;Hello&quot;))
+
+        //（2）如果函数体只有一行代码，可以省略花括号
+        def f2(s:String):String = s + &quot; jinlian&quot;
+
+        //（3）返回值类型如果能够推断出来，那么可以省略（:和返回值类型一起省略）
+        def f3( s : String ) = s + &quot; jinlian&quot; 
+        println(f3(&quot;Hello3&quot;))
+
+        //（4）如果有 return，则不能省略返回值类型，必须指定。
+        def f4() :String = {
+        	return &quot;ximenqing4&quot;
+        }
+        println(f4())
+
+        //（5）如果函数明确声明 unit，那么即使函数体中使用 return 关键字也不起作用
+        def f5(): Unit = { 
+        	return &quot;dalang5&quot;
+        }
+        println(f5())
+
+        //（6）Scala 如果期望是无返回值类型,可以省略等号
+        // 将无返回值的函数称之为过程
+        def f6() {
+        	&quot;dalang6&quot;
+        }
+        println(f6())
+
+        //（7）如果函数无参，但是声明了参数列表，那么调用时，小括号，可加可不加
+        def f7() = &quot;dalang7&quot; 
+        println(f7())
+        println(f7)
+
+        //（8）如果函数没有参数列表，那么小括号可以省略,调用时小括号必须省略
+        def f8 = &quot;dalang&quot;
+        //println(f8()) 
+        println(f8)
+
+        //（9）如果不关心名称，只关心逻辑处理，那么函数名（def）可以省略
+        def f9 = (x:String)=&gt;{println(&quot;wusong&quot;)}
+
+        def f10(f:String=&gt;Unit) = { 
+        	f(&quot;&quot;)
+        }
+
+        f10(f9)
+        println(f10((x:String)=&gt;{println(&quot;wusong&quot;)}))
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br></div></div><h2 id="_5-2-函数高级"><a href="#_5-2-函数高级" class="header-anchor">#</a> 5.2 函数高级</h2> <h3 id="_5-2-1-高阶函数"><a href="#_5-2-1-高阶函数" class="header-anchor">#</a> 5.2.1 高阶函数</h3> <p>在 Scala 中，函数是一等公民。怎么体现的呢？ 对于一个函数我们可以：<strong>定义函数、调用函数</strong></p> <div class="language- line-numbers-mode"><pre class="language-text"><code>object TestFunction {
+
+    def main(args: Array[String]): Unit = {
+        // 调用函数
+        foo()
+    }
+        // 定义函数
+    def foo():Unit = { 
+    	println(&quot;foo...&quot;)
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br></div></div><p>但是其实函数还有更高阶的用法</p> <p>1）函数可以作为值进行传递</p> <blockquote><p>函数 foo 后面加上 _，相当于把函数 foo 当成一个整体， 传递给变量 f1，不加话会使用函数至单原则便是需要执行函数</p></blockquote> <div class="language-scala line-numbers-mode"><pre class="language-scala"><code><span class="token keyword">object</span> TestFunction <span class="token punctuation">{</span>
+
+    <span class="token keyword">def</span> main<span class="token punctuation">(</span>args<span class="token operator">:</span> Array<span class="token punctuation">[</span><span class="token builtin">String</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">Unit</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+
+    <span class="token comment">//（1）调用 foo 函数，把返回值给变量f</span>
+    <span class="token comment">//val f = foo() </span>
+    <span class="token keyword">val</span> f <span class="token operator">=</span> foo  <span class="token comment">//省略（），直接执行</span>
+    println<span class="token punctuation">(</span>f<span class="token punctuation">)</span>
+    <span class="token comment">//（2）在被调用函数 foo 后面加上 _，相当于把函数 foo 当成一个整体， 传递给变量 f1</span>
+    <span class="token keyword">val</span> f1 <span class="token operator">=</span> foo _ <span class="token comment">//不会执行函数</span>
+
+    foo<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    f1<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token comment">//（3）如果明确变量类型，那么不使用下划线也可以将函数作为整体传递给</span>
+    变量
+    <span class="token keyword">var</span> f2<span class="token operator">:</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token keyword">=&gt;</span><span class="token builtin">Int</span> <span class="token operator">=</span> foo
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">def</span> foo<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span><span class="token builtin">Int</span> <span class="token operator">=</span> <span class="token punctuation">{</span> 
+        println<span class="token punctuation">(</span><span class="token string">&quot;foo...&quot;</span><span class="token punctuation">)</span> 
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br></div></div><p>2）函数可以作为参数进行传递</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>def main(args: Array[String]): Unit = {
+
+    //（1）定义一个函数，函数参数还是一个函数签名；f 表示函数名称;(Int,Int)表示输入两个 Int 参数；Int 表示函数返回值
+    def f1(f: (Int, Int) =&gt; Int): Int = { 
+    	f(2, 4)
+    }
+
+    // （2）定义一个函数，参数和返回值类型和f1 的输入参数一致
+    def add(a: Int, b: Int): Int = a + b
+
+    // （3）将 add 函数作为参数传递给 f1 函数，如果能够推断出来不是调用，_ 可以省略
+    println(f1(add)) 
+    println(f1(add _))
+    //可以传递匿名函数
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br></div></div><p>3）函数可以作为函数返回值返回</p> <div class="language-scala line-numbers-mode"><pre class="language-scala"><code><span class="token keyword">def</span> main<span class="token punctuation">(</span>args<span class="token operator">:</span> Array<span class="token punctuation">[</span><span class="token builtin">String</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">Unit</span> <span class="token operator">=</span> <span class="token punctuation">{</span> 
+    <span class="token keyword">def</span> f1<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+        <span class="token keyword">def</span> f2<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+
+        <span class="token punctuation">}</span>
+        f2 _
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">val</span> f <span class="token operator">=</span> f1<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token comment">// 因为f1 函数的返回值依然为函数，所以可以变量f 可以作为函数继续调用</span>
+    f<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token comment">// 上面的代码可以简化为</span>
+    f1<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div></div><h3 id="_5-2-2-匿名函数"><a href="#_5-2-2-匿名函数" class="header-anchor">#</a> 5.2.2 匿名函数</h3> <p>1）说明
+没有名字的函数就是匿名函数。
+<code>(x:Int)=&gt;{函数体}</code>
+x：表示输入参数类型；Int：表示输入参数类型；函数体：表示具体代码逻辑</p> <p>2）案例实操
+需求 1：传递的函数有一个参数传递匿名函数至简原则：
+（1）参数的类型可以省略，会根据形参进行自动的推导
+（2）类型省略之后，发现只有一个参数，则圆括号可以省略；其他情况：没有参数和参数超过 1 的永远不能省略圆括号。
+（3）匿名函数如果只有一行，则大括号也可以省略
+如果参数只出现一次，则参数省略且后面参数可以用_代替</p> <div class="language-scala line-numbers-mode"><pre class="language-scala"><code><span class="token keyword">def</span> main<span class="token punctuation">(</span>args<span class="token operator">:</span> Array<span class="token punctuation">[</span><span class="token builtin">String</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">Unit</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+
+    <span class="token comment">// （1）定义一个函数：参数包含数据和逻辑函数</span>
+    <span class="token keyword">def</span> operation<span class="token punctuation">(</span>arr<span class="token operator">:</span> Array<span class="token punctuation">[</span><span class="token builtin">Int</span><span class="token punctuation">]</span><span class="token punctuation">,</span> op<span class="token operator">:</span> <span class="token builtin">Int</span> <span class="token keyword">=&gt;</span> <span class="token builtin">Int</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token punctuation">{</span> 
+    	<span class="token keyword">for</span> <span class="token punctuation">(</span>elem <span class="token keyword">&lt;-</span> arr<span class="token punctuation">)</span> <span class="token keyword">yield</span> op<span class="token punctuation">(</span>elem<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// （2）定义逻辑函数</span>
+    <span class="token keyword">def</span> op<span class="token punctuation">(</span>ele<span class="token operator">:</span> <span class="token builtin">Int</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">Int</span> <span class="token operator">=</span> <span class="token punctuation">{</span> 
+    	ele <span class="token operator">+</span> <span class="token number">1</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// （3）标准函数调用</span>
+    <span class="token keyword">val</span> arr <span class="token operator">=</span> operation<span class="token punctuation">(</span>Array<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">,</span> op<span class="token punctuation">)</span> println<span class="token punctuation">(</span>arr<span class="token punctuation">.</span>mkString<span class="token punctuation">(</span><span class="token string">&quot;,&quot;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    <span class="token comment">// （4）采用匿名函数</span>
+    <span class="token keyword">val</span> arr1 <span class="token operator">=</span> operation<span class="token punctuation">(</span>Array<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>ele<span class="token operator">:</span> <span class="token builtin">Int</span><span class="token punctuation">)</span> <span class="token keyword">=&gt;</span> <span class="token punctuation">{</span> 
+    	ele <span class="token operator">+</span> <span class="token number">1</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    println<span class="token punctuation">(</span>arr1<span class="token punctuation">.</span>mkString<span class="token punctuation">(</span><span class="token string">&quot;,&quot;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    <span class="token comment">// （4.1）参数的类型可以省略，会根据形参进行自动的推导; </span>
+    <span class="token keyword">val</span> arr2 <span class="token operator">=</span> operation<span class="token punctuation">(</span>Array<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>ele<span class="token punctuation">)</span> <span class="token keyword">=&gt;</span> <span class="token punctuation">{</span>
+    	ele <span class="token operator">+</span> <span class="token number">1</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    println<span class="token punctuation">(</span>arr2<span class="token punctuation">.</span>mkString<span class="token punctuation">(</span><span class="token string">&quot;,&quot;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    <span class="token comment">// （4.2）类型省略之后，发现只有一个参数，则圆括号可以省略；其他情况：没有参数和参数超过 1 的永远不能省略圆括号。</span>
+    <span class="token keyword">val</span> arr3 <span class="token operator">=</span> operation<span class="token punctuation">(</span>Array<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">,</span> ele <span class="token keyword">=&gt;</span> <span class="token punctuation">{</span> 
+    	ele <span class="token operator">+</span> <span class="token number">1</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    println<span class="token punctuation">(</span>arr3<span class="token punctuation">.</span>mkString<span class="token punctuation">(</span><span class="token string">&quot;,&quot;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    <span class="token comment">// (4.3) 匿名函数如果只有一行，则大括号也可以省略</span>
+    <span class="token keyword">val</span> arr4 <span class="token operator">=</span> operation<span class="token punctuation">(</span>Array<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">,</span> ele <span class="token keyword">=&gt;</span> ele <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> println<span class="token punctuation">(</span>arr4<span class="token punctuation">.</span>mkString<span class="token punctuation">(</span><span class="token string">&quot;,&quot;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    <span class="token comment">//（4.4）如果参数只出现一次，则参数省略且后面参数可以用_代替</span>
+    <span class="token keyword">val</span> arr5 <span class="token operator">=</span> operation<span class="token punctuation">(</span>Array<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">,</span> _ <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> println<span class="token punctuation">(</span>arr5<span class="token punctuation">.</span>mkString<span class="token punctuation">(</span><span class="token string">&quot;,&quot;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br></div></div><p>需求 2：传递的函数有两个参数</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>object TestFunction {
+
+    def main(args: Array[String]): Unit = {
+
+        def calculator(a: Int, b: Int, op: (Int, Int) =&gt; Int): Int = {
+        	op(a, b)
+        }
+
+        // （1）标准版
+        println(calculator(2, 3, (x: Int, y: Int) =&gt;	{x + y}))
+
+        // （2）如果只有一行，则大括号也可以省略
+        println(calculator(2, 3, (x: Int, y: Int) =&gt;	x + y))
+
+        // （3）参数的类型可以省略，会根据形参进行自动的推导; 
+        println(calculator(2, 3, (x , y) =&gt;	x + y))
+
+        // （4）如果参数只出现一次，则参数省略且后面参数可以用_代替
+        println(calculator(2, 3,	_ + _))
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br></div></div><h3 id="_5-2-4-函数柯里化-闭包"><a href="#_5-2-4-函数柯里化-闭包" class="header-anchor">#</a> 5.2.4 函数柯里化&amp;闭包</h3> <p>闭包：函数式编程的标配
+1）说明
+闭包：如果一个函数，访问到了它的外部（局部）变量的值，那么这个函数和他所处的环境，称为闭包
+函数柯里化：把一个参数列表的多个参数，变成多个参数列表。
+2）案例实操</p> <p>（1）闭包</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>object TestFunction {
+
+    def main(args: Array[String]): Unit = { 
+        def f1()={
+            var a:Int = 10 
+            def f2(b:Int)={
+                a + b
+            }
+            f2 _
+        }
+
+        // 在调用时，f1 函数执行完毕后，局部变量a 应该随着栈空间释放掉
+        val f = f1()
+
+        // 但是在此处，变量a 其实并没有释放，而是包含在了 f2 函数的内部，形成了闭合的效果
+        println(f(3))
+
+        println(f1()(3))
+
+        // 函数柯里化，其实就是将复杂的参数逻辑变得简单化,函数柯里化一定存在闭包
+        def f3()(b:Int)={ 
+        	a + b
+        }
+
+        println(f3()(3))
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br></div></div><h3 id="_5-2-5-递归"><a href="#_5-2-5-递归" class="header-anchor">#</a> 5.2.5 递归</h3> <p>1）说明
+一个函数/方法在函数/方法体内又调用了本身，我们称之为递归调用</p> <p>2）案例实操</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>object TestFunction {
+
+    def main(args: Array[String]): Unit = {
+
+        // 阶 乘
+        // 递归算法
+        // 1) 方法调用自身
+        // 2) 方法必须要有跳出的逻辑
+        // 3) 方法调用自身时，传递的参数应该有规律
+        // 4) scala 中的递归必须声明函数返回值类型
+        println(test(5))
+    }
+
+   def test(i : Int) : Int = { 
+		if (i == 1) {
+               1
+         } else {
+               i * test(I - 1)
+         }
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br></div></div><h3 id="_5-2-6-控制抽象"><a href="#_5-2-6-控制抽象" class="header-anchor">#</a> 5.2.6 控制抽象</h3> <p>1）值调用：把计算后的值传递过去</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>object TestControl {
+    def main(args: Array[String]): Unit = { 
+        def f = ()=&gt;{
+            println(&quot;f...&quot;)
+            10
+        }
+
+        foo(f())
+    }
+
+    def foo(a: Int):Unit = { 
+        println(a) 
+        println(a)
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br></div></div><p>2）名调用：把代码传递过去</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>object TestControl {
+    def main(args: Array[String]): Unit = { 
+        def f = ()=&gt;{
+            println(&quot;f...&quot;)
+            10
+        }
+
+    	foo(f())
+    }
+
+    //def foo(a: Int):Unit = {
+    def foo(a: =&gt;Int):Unit = {//注意这里变量 a 没有小括号了
+    	println(a) 
+    	println(a)
+    }
+}
+输出结果：
+f... 
+10 
+f... 
+10
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br></div></div><p>注意：Java 只有值调用；Scala 既有值调用，又有名调用。</p> <h3 id="_5-2-7-惰性加载"><a href="#_5-2-7-惰性加载" class="header-anchor">#</a> 5.2.7 惰性加载</h3> <p>1）说明
+当函数返回值被声明为 lazy 时，函数的执行将被推迟，直到我们首次对此取值，该函数才会执行。这种函数我们称之为惰性函数。</p> <p>2）案例实操</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>def main(args: Array[String]): Unit = {
+
+    lazy val res = sum(10, 30) 
+    println(&quot;---------------&quot;) 
+    println(&quot;res=&quot; + res)
+}
+
+def sum(n1: Int, n2: Int): Int = { 
+    println(&quot;sum 被 执 行 。 。 。 &quot;) 
+    return n1 + n2
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br></div></div><p>输出结果：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>---------------
+sum 被执行。。。
+res=40
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><blockquote><p>注意：lazy 不能修饰 var 类型的变量</p></blockquote></div></div>  <div class="page-edit"><div class="edit-link"><a href="https://github.com/andanyang/vuepress-theme-vdoing/edit/master/docs/大数据/005.scala/02.scala 函数式编程.md" target="_blank" rel="noopener noreferrer">编辑</a> <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></div> <!----> <div class="last-updated"><span class="prefix">上次更新:</span> <span class="time">2024/03/11, 02:40:47</span></div></div> <div class="page-nav-wapper"><div class="page-nav-centre-wrap"><a href="/bigdata/scala/" class="page-nav-centre page-nav-centre-prev router-link-active"><div class="tooltip">Scala 入 门</div></a> <a href="/bigdata/scala/OOP/" class="page-nav-centre page-nav-centre-next"><div class="tooltip">scala 面向对象</div></a></div> <div class="page-nav"><p class="inner"><span class="prev">
+        ←
+        <a href="/bigdata/scala/" class="prev router-link-active">Scala 入 门</a></span> <span class="next"><a href="/bigdata/scala/OOP/">scala 面向对象</a>→
+      </span></p></div></div></div> <div class="article-list"><div class="article-title"><a href="/archives/" class="iconfont icon-bi">最近更新</a></div> <div class="article-wrapper"><dl><dd>01</dd> <dt><a href="/bigdata/spark/SparkStreaming_Driver_Executer/"><div>
+            spark中代码的执行位置（Driver or Executer）
+            <!----></div></a> <span class="date">12-12</span></dt></dl><dl><dd>02</dd> <dt><a href="/bigdata/spark/SparkStreaming/"><div>
+            大数据技术之 SparkStreaming
+            <!----></div></a> <span class="date">12-12</span></dt></dl><dl><dd>03</dd> <dt><a href="/bigdata/spark/sql/"><div>
+            Spark 核心编程之 RDD 累加器与广播变量
+            <!----></div></a> <span class="date">12-06</span></dt></dl> <dl><dd></dd> <dt><a href="/archives/" class="more">更多文章&gt;</a></dt></dl></div></div></main></div> <div class="footer"><div class="icons"><a href="mailto:1218853253@qq.com" title="发邮件" target="_blank" class="iconfont icon-youjian"></a><a href="https://github.com/andanyang" title="GitHub" target="_blank" class="iconfont icon-github"></a><a href="https://music.163.com/#/playlist?id=755597173" title="听音乐" target="_blank" class="iconfont icon-erji"></a></div> 
+  Theme by
+  <a href="https://github.com/xugaoyi/vuepress-theme-vdoing" target="_blank" title="本站主题">Vdoing</a> 
+    | Copyright © 2019-2024
+    <span>Young | <a href="https://github.com/andanyoung/young-blog/blob/master/LICENSE" target="_blank">MIT License</a> <br/> <a  href="https://beian.miit.gov.cn/" target="_blank">浙ICP备20002744号</a></span></div> <div class="buttons"><div title="返回顶部" class="button blur go-to-top iconfont icon-fanhuidingbu" style="display:none;"></div> <div title="去评论" class="button blur go-to-comment iconfont icon-pinglun" style="display:none;"></div> <div title="主题模式" class="button blur theme-mode-but iconfont icon-zhuti"><ul class="select-box" style="display:none;"><li class="iconfont icon-zidong">
+          跟随系统
+        </li><li class="iconfont icon-rijianmoshi">
+          浅色模式
+        </li><li class="iconfont icon-yejianmoshi">
+          深色模式
+        </li><li class="iconfont icon-yuedu">
+          阅读模式
+        </li></ul></div></div> <!----> <!----> <!----></div><div class="global-ui"><div></div></div></div>
+    <script src="/assets/js/app.e4caa6db.js" defer></script><script src="/assets/js/2.d1be14c5.js" defer></script><script src="/assets/js/114.daf1d8a5.js" defer></script>
+  </body>
+</html>

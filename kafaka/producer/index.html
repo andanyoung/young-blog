@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>kafka3.0 生产者 | Young&#39;s blog</title>
+    <meta name="generator" content="VuePress 1.9.5">
+    <link rel="icon" href="/img/favicon.ico">
+    <meta name="description" content="Young丶java后端技术博客,专注后端学习与总结。擅长spring boot,JAVA基础总结,等方面的知识,关注spring,架构,elasticsearch,mysql领域.">
+    <meta name="keywords" content="前端博客,个人技术博客,前端,前端开发,前端框架,web前端,前端面试题,技术文档,学习,面试,JavaScript,js,ES6,TypeScript,vue,python,css3,html5,Node,git,github,markdown">
+    <meta name="baidu-site-verification" content="7F55weZDDc">
+    <meta name="theme-color" content="#11a8cd">
+    
+    <link rel="preload" href="/assets/css/0.styles.53c04193.css" as="style"><link rel="preload" href="/assets/js/app.e4caa6db.js" as="script"><link rel="preload" href="/assets/js/2.d1be14c5.js" as="script"><link rel="preload" href="/assets/js/39.3b3fde85.js" as="script"><link rel="prefetch" href="/assets/js/10.20449a2b.js"><link rel="prefetch" href="/assets/js/100.f25e73b5.js"><link rel="prefetch" href="/assets/js/101.3180ba9d.js"><link rel="prefetch" href="/assets/js/102.fcd415ea.js"><link rel="prefetch" href="/assets/js/103.522869bb.js"><link rel="prefetch" href="/assets/js/104.5da1e4e4.js"><link rel="prefetch" href="/assets/js/105.e5a40fe8.js"><link rel="prefetch" href="/assets/js/106.627d6279.js"><link rel="prefetch" href="/assets/js/107.606beca1.js"><link rel="prefetch" href="/assets/js/108.100e1cb2.js"><link rel="prefetch" href="/assets/js/109.9765392e.js"><link rel="prefetch" href="/assets/js/11.da3512b5.js"><link rel="prefetch" href="/assets/js/110.b73cf0d9.js"><link rel="prefetch" href="/assets/js/111.3f77dd60.js"><link rel="prefetch" href="/assets/js/112.0c7d547d.js"><link rel="prefetch" href="/assets/js/113.1827c266.js"><link rel="prefetch" href="/assets/js/114.daf1d8a5.js"><link rel="prefetch" href="/assets/js/115.e7dca24d.js"><link rel="prefetch" href="/assets/js/116.11b303de.js"><link rel="prefetch" href="/assets/js/117.203cefba.js"><link rel="prefetch" href="/assets/js/118.61d8527b.js"><link rel="prefetch" href="/assets/js/119.1f959a37.js"><link rel="prefetch" href="/assets/js/12.11f18e06.js"><link rel="prefetch" href="/assets/js/120.c268b7aa.js"><link rel="prefetch" href="/assets/js/121.64318c96.js"><link rel="prefetch" href="/assets/js/122.cbddb70d.js"><link rel="prefetch" href="/assets/js/123.b49b84fb.js"><link rel="prefetch" href="/assets/js/124.392f030b.js"><link rel="prefetch" href="/assets/js/125.45f631c4.js"><link rel="prefetch" href="/assets/js/126.700cc575.js"><link rel="prefetch" href="/assets/js/127.d649cb2a.js"><link rel="prefetch" href="/assets/js/128.bc018411.js"><link rel="prefetch" href="/assets/js/129.d0a74611.js"><link rel="prefetch" href="/assets/js/13.1cb33dc8.js"><link rel="prefetch" href="/assets/js/130.45b1f75c.js"><link rel="prefetch" href="/assets/js/131.45ba93df.js"><link rel="prefetch" href="/assets/js/132.c58bbbd7.js"><link rel="prefetch" href="/assets/js/133.7f53922e.js"><link rel="prefetch" href="/assets/js/134.ddf0d780.js"><link rel="prefetch" href="/assets/js/135.ada3af13.js"><link rel="prefetch" href="/assets/js/136.4097c2be.js"><link rel="prefetch" href="/assets/js/137.fc910ac9.js"><link rel="prefetch" href="/assets/js/138.9628f460.js"><link rel="prefetch" href="/assets/js/139.3125ef74.js"><link rel="prefetch" href="/assets/js/14.1004ce43.js"><link rel="prefetch" href="/assets/js/140.bb53ac81.js"><link rel="prefetch" href="/assets/js/141.a002ac19.js"><link rel="prefetch" href="/assets/js/142.540d19e4.js"><link rel="prefetch" href="/assets/js/143.4cbccfca.js"><link rel="prefetch" href="/assets/js/144.8a217b6a.js"><link rel="prefetch" href="/assets/js/145.9c7bc0de.js"><link rel="prefetch" href="/assets/js/146.3dfd0773.js"><link rel="prefetch" href="/assets/js/147.bc0f0d42.js"><link rel="prefetch" href="/assets/js/148.e0cdc4d5.js"><link rel="prefetch" href="/assets/js/149.8486db6e.js"><link rel="prefetch" href="/assets/js/15.703e8784.js"><link rel="prefetch" href="/assets/js/150.5f3b7fb5.js"><link rel="prefetch" href="/assets/js/151.98a3f202.js"><link rel="prefetch" href="/assets/js/152.2940f2ba.js"><link rel="prefetch" href="/assets/js/153.75f3a085.js"><link rel="prefetch" href="/assets/js/154.fa2da83b.js"><link rel="prefetch" href="/assets/js/155.113be5c8.js"><link rel="prefetch" href="/assets/js/156.0667e7f5.js"><link rel="prefetch" href="/assets/js/157.0b3e5dfa.js"><link rel="prefetch" href="/assets/js/158.a338bdd7.js"><link rel="prefetch" href="/assets/js/159.33c9771c.js"><link rel="prefetch" href="/assets/js/16.71e3d898.js"><link rel="prefetch" href="/assets/js/160.e868c8b3.js"><link rel="prefetch" href="/assets/js/161.cf61955e.js"><link rel="prefetch" href="/assets/js/162.baee00ca.js"><link rel="prefetch" href="/assets/js/163.183cde82.js"><link rel="prefetch" href="/assets/js/164.c1eadef5.js"><link rel="prefetch" href="/assets/js/165.70ee8a24.js"><link rel="prefetch" href="/assets/js/166.8e185ff2.js"><link rel="prefetch" href="/assets/js/167.0881cf57.js"><link rel="prefetch" href="/assets/js/168.88caf424.js"><link rel="prefetch" href="/assets/js/169.e7e984ff.js"><link rel="prefetch" href="/assets/js/17.b0356f05.js"><link rel="prefetch" href="/assets/js/170.c7052d81.js"><link rel="prefetch" href="/assets/js/171.2ab773fd.js"><link rel="prefetch" href="/assets/js/172.0e39f858.js"><link rel="prefetch" href="/assets/js/173.76661218.js"><link rel="prefetch" href="/assets/js/174.0ac9f795.js"><link rel="prefetch" href="/assets/js/175.da30bba2.js"><link rel="prefetch" href="/assets/js/176.0f230688.js"><link rel="prefetch" href="/assets/js/177.040e0937.js"><link rel="prefetch" href="/assets/js/178.68852030.js"><link rel="prefetch" href="/assets/js/179.c998f0ca.js"><link rel="prefetch" href="/assets/js/18.2e77c8d1.js"><link rel="prefetch" href="/assets/js/180.4f6b395f.js"><link rel="prefetch" href="/assets/js/181.577a5325.js"><link rel="prefetch" href="/assets/js/182.6b43cbf2.js"><link rel="prefetch" href="/assets/js/183.cf9e9cca.js"><link rel="prefetch" href="/assets/js/184.f0e76def.js"><link rel="prefetch" href="/assets/js/185.2d3d8eea.js"><link rel="prefetch" href="/assets/js/186.4db71601.js"><link rel="prefetch" href="/assets/js/187.8b6a6829.js"><link rel="prefetch" href="/assets/js/188.4a0b8f41.js"><link rel="prefetch" href="/assets/js/189.0a28241b.js"><link rel="prefetch" href="/assets/js/19.51c97d4c.js"><link rel="prefetch" href="/assets/js/190.5001309c.js"><link rel="prefetch" href="/assets/js/191.42778cf1.js"><link rel="prefetch" href="/assets/js/192.fabd1cb0.js"><link rel="prefetch" href="/assets/js/193.cbc113b8.js"><link rel="prefetch" href="/assets/js/194.4cf24763.js"><link rel="prefetch" href="/assets/js/195.ea5d1afb.js"><link rel="prefetch" href="/assets/js/196.16115ce4.js"><link rel="prefetch" href="/assets/js/197.b90179d1.js"><link rel="prefetch" href="/assets/js/198.456ceb51.js"><link rel="prefetch" href="/assets/js/199.a28de97a.js"><link rel="prefetch" href="/assets/js/20.79989fc4.js"><link rel="prefetch" href="/assets/js/200.72102ac7.js"><link rel="prefetch" href="/assets/js/201.e2b3a297.js"><link rel="prefetch" href="/assets/js/202.d4283e12.js"><link rel="prefetch" href="/assets/js/203.6e5e6596.js"><link rel="prefetch" href="/assets/js/204.363863cf.js"><link rel="prefetch" href="/assets/js/205.d16c5a36.js"><link rel="prefetch" href="/assets/js/206.dc867263.js"><link rel="prefetch" href="/assets/js/207.acfeaaaa.js"><link rel="prefetch" href="/assets/js/208.22c49054.js"><link rel="prefetch" href="/assets/js/209.0f7c526b.js"><link rel="prefetch" href="/assets/js/21.1b619a3f.js"><link rel="prefetch" href="/assets/js/210.b247a678.js"><link rel="prefetch" href="/assets/js/211.fe8629a4.js"><link rel="prefetch" href="/assets/js/212.48b672e5.js"><link rel="prefetch" href="/assets/js/213.08f571a8.js"><link rel="prefetch" href="/assets/js/214.04da1824.js"><link rel="prefetch" href="/assets/js/215.f60b57f4.js"><link rel="prefetch" href="/assets/js/216.4383ceb6.js"><link rel="prefetch" href="/assets/js/217.3b1ce286.js"><link rel="prefetch" href="/assets/js/218.1534ef52.js"><link rel="prefetch" href="/assets/js/219.6901e38c.js"><link rel="prefetch" href="/assets/js/22.349d3a16.js"><link rel="prefetch" href="/assets/js/220.22e0c5ea.js"><link rel="prefetch" href="/assets/js/221.2e7a5a4f.js"><link rel="prefetch" href="/assets/js/222.76b63073.js"><link rel="prefetch" href="/assets/js/223.500a058f.js"><link rel="prefetch" href="/assets/js/224.7f7c1250.js"><link rel="prefetch" href="/assets/js/225.2f183cbe.js"><link rel="prefetch" href="/assets/js/23.712dd5ac.js"><link rel="prefetch" href="/assets/js/24.77ae5052.js"><link rel="prefetch" href="/assets/js/25.e95f81fb.js"><link rel="prefetch" href="/assets/js/26.82cdd880.js"><link rel="prefetch" href="/assets/js/27.427a5aec.js"><link rel="prefetch" href="/assets/js/28.e245952d.js"><link rel="prefetch" href="/assets/js/29.50596e31.js"><link rel="prefetch" href="/assets/js/3.4f4335cf.js"><link rel="prefetch" href="/assets/js/30.016e73a0.js"><link rel="prefetch" href="/assets/js/31.fb0b0b40.js"><link rel="prefetch" href="/assets/js/32.8e7d8efe.js"><link rel="prefetch" href="/assets/js/33.f05f242b.js"><link rel="prefetch" href="/assets/js/34.893b8c3e.js"><link rel="prefetch" href="/assets/js/35.f98d31b7.js"><link rel="prefetch" href="/assets/js/36.6a5744a0.js"><link rel="prefetch" href="/assets/js/37.67e8976d.js"><link rel="prefetch" href="/assets/js/38.2d8447e0.js"><link rel="prefetch" href="/assets/js/4.93e1dc89.js"><link rel="prefetch" href="/assets/js/40.8cde36eb.js"><link rel="prefetch" href="/assets/js/41.9df0f821.js"><link rel="prefetch" href="/assets/js/42.c9f1a26b.js"><link rel="prefetch" href="/assets/js/43.fa088c07.js"><link rel="prefetch" href="/assets/js/44.121055e3.js"><link rel="prefetch" href="/assets/js/45.7995c3a0.js"><link rel="prefetch" href="/assets/js/46.17d53a2e.js"><link rel="prefetch" href="/assets/js/47.4a374966.js"><link rel="prefetch" href="/assets/js/48.733e5b6c.js"><link rel="prefetch" href="/assets/js/49.0fb92742.js"><link rel="prefetch" href="/assets/js/5.f52855e6.js"><link rel="prefetch" href="/assets/js/50.50fc5031.js"><link rel="prefetch" href="/assets/js/51.69d8d52a.js"><link rel="prefetch" href="/assets/js/52.d84cedc3.js"><link rel="prefetch" href="/assets/js/53.a64ddaf4.js"><link rel="prefetch" href="/assets/js/54.15e09103.js"><link rel="prefetch" href="/assets/js/55.0f7e8fd5.js"><link rel="prefetch" href="/assets/js/56.6cb5bf13.js"><link rel="prefetch" href="/assets/js/57.d90d9da6.js"><link rel="prefetch" href="/assets/js/58.2c03a905.js"><link rel="prefetch" href="/assets/js/59.02cf613a.js"><link rel="prefetch" href="/assets/js/6.0ff35647.js"><link rel="prefetch" href="/assets/js/60.bb6d2b2f.js"><link rel="prefetch" href="/assets/js/61.ef2abfd3.js"><link rel="prefetch" href="/assets/js/62.b09e5f81.js"><link rel="prefetch" href="/assets/js/63.6ca85ec7.js"><link rel="prefetch" href="/assets/js/64.77eab656.js"><link rel="prefetch" href="/assets/js/65.65b00883.js"><link rel="prefetch" href="/assets/js/66.040b5d23.js"><link rel="prefetch" href="/assets/js/67.23318ab1.js"><link rel="prefetch" href="/assets/js/68.5c29433f.js"><link rel="prefetch" href="/assets/js/69.90978695.js"><link rel="prefetch" href="/assets/js/7.463451e9.js"><link rel="prefetch" href="/assets/js/70.0c585fbd.js"><link rel="prefetch" href="/assets/js/71.120e4ae5.js"><link rel="prefetch" href="/assets/js/72.53bf1e3a.js"><link rel="prefetch" href="/assets/js/73.282f5b35.js"><link rel="prefetch" href="/assets/js/74.4f1cb67d.js"><link rel="prefetch" href="/assets/js/75.f5d3ea1e.js"><link rel="prefetch" href="/assets/js/76.fb173587.js"><link rel="prefetch" href="/assets/js/77.8064b022.js"><link rel="prefetch" href="/assets/js/78.d26f8075.js"><link rel="prefetch" href="/assets/js/79.6cff2fa5.js"><link rel="prefetch" href="/assets/js/8.d5f74857.js"><link rel="prefetch" href="/assets/js/80.29d746c7.js"><link rel="prefetch" href="/assets/js/81.c0a214a2.js"><link rel="prefetch" href="/assets/js/82.f0c93ca2.js"><link rel="prefetch" href="/assets/js/83.db6f55e1.js"><link rel="prefetch" href="/assets/js/84.b0a7a28c.js"><link rel="prefetch" href="/assets/js/85.db7376d4.js"><link rel="prefetch" href="/assets/js/86.96ec3402.js"><link rel="prefetch" href="/assets/js/87.ae41a109.js"><link rel="prefetch" href="/assets/js/88.d83c21c8.js"><link rel="prefetch" href="/assets/js/89.33868490.js"><link rel="prefetch" href="/assets/js/9.2680f96d.js"><link rel="prefetch" href="/assets/js/90.ed48459a.js"><link rel="prefetch" href="/assets/js/91.e1ee23ba.js"><link rel="prefetch" href="/assets/js/92.8b354527.js"><link rel="prefetch" href="/assets/js/93.0682d2e4.js"><link rel="prefetch" href="/assets/js/94.105580aa.js"><link rel="prefetch" href="/assets/js/95.d378d658.js"><link rel="prefetch" href="/assets/js/96.a6460598.js"><link rel="prefetch" href="/assets/js/97.a4cc955f.js"><link rel="prefetch" href="/assets/js/98.9a600d4f.js"><link rel="prefetch" href="/assets/js/99.45007523.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.53c04193.css">
+  </head>
+  <body class="theme-mode-light">
+    <div id="app" data-server-rendered="true"><div class="theme-container sidebar-open have-rightmenu"><header class="navbar blur"><div title="目录" class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/img/logo.png" alt="Young's blog" class="logo"> <span class="site-name can-hide">Young's blog</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><a href="/Spring/" class="nav-link">Spring</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="前端" class="dropdown-title"><a href="/web/" class="link-title">前端</a> <span class="title" style="display:none;">前端</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>前端文章1</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/pages/8143cc480faf9a11/" class="nav-link">JavaScript</a></li></ul></li><li class="dropdown-item"><h4>学习笔记</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/note/javascript/" class="nav-link">《JavaScript教程》</a></li><li class="dropdown-subitem"><a href="/note/js/" class="nav-link">《JavaScript高级程序设计》</a></li><li class="dropdown-subitem"><a href="/note/es6/" class="nav-link">《ES6 教程》</a></li><li class="dropdown-subitem"><a href="/note/vue/" class="nav-link">《Vue》</a></li><li class="dropdown-subitem"><a href="/note/react/" class="nav-link">《React》</a></li><li class="dropdown-subitem"><a href="/note/typescript-axios/" class="nav-link">《TypeScript 从零实现 axios》</a></li><li class="dropdown-subitem"><a href="/note/git/" class="nav-link">《Git》</a></li><li class="dropdown-subitem"><a href="/pages/51afd6/" class="nav-link">TypeScript</a></li><li class="dropdown-subitem"><a href="/pages/4643cd/" class="nav-link">JS设计模式总结</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="页面" class="dropdown-title"><a href="/ui/" class="link-title">页面</a> <span class="title" style="display:none;">页面</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/8309a5b876fc95e3/" class="nav-link">HTML</a></li><li class="dropdown-item"><!----> <a href="/pages/0a83b083bdf257cb/" class="nav-link">CSS</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="技术" class="dropdown-title"><a href="/technology/" class="link-title">技术</a> <span class="title" style="display:none;">技术</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/9a7ee40fc232253e/" class="nav-link">技术文档</a></li><li class="dropdown-item"><!----> <a href="/pages/4c778760be26d8b3/" class="nav-link">GitHub技巧</a></li><li class="dropdown-item"><!----> <a href="/pages/117708e0af7f0bd9/" class="nav-link">Nodejs</a></li><li class="dropdown-item"><!----> <a href="/pages/41f87d890d0a02af/" class="nav-link">博客搭建</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="更多" class="dropdown-title"><a href="/more/" class="link-title">更多</a> <span class="title" style="display:none;">更多</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/f2a556/" class="nav-link">学习</a></li><li class="dropdown-item"><!----> <a href="/pages/aea6571b7a8bae86/" class="nav-link">面试</a></li><li class="dropdown-item"><!----> <a href="/pages/2d615df9a36a98ed/" class="nav-link">心情杂货</a></li><li class="dropdown-item"><!----> <a href="/pages/baaa02/" class="nav-link">实用技巧</a></li><li class="dropdown-item"><!----> <a href="/friends/" class="nav-link">友情链接</a></li></ul></div></div><div class="nav-item"><a href="/about/" class="nav-link">关于</a></div><div class="nav-item"><a href="/pages/beb6c0bd8a66cea6/" class="nav-link">收藏</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="索引" class="dropdown-title"><a href="/archives/" class="link-title">索引</a> <span class="title" style="display:none;">索引</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/" class="nav-link">分类</a></li><li class="dropdown-item"><!----> <a href="/tags/" class="nav-link">标签</a></li><li class="dropdown-item"><!----> <a href="/archives/" class="nav-link">归档</a></li></ul></div></div> <a href="https://github.com/andanyang/vuepress-theme-vdoing" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <div class="sidebar-hover-trigger"></div> <aside class="sidebar" style="display:none;"><div class="blogger"><img src="/img/logo.png"> <div class="blogger-info"><h3>Young</h3> <span></span></div></div> <nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><a href="/Spring/" class="nav-link">Spring</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="前端" class="dropdown-title"><a href="/web/" class="link-title">前端</a> <span class="title" style="display:none;">前端</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>前端文章1</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/pages/8143cc480faf9a11/" class="nav-link">JavaScript</a></li></ul></li><li class="dropdown-item"><h4>学习笔记</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/note/javascript/" class="nav-link">《JavaScript教程》</a></li><li class="dropdown-subitem"><a href="/note/js/" class="nav-link">《JavaScript高级程序设计》</a></li><li class="dropdown-subitem"><a href="/note/es6/" class="nav-link">《ES6 教程》</a></li><li class="dropdown-subitem"><a href="/note/vue/" class="nav-link">《Vue》</a></li><li class="dropdown-subitem"><a href="/note/react/" class="nav-link">《React》</a></li><li class="dropdown-subitem"><a href="/note/typescript-axios/" class="nav-link">《TypeScript 从零实现 axios》</a></li><li class="dropdown-subitem"><a href="/note/git/" class="nav-link">《Git》</a></li><li class="dropdown-subitem"><a href="/pages/51afd6/" class="nav-link">TypeScript</a></li><li class="dropdown-subitem"><a href="/pages/4643cd/" class="nav-link">JS设计模式总结</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="页面" class="dropdown-title"><a href="/ui/" class="link-title">页面</a> <span class="title" style="display:none;">页面</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/8309a5b876fc95e3/" class="nav-link">HTML</a></li><li class="dropdown-item"><!----> <a href="/pages/0a83b083bdf257cb/" class="nav-link">CSS</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="技术" class="dropdown-title"><a href="/technology/" class="link-title">技术</a> <span class="title" style="display:none;">技术</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/9a7ee40fc232253e/" class="nav-link">技术文档</a></li><li class="dropdown-item"><!----> <a href="/pages/4c778760be26d8b3/" class="nav-link">GitHub技巧</a></li><li class="dropdown-item"><!----> <a href="/pages/117708e0af7f0bd9/" class="nav-link">Nodejs</a></li><li class="dropdown-item"><!----> <a href="/pages/41f87d890d0a02af/" class="nav-link">博客搭建</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="更多" class="dropdown-title"><a href="/more/" class="link-title">更多</a> <span class="title" style="display:none;">更多</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/f2a556/" class="nav-link">学习</a></li><li class="dropdown-item"><!----> <a href="/pages/aea6571b7a8bae86/" class="nav-link">面试</a></li><li class="dropdown-item"><!----> <a href="/pages/2d615df9a36a98ed/" class="nav-link">心情杂货</a></li><li class="dropdown-item"><!----> <a href="/pages/baaa02/" class="nav-link">实用技巧</a></li><li class="dropdown-item"><!----> <a href="/friends/" class="nav-link">友情链接</a></li></ul></div></div><div class="nav-item"><a href="/about/" class="nav-link">关于</a></div><div class="nav-item"><a href="/pages/beb6c0bd8a66cea6/" class="nav-link">收藏</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="索引" class="dropdown-title"><a href="/archives/" class="link-title">索引</a> <span class="title" style="display:none;">索引</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/" class="nav-link">分类</a></li><li class="dropdown-item"><!----> <a href="/tags/" class="nav-link">标签</a></li><li class="dropdown-item"><!----> <a href="/archives/" class="nav-link">归档</a></li></ul></div></div> <a href="https://github.com/andanyang/vuepress-theme-vdoing" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Hadoop</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>kafka</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/kafaka/introduction/" class="sidebar-link">kafka3.0入门</a></li><li><a href="/kafaka/producer/" aria-current="page" class="active sidebar-link">kafka3.0 生产者</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level2"><a href="/kafaka/producer/#_3-1-生产者消息发送流程" class="sidebar-link">3.1 生产者消息发送流程</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/kafaka/producer/#_3-1-1-发送原理" class="sidebar-link">3.1.1 发送原理</a></li><li class="sidebar-sub-header level3"><a href="/kafaka/producer/#_3-1-2-生产者重要参数列表" class="sidebar-link">3.1.2 生产者重要参数列表</a></li><li class="sidebar-sub-header level3"><a href="/kafaka/producer/#_3-2-异步发送-api" class="sidebar-link">3.2 异步发送 API</a></li><li class="sidebar-sub-header level3"><a href="/kafaka/producer/#_3-2-1-普通异步发送" class="sidebar-link">3.2.1 普通异步发送</a></li><li class="sidebar-sub-header level4"><a href="/kafaka/producer/#_1-需求-创建-kafka-生产者-采用异步的方式发送到-kafka-broker" class="sidebar-link">1）需求：创建 Kafka 生产者，采用异步的方式发送到 Kafka Broker</a></li><li class="sidebar-sub-header level4"><a href="/kafaka/producer/#_2-代码编写" class="sidebar-link">2）代码编写</a></li><li class="sidebar-sub-header level3"><a href="/kafaka/producer/#_3-2-2-带回调函数的异步发送" class="sidebar-link">3.2.2 带回调函数的异步发送</a></li><li class="sidebar-sub-header level3"><a href="/kafaka/producer/#_3-3-同步发送-api" class="sidebar-link">3.3 同步发送 API</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/kafaka/producer/#_3-4-生产者分区" class="sidebar-link">3.4 生产者分区</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/kafaka/producer/#_3-4-1-分区好处" class="sidebar-link">3.4.1 分区好处</a></li><li class="sidebar-sub-header level3"><a href="/kafaka/producer/#_3-4-2-生产者发送消息的分区策略" class="sidebar-link">3.4.2 生产者发送消息的分区策略</a></li><li class="sidebar-sub-header level4"><a href="/kafaka/producer/#_1-默认的分区器-defaultpartitioner" class="sidebar-link">1）默认的分区器 DefaultPartitioner</a></li><li class="sidebar-sub-header level4"><a href="/kafaka/producer/#_2-案例一" class="sidebar-link">2）案例一</a></li><li class="sidebar-sub-header level4"><a href="/kafaka/producer/#_3-案例二" class="sidebar-link">3）案例二</a></li><li class="sidebar-sub-header level3"><a href="/kafaka/producer/#_3-4-3-自定义分区器" class="sidebar-link">3.4.3 自定义分区器</a></li><li class="sidebar-sub-header level4"><a href="/kafaka/producer/#_1-需求" class="sidebar-link">1）需求</a></li><li class="sidebar-sub-header level4"><a href="/kafaka/producer/#_2-实现步骤" class="sidebar-link">2）实现步骤</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/kafaka/producer/#_3-5-生产经验-生产者如何提高吞吐量" class="sidebar-link">3.5 生产经验——生产者如何提高吞吐量</a></li><li class="sidebar-sub-header level2"><a href="/kafaka/producer/#_3-6-生产经验-数据可靠性" class="sidebar-link">3.6 生产经验——数据可靠性</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level4"><a href="/kafaka/producer/#_1-ack-应答原理" class="sidebar-link">1）ack 应答原理</a></li><li class="sidebar-sub-header level3"><a href="/kafaka/producer/#_3-7-生产经验-数据去重" class="sidebar-link">3.7 生产经验——数据去重</a></li><li class="sidebar-sub-header level3"><a href="/kafaka/producer/#_3-7-1-数据传递语义" class="sidebar-link">3.7.1 数据传递语义</a></li><li class="sidebar-sub-header level3"><a href="/kafaka/producer/#_3-7-2-幂等性" class="sidebar-link">3.7.2 幂等性</a></li><li class="sidebar-sub-header level4"><a href="/kafaka/producer/#_1-幂等性原理" class="sidebar-link">1）幂等性原理</a></li><li class="sidebar-sub-header level4"><a href="/kafaka/producer/#_2-如何使用幂等性" class="sidebar-link">2）如何使用幂等性</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/kafaka/producer/#_3-7-3-生产者事务" class="sidebar-link">3.7.3 生产者事务</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level4"><a href="/kafaka/producer/#_1-kafka-事务原理" class="sidebar-link">1）Kafka 事务原理</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/kafaka/producer/#_3-8-生产经验-数据有序" class="sidebar-link">3.8 生产经验——数据有序</a></li><li class="sidebar-sub-header level2"><a href="/kafaka/producer/#_3-9-生产经验-数据乱序" class="sidebar-link">3.9 生产经验——数据乱序</a></li></ul></li><li><a href="/kafka/broker/" class="sidebar-link">kafka3.0 broker</a></li><li><a href="/kafka/consumer/" class="sidebar-link">Kafka 消费者</a></li><li><a href="/kafka/Kafka_Kraft/" class="sidebar-link">Kafka-Kraft 模式</a></li><li><a href="/kafka/Kafka_Workflow/" class="sidebar-link">Kafka 整体流程</a></li><li><a href="/kafka/Kafka_Idempotent_transactional/" class="sidebar-link">Kafka 幂等性和事务</a></li><li><a href="/kafka/Kafka_integration/" class="sidebar-link">Kafka 外部系统集成 Springboot</a></li><li><a href="/kafka/Kafka_Production_tuning/" class="sidebar-link">Kafka生产调优手册</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Flume</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>hive</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>scala</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>spark</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <div><main class="page"><div class="theme-vdoing-wrapper "><div class="articleInfo-wrap" data-v-06225672><div class="articleInfo" data-v-06225672><ul class="breadcrumbs" data-v-06225672><li data-v-06225672><a href="/" title="首页" class="iconfont icon-home router-link-active" data-v-06225672></a></li> <li data-v-06225672><a href="/categories/?category=%E5%A4%A7%E6%95%B0%E6%8D%AE" title="分类" data-v-06225672>大数据</a></li><li data-v-06225672><a href="/categories/?category=kafka" title="分类" data-v-06225672>kafka</a></li></ul> <div class="info" data-v-06225672><div title="作者" class="author iconfont icon-touxiang" data-v-06225672><a href="https://github.com/andanyoung" target="_blank" title="作者" class="beLink" data-v-06225672>andanyang</a></div> <div title="创建时间" class="date iconfont icon-riqi" data-v-06225672><a href="javascript:;" data-v-06225672>2023-09-20</a></div> <!----></div></div></div> <!----> <div class="content-wrapper"><div class="right-menu-wrapper"><div class="right-menu-margin"><div class="right-menu-title">目录</div> <div class="right-menu-content"></div></div></div> <h1><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAABKFJREFUSA3tVl1oFVcQnrMbrak3QUgkya1akpJYcrUtIqW1JvFBE9LiQ5v6JmJpolbMg32rVrhgoYK0QiMY6i9Y6EMaW5D+xFJaTYItIuK2Kr3+BJNwkxBj05sQY3b3nM6cs2dv9t7NT/vQJw/sndk5M/PNzJkzewGerP+pAmy+ON8lLzUJgA8ZYxYIYZmGYRnctDaWvJJAmTtfP1pvXsBCCPP8QFcCaRkZYACgDZFO4stNIcBCajEOlmmC9XpJ9bAGCaPaPmzPl32dvLSVu3BWCTQs0XQQ6g0DYgwLIoAZbBCdW/i+781o1VVlm/410mw4h06Y7bIPHNyWDyL4FHkX03Q8SrzNhZTZriieckWt7cL6MM85YcLpsi/7O9/iXFT6MswI0DmmpkSaJ0qLxFIm3+i1THHB3zmBH3PYx9CcykcLOeQVVa7QtdxTgQgEleX2AjHYfwA+2ddV77ruGoJUbhGDI09YSNXyMpUt5ylOzxgbUmtOp7NmbNt8v3arjTBfYELmLUV+M+nSawNNAUqpT3ClJWg5I3BLT+cGW/DXNGCa6tx1aakCGEigArTn4TDIPdrXXYKCZNrHLMCOEPvHBlLQ99s9eHB7EB6NTki73CVPQ2F5MSx/uRQixfmq7rK0wYD8w8E905bnPDfwoWs/rfv93NWN/ZfvwsLIU7A09gxECyISeGJkHAau98L97tuw7NXnoPyNF8FcYGLGKsOs0mN3OEyec9esGW/ZEl945dTP34wlR2FZVQWU1q0Cw8Tr7p+hgLLNL0FPxx/Q35mA8aEUrH6nCgwEl0tn7wUiZYJnNRh6DK4UH/k0lfyrsBKdPVv/AriGIQcEDQZ65LBAGe2Rzui9Ybjz7XUppz1/uKBbyVPGkN3ZAeC6hr0x7Nr38N5+EqkoOm17xpoqR9ohQF55ERSvr4Dkr3chNfC3DMzGJlNBElW8w9nsGQvhNGIzDkXzCg8cLK951xHsFBlTJspJNi3ZFIMF2AeDV3q8DNOB+YHi6QTrChDIWDBRi5U5f+ZMfJLu3ccrqxtdxk4SKH336LFxSmkqefwU5T8fhdSdQf9IVKD6aNiwI/hnmcAZ91isYMJIaCUCx9W098+LgruikeTqzqqxKPUwqJyCPJiyemVVZBOijDGjD38Os0jOiSPL1z3SPjXNANbiNPXAdzTfukjjuknNBbyz3nwgTd3AVFqUJ5hpHlq9MveLnWwttUfoygBmvVjuikxND3znrhsELnZk7k+OjIGxeNEkomyLVta0xxn+HZhjBc4YZ/AFjHjz9u3xRZl2BN4aq9nFwWh16IrQ1aHHEd3j1+4/dB9OtH4e29A2H1DyHQRmOSfQZ1Fy7MHBTGB6J/Djq6p3OxyO2cB+4Car7v/o3GXgfAkj23+x9ID1Teoamo/SXcbvSf2PX7Vc8DdCmE1vN9di+32P9/5YR3vLnhCVGUWBjEkr3yh4H8v9CzmsbdhzOKzsJKM90iFdaTMjRPhGVsakRvOaRidljo6H6G7j+ctrJpsP+4COhDIl0La2+FS4+5mlocBaXY5QnGZysIBYoeSsl5qQzrSj/cgNrfuEzlWBfwA+EjrZyWUvpAAAAABJRU5ErkJggg==">kafka3.0 生产者<!----></h1>  <div class="theme-vdoing-content content__default"><h3 id="第-3-章-kafka-生产者"><a href="#第-3-章-kafka-生产者" class="header-anchor">#</a> 第 3 章 Kafka 生产者</h3> <h2 id="_3-1-生产者消息发送流程"><a href="#_3-1-生产者消息发送流程" class="header-anchor">#</a> 3.1 生产者消息发送流程</h2> <h3 id="_3-1-1-发送原理"><a href="#_3-1-1-发送原理" class="header-anchor">#</a> 3.1.1 发送原理</h3> <p>在消息发送的过程中，涉及到了<strong>两个线程——main 线程和 Sender 线程</strong>。在 main 线程 中创建了一个<strong>双端队列 RecordAccumulator</strong>。main 线程将消息发送给 RecordAccumulator， Sender 线程不断从 RecordAccumulator 中拉取消息发送到 Kafka Broker。</p> <p><img src="/assets/img/image-20230920224352147.6f8542b5.png" alt="发送流程">\</p> <h3 id="_3-1-2-生产者重要参数列表"><a href="#_3-1-2-生产者重要参数列表" class="header-anchor">#</a> 3.1.2 生产者重要参数列表</h3> <table><thead><tr><th>参数名称</th> <th>描述</th></tr></thead> <tbody><tr><td>bootstrap.servers</td> <td>生产者连接集群所需的 broker 地 址清单 。 例 如 hadoop102:9092,hadoop103:9092,hadoop104:9092，可以设置 1 个或者多个，中间用逗号隔开。注意这里并<strong>非需要所有的 broker 地址</strong>，因为生产者从给定的 broker 里查找到其他 broker 信息。</td></tr> <tr><td>key.serializer 和 value.serializer</td> <td>指定发送消息的 key 和 value 的序列化类型。一定要写 全类名。</td></tr> <tr><td>buffer.memory</td> <td>RecordAccumulator 缓冲区总大小，<strong>默认 32m。</strong></td></tr> <tr><td>batch.size</td> <td>缓冲区一批数据最大值，默认 16k。适当增加该值，可 以提高吞吐量，但是如果该值设置太大，会导致数据 传输延迟增加。</td></tr> <tr><td>linger.ms</td> <td>如果数据迟迟未达到 batch.size，sender 等待 linger.time 之后就会发送数据。单位 ms，<strong>默认值是 0ms</strong>，表示没有延迟。生产环境建议该值大小为 5-100ms 之间。</td></tr> <tr><td>acks</td> <td>0：生产者发送过来的数据，不需要等数据落盘应答。 1：生产者发送过来的数据，Leader 收到数据后应答。 -1（all）：生产者发送过来的数据，Leader+和 isr 队列里面的所有节点收齐数据后应答。<strong>默认值是-1，-1 和 all 是等价的。</strong></td></tr> <tr><td>max.in.flight.requests.per.connection</td> <td>允许最多没有返回 ack 的次数，<strong>默认为 5</strong>，开启幂等性要保证该值是 1-5 的数字。</td></tr> <tr><td>retries</td> <td>当消息发送出现错误的时候，系统会重发消息。retries 表示重试次数。<strong>默认是 int 最大值，2147483647</strong>。 如果设置了重试，还想保证消息的有序性，需要设置 MAX_IN_FLIGHT_REQUESTS_PER_CONNECTION=1 否则在重试此失败消息的时候，其他的消息可能发送成功了。</td></tr> <tr><td>retry.backoff.ms</td> <td>两次重试之间的时间间隔，默认是 100ms。</td></tr> <tr><td>enable.idempotence</td> <td>是否开启幂等性，<strong>默认 true</strong>，开启幂等性。</td></tr> <tr><td>compression.type</td> <td>生产者发送的所有数据的压缩方式。<strong>默认是 none</strong>，也就是不压缩。 支持压缩类型：<strong>none、gzip、snappy、lz4 和 zstd。</strong></td></tr></tbody></table> <h3 id="_3-2-异步发送-api"><a href="#_3-2-异步发送-api" class="header-anchor">#</a> 3.2 异步发送 API</h3> <h3 id="_3-2-1-普通异步发送"><a href="#_3-2-1-普通异步发送" class="header-anchor">#</a> 3.2.1 普通异步发送</h3> <h4 id="_1-需求-创建-kafka-生产者-采用异步的方式发送到-kafka-broker"><a href="#_1-需求-创建-kafka-生产者-采用异步的方式发送到-kafka-broker" class="header-anchor">#</a> 1）需求：创建 Kafka 生产者，采用异步的方式发送到 Kafka Broker</h4> <p><img src="/assets/img/image-20230920225146396.6fd5e0c0.png" alt="异步发送流程"></p> <h4 id="_2-代码编写"><a href="#_2-代码编写" class="header-anchor">#</a> 2）代码编写</h4> <p>（1）创建工程 kafka</p> <p>（2）导入依赖</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>		&lt;dependency&gt;
+            &lt;groupId&gt;org.apache.kafka&lt;/groupId&gt;
+            &lt;artifactId&gt;kafka-clients&lt;/artifactId&gt;
+            &lt;version&gt;3.0.0&lt;/version&gt;
+        &lt;/dependency&gt;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p>（3）创建包名：com.andanyoung.kafka.producer</p> <p>（4）编写不带回调函数的 API 代码</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.common.serialization.StringSerializer;
+
+import java.util.Properties;
+
+public class CustomProducer {
+
+    public static void main(String[] args) {
+
+        // 0 配置
+        Properties properties = new Properties();
+
+        // 连接集群 bootstrap.servers
+        properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,&quot;hadoop102:9092,hadoop103:9092&quot;);
+
+        // 指定对应的key和value的序列化类型 key.serializer
+        properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+        properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,StringSerializer.class.getName());
+
+        // 1 创建kafka生产者对象
+        // &quot;&quot; hello
+        KafkaProducer&lt;String, String&gt; kafkaProducer = new KafkaProducer&lt;&gt;(properties);
+
+        // 2 发送数据
+        for (int i = 0; i &lt; 5; i++) {
+            kafkaProducer.send(new ProducerRecord&lt;&gt;(&quot;first&quot;,&quot;andanyoung&quot;+i));
+        }
+
+        // 3 关闭资源
+        kafkaProducer.close();
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br></div></div><h3 id="_3-2-2-带回调函数的异步发送"><a href="#_3-2-2-带回调函数的异步发送" class="header-anchor">#</a> 3.2.2 带回调函数的异步发送</h3> <p>回调函数会在 producer 收到 ack 时调用，为异步调用，该方法有两个参数，分别是元数据信息（RecordMetadata）和异常信息（Exception），如果 Exception 为 null，说明消息发送成功，如果 Exception 不为 null，说明消息发送失败。</p> <blockquote><p>注意：消息发送失败会自动重试，不需要我们在回调函数中手动重试</p></blockquote> <div class="language- line-numbers-mode"><pre class="language-text"><code>public class CustomProducerCallback {
+
+    public static void main(String[] args) throws InterruptedException {
+
+        // 0 配置
+        Properties properties = new Properties();
+
+        // 连接集群 bootstrap.servers
+        properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,&quot;hadoop102:9092,hadoop103:9092&quot;);
+
+        // 指定对应的key和value的序列化类型 key.serializer
+//        properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,&quot;org.apache.kafka.common.serialization.StringSerializer&quot;);
+        properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+        properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,StringSerializer.class.getName());
+
+        // 1 创建kafka生产者对象
+        // &quot;&quot; hello
+        KafkaProducer&lt;String, String&gt; kafkaProducer = new KafkaProducer&lt;&gt;(properties);
+
+        // 2 发送数据
+        for (int i = 0; i &lt; 500; i++) {
+            kafkaProducer.send(new ProducerRecord&lt;&gt;(&quot;first&quot;, &quot;andanyoung&quot; + i), new Callback() {
+                @Override
+                public void onCompletion(RecordMetadata metadata, Exception exception) {
+
+                    if (exception == null){
+                        System.out.println(&quot;主题： &quot;+metadata.topic() + &quot; 分区： &quot;+ metadata.partition());
+                    }
+                }
+            });
+
+            Thread.sleep(2);
+        }
+
+        // 3 关闭资源
+        kafkaProducer.close();
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br></div></div><h3 id="_3-3-同步发送-api"><a href="#_3-3-同步发送-api" class="header-anchor">#</a> 3.3 同步发送 API</h3> <p>只需在异步发送的基础上，再调用一下 get()方法即可。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>public class CustomProducerSync {
+
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+
+        // 0 配置
+        Properties properties = new Properties();
+
+        // 连接集群 bootstrap.servers
+        properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,&quot;hadoop102:9092,hadoop103:9092&quot;);
+
+        // 指定对应的key和value的序列化类型 key.serializer
+//        properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,&quot;org.apache.kafka.common.serialization.StringSerializer&quot;);
+        properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+        properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,StringSerializer.class.getName());
+
+        // 1 创建kafka生产者对象
+        // &quot;&quot; hello
+        KafkaProducer&lt;String, String&gt; kafkaProducer = new KafkaProducer&lt;&gt;(properties);
+
+        // 2 发送数据
+        for (int i = 0; i &lt; 5; i++) {
+            kafkaProducer.send(new ProducerRecord&lt;&gt;(&quot;first&quot;,&quot;andanyoung&quot;+i)).get();
+        }
+
+        // 3 关闭资源
+        kafkaProducer.close();
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br></div></div><h2 id="_3-4-生产者分区"><a href="#_3-4-生产者分区" class="header-anchor">#</a> 3.4 生产者分区</h2> <h3 id="_3-4-1-分区好处"><a href="#_3-4-1-分区好处" class="header-anchor">#</a> 3.4.1 分区好处</h3> <p>（1）<strong>便于合理使用存储资源</strong>，每个 Partition 在一个 Broker 上存储，可以把海量的数据按照分区切割成一块一块数据存储在多台 Broker 上。合理控制分区的任务，可以实现负载均衡的效果。</p> <p>（2）<strong>提高并行度</strong>，生产者可以以分区为单位发送数据；消费者可以以分区为单位进行<strong>消费数据</strong>。</p> <p><img src="/assets/img/image-20230920225912050.745e50c6.png" alt="Kafka 分区好处"></p> <h3 id="_3-4-2-生产者发送消息的分区策略"><a href="#_3-4-2-生产者发送消息的分区策略" class="header-anchor">#</a> 3.4.2 生产者发送消息的分区策略</h3> <h4 id="_1-默认的分区器-defaultpartitioner"><a href="#_1-默认的分区器-defaultpartitioner" class="header-anchor">#</a> 1）默认的分区器 DefaultPartitioner</h4> <p>在 IDEA 中 ctrl +n，全局查找 DefaultPartitioner。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>/**
+* The default partitioning strategy:
+* &lt;ul&gt;
+* 	&lt;li&gt;If a partition is specified in the record, use it
+* 	&lt;li&gt;If no partition is specified but a key is present choose a partition based on a hash of the key
+* 	&lt;li&gt;If no partition or key is present choose the sticky partition that changes when the batch is full.
+*
+* See KIP-480 for details about sticky partitioning.
+*/
+public class DefaultPartitioner implements Partitioner {
+	 … …
+}
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><p><img src="/assets/img/image-20230920230043076.ff041761.png" alt="Kafka 原则"></p> <h4 id="_2-案例一"><a href="#_2-案例一" class="header-anchor">#</a> 2）案例一</h4> <p>将数据发往指定 partition 的情况下，例如，将所有数据发往分区 1 中。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>public class CustomProducerCallbackPartitions {
+
+    public static void main(String[] args) throws InterruptedException {
+
+        // 0 配置
+        Properties properties = new Properties();
+
+        // 连接集群 bootstrap.servers
+        properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,&quot;hadoop102:9092,hadoop103:9092&quot;);
+
+        // 指定对应的key和value的序列化类型 key.serializer
+//        properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,&quot;org.apache.kafka.common.serialization.StringSerializer&quot;);
+        properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+        properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,StringSerializer.class.getName());
+
+        // 1 创建kafka生产者对象
+        // &quot;&quot; hello
+        KafkaProducer&lt;String, String&gt; kafkaProducer = new KafkaProducer&lt;&gt;(properties);
+
+        // 2 发送数据
+        for (int i = 0; i &lt; 5; i++) {
+            kafkaProducer.send(new ProducerRecord&lt;&gt;(&quot;first&quot;, 1,&quot;&quot;,&quot;hello&quot; + i), new Callback() {
+                @Override
+                public void onCompletion(RecordMetadata metadata, Exception exception) {
+
+                    if (exception == null){
+                        System.out.println(&quot;主题： &quot;+metadata.topic() + &quot; 分区： &quot;+ metadata.partition());
+                    }
+                }
+            });
+
+            Thread.sleep(2);
+        }
+
+        // 3 关闭资源
+        kafkaProducer.close();
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br></div></div><h4 id="_3-案例二"><a href="#_3-案例二" class="header-anchor">#</a> 3）案例二</h4> <p>没有指明 partition 值但有 key 的情况下，将 key 的 hash 值与 topic 的 partition 数进行取余得到 partition 值。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>public class CustomProducerCallback {
+
+    public static void main(String[] args) throws InterruptedException {
+
+        // 0 配置
+        Properties properties = new Properties();
+
+        // 连接集群 bootstrap.servers
+        properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,&quot;hadoop102:9092,hadoop103:9092&quot;);
+
+        // 指定对应的key和value的序列化类型 key.serializer
+//        properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,&quot;org.apache.kafka.common.serialization.StringSerializer&quot;);
+        properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+        properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,StringSerializer.class.getName());
+
+        // 1 创建kafka生产者对象
+        // &quot;&quot; hello
+        KafkaProducer&lt;String, String&gt; kafkaProducer = new KafkaProducer&lt;&gt;(properties);
+
+        // 2 发送数据
+        for (int i = 0; i &lt; 500; i++) {
+            kafkaProducer.send(new ProducerRecord&lt;&gt;(&quot;first&quot;, &quot;andanyoung&quot; + i), new Callback() {
+                @Override
+                public void onCompletion(RecordMetadata metadata, Exception exception) {
+
+                    if (exception == null){
+                        System.out.println(&quot;主题： &quot;+metadata.topic() + &quot; 分区： &quot;+ metadata.partition());
+                    }
+                }
+            });
+
+            Thread.sleep(2);
+        }
+
+        // 3 关闭资源
+        kafkaProducer.close();
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br></div></div><h3 id="_3-4-3-自定义分区器"><a href="#_3-4-3-自定义分区器" class="header-anchor">#</a> 3.4.3 自定义分区器</h3> <p>如果研发人员可以根据企业需求，自己重新实现分区器。</p> <h4 id="_1-需求"><a href="#_1-需求" class="header-anchor">#</a> 1）需求</h4> <p>例如我们实现一个分区器实现，发送过来的数据中如果包含 andanyoung，就发往 0 号分区， 不包含 andanyoung，就发往 1 号分区。</p> <h4 id="_2-实现步骤"><a href="#_2-实现步骤" class="header-anchor">#</a> 2）实现步骤</h4> <p>（1）定义类实现 Partitioner 接口。</p> <p>（2）重写 partition()方法。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>public class MyPartitioner implements Partitioner {
+    @Override
+    public int partition(String topic, Object key, byte[] keyBytes, Object value, byte[] valueBytes, Cluster cluster) {
+
+        // 获取数据 andanyoung  hello
+        String msgValues = value.toString();
+
+        int partition;
+
+        if (msgValues.contains(&quot;andanyoung&quot;)){
+            partition = 0;
+        }else {
+            partition = 1;
+        }
+
+        return partition;
+    }
+
+    @Override
+    public void close() {
+
+    }
+
+    @Override
+    public void configure(Map&lt;String, ?&gt; configs) {
+
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br></div></div><p>（3）使用分区器的方法，在生产者的配置中添加分区器参数。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>
+public class CustomProducerCallbackPartitions {
+
+    public static void main(String[] args) throws InterruptedException {
+
+        // 0 配置
+        Properties properties = new Properties();
+
+        // 连接集群 bootstrap.servers
+        properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,&quot;hadoop102:9092,hadoop103:9092&quot;);
+
+        // 指定对应的key和value的序列化类型 key.serializer
+//        properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,&quot;org.apache.kafka.common.serialization.StringSerializer&quot;);
+        properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+        properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,StringSerializer.class.getName());
+
+        // 关联自定义分区器
+        properties.put(ProducerConfig.PARTITIONER_CLASS_CONFIG,&quot;com.andanyoung.kafka.producer.MyPartitioner&quot;);
+
+        // 1 创建kafka生产者对象
+        // &quot;&quot; hello
+        KafkaProducer&lt;String, String&gt; kafkaProducer = new KafkaProducer&lt;&gt;(properties);
+
+        // 2 发送数据
+        for (int i = 0; i &lt; 5; i++) {
+            kafkaProducer.send(new ProducerRecord&lt;&gt;(&quot;first&quot;, 1,&quot;&quot;,&quot;hello&quot; + i), new Callback() {
+                @Override
+                public void onCompletion(RecordMetadata metadata, Exception exception) {
+
+                    if (exception == null){
+                        System.out.println(&quot;主题： &quot;+metadata.topic() + &quot; 分区： &quot;+ metadata.partition());
+                    }
+                }
+            });
+
+            Thread.sleep(2);
+        }
+
+        // 3 关闭资源
+        kafkaProducer.close();
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br></div></div><h2 id="_3-5-生产经验-生产者如何提高吞吐量"><a href="#_3-5-生产经验-生产者如何提高吞吐量" class="header-anchor">#</a> 3.5 生产经验——生产者如何提高吞吐量</h2> <ul><li>batch.size：批次大小，默认 16k</li> <li>linger.ms：等待时间，修改为 5-100ms</li> <li>compression.type：压缩 snappy</li> <li>RecordAccumulator：缓冲区大小，修改为 64m</li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>public class CustomProducerParameters {
+
+    public static void main(String[] args) {
+
+        // 0 配置
+        Properties properties = new Properties();
+
+        // 连接kafka集群
+        properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,&quot;hadoop102:9092,hadoop103:9092&quot;);
+
+        // 序列化
+        properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+        properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,StringSerializer.class.getName());
+
+        // 缓冲区大小
+        properties.put(ProducerConfig.BUFFER_MEMORY_CONFIG,33554432);
+
+        // 批次大小
+        properties.put(ProducerConfig.BATCH_SIZE_CONFIG,16384);
+
+        // linger.ms
+        properties.put(ProducerConfig.LINGER_MS_CONFIG, 1);
+
+        // 压缩
+        properties.put(ProducerConfig.COMPRESSION_TYPE_CONFIG,&quot;snappy&quot;);
+
+
+        // 1 创建生产者
+        KafkaProducer&lt;String, String&gt; kafkaProducer = new KafkaProducer&lt;&gt;(properties);
+
+        // 2 发送数据
+        for (int i = 0; i &lt; 5; i++) {
+            kafkaProducer.send(new ProducerRecord&lt;&gt;(&quot;first&quot;,&quot;andanyoung&quot;+i));
+        }
+
+        // 3 关闭资源
+        kafkaProducer.close();
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br></div></div><h2 id="_3-6-生产经验-数据可靠性"><a href="#_3-6-生产经验-数据可靠性" class="header-anchor">#</a> 3.6 生产经验——数据可靠性</h2> <h4 id="_1-ack-应答原理"><a href="#_1-ack-应答原理" class="header-anchor">#</a> 1）ack 应答原理</h4> <p><img src="/assets/img/image-20230920230802562.f40cdf13.png" alt="ACK应答级别"></p> <p><img src="/assets/img/image-20230920230915086.30055681.png" alt="ACK应答级别"></p> <p><strong>可靠性总结：</strong></p> <ul><li>acks=0，生产者发送过来数据就不管了，可靠性差，效率高；</li> <li>acks=1，生产者发送过来数据 Leader 应答，可靠性中等，效率中等；</li> <li>acks=-1，生产者发送过来数据 Leader 和 ISR 队列里面所有 Follwer 应答，可靠性高，效率低；</li></ul> <p>在生产环境中，acks=0 很少使用；acks=1，一般用于传输普通日志，允许丢个别数据；acks=-1，一般用于传输和钱相关的数据， 对可靠性要求比较高的场景。</p> <p>数据重复分析：</p> <p>acks： -1（all）：生产者发送过来的数据，Leader 和 ISR 队列里面的所有节点收齐数据后应答。</p> <p><img src="/assets/img/image-20230920231231304.ddde5c49.png" alt="数据重复分析"></p> <p>2）代码配置</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>public class CustomProducerAcks {
+
+    public static void main(String[] args) {
+
+        // 0 配置
+        Properties properties = new Properties();
+
+        // 连接集群 bootstrap.servers
+        properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,&quot;hadoop102:9092,hadoop103:9092&quot;);
+
+        // 指定对应的key和value的序列化类型 key.serializer
+//        properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,&quot;org.apache.kafka.common.serialization.StringSerializer&quot;);
+        properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+        properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,StringSerializer.class.getName());
+
+        // acks
+        properties.put(ProducerConfig.ACKS_CONFIG,&quot;1&quot;);
+
+        // 重试次数
+        properties.put(ProducerConfig.RETRIES_CONFIG,3);
+
+        // 1 创建kafka生产者对象
+        // &quot;&quot; hello
+        KafkaProducer&lt;String, String&gt; kafkaProducer = new KafkaProducer&lt;&gt;(properties);
+
+        // 2 发送数据
+        for (int i = 0; i &lt; 5; i++) {
+            kafkaProducer.send(new ProducerRecord&lt;&gt;(&quot;first&quot;,&quot;andanyoung&quot;+i));
+        }
+
+        // 3 关闭资源
+        kafkaProducer.close();
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br></div></div><h3 id="_3-7-生产经验-数据去重"><a href="#_3-7-生产经验-数据去重" class="header-anchor">#</a> 3.7 生产经验——数据去重</h3> <h3 id="_3-7-1-数据传递语义"><a href="#_3-7-1-数据传递语义" class="header-anchor">#</a> 3.7.1 数据传递语义</h3> <ul><li>至少一次（At Least Once）= ACK 级别设置为-1 + 分区副本大于等于 2 + ISR 里应答的最小副本数量大于等于 2</li> <li>最多一次（At Most Once）= ACK 级别设置为 0</li> <li>精确一次（Exactly Once）：对于一些非常重要的信息，比如和钱相关的数据，要求数据既不能重复也不丢失。</li></ul> <p>总结：</p> <p>At Least Once 可以保证数据不丢失，但是不能保证数据不重复；</p> <p>At Most Once 可以保证数据不重复，但是不能保证数据不丢失。</p> <p>Kafka 0.11 版本以后，引入了一项重大特性：幂等性和事务。</p> <h3 id="_3-7-2-幂等性"><a href="#_3-7-2-幂等性" class="header-anchor">#</a> 3.7.2 幂等性</h3> <h4 id="_1-幂等性原理"><a href="#_1-幂等性原理" class="header-anchor">#</a> 1）幂等性原理</h4> <p><strong>幂等性</strong>就是指 Producer 不论向 Broker 发送多少次重复数据，Broker 端都只会持久化一条，保证了不重复。</p> <p>精确一次（Exactly Once） = 幂等性 + 至少一次（ ack=-1 + 分区副本数&gt;=2 + ISR 最小副本数量&gt;=2） 。</p> <p><strong>重复数据的判断标准</strong>：具有相同主键<code>&lt;PID, Partition, SeqNumber&gt;</code>的消息提交时，Broker 只会持久化一条。其中 PID 是 Kafka 每次重启都会分配一个新的；Partition 表示分区号；发往同一 Partition 的消息会附带 Sequence Number 是单调自增的。 <strong>所以幂等性只能保证的是在单分区单会话内不重复</strong>。</p> <p><img src="/assets/img/image-20230920231643580.bdea7caf.png" alt="幂等性原理"></p> <h4 id="_2-如何使用幂等性"><a href="#_2-如何使用幂等性" class="header-anchor">#</a> 2）如何使用幂等性</h4> <p>开启参数 <strong>enable.idempotence</strong> 默认为 true，false 关闭。</p> <h2 id="_3-7-3-生产者事务"><a href="#_3-7-3-生产者事务" class="header-anchor">#</a> 3.7.3 生产者事务</h2> <h4 id="_1-kafka-事务原理"><a href="#_1-kafka-事务原理" class="header-anchor">#</a> 1）Kafka 事务原理</h4> <blockquote><p>说明：开启事务，必须开启幂等性。</p></blockquote> <p><img src="/assets/img/image-20230920231846864.3261b7c4.png" alt="Kafka 事务原理"></p> <p>2）Kafka 的事务一共有如下 5 个 API</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>// 1 初始化事务
+void initTransactions();
+
+// 2 开启事务
+void beginTransaction() throws ProducerFencedException;
+
+// 3 在事务内提交已经消费的偏移量（主要用于消费者）
+void sendOffsetsToTransaction(Map&lt;TopicPartition, OffsetAndMetadata&gt; offsets,String consumerGroupId) throws ProducerFencedException;
+
+// 4 提交事务
+void commitTransaction() throws ProducerFencedException;
+
+// 5 放弃事务（类似于回滚事务的操作）
+void abortTransaction() throws ProducerFencedException;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div></div><p>3）单个 Producer，使用事务保证消息的仅一次发送</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>public class CustomProducerTranactions {
+
+    public static void main(String[] args) {
+
+        // 0 配置
+        Properties properties = new Properties();
+
+        // 连接集群 bootstrap.servers
+        properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, &quot;hadoop102:9092,hadoop103:9092&quot;);
+
+        // 指定对应的key和value的序列化类型 key.serializer
+//        properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,&quot;org.apache.kafka.common.serialization.StringSerializer&quot;);
+        properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+        properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+
+        // 指定事务id
+        properties.put(ProducerConfig.TRANSACTIONAL_ID_CONFIG, &quot;tranactional_id_01&quot;);
+
+        // 1 创建kafka生产者对象 事务 id 任意起名
+        // &quot;&quot; hello
+        KafkaProducer&lt;String, String&gt; kafkaProducer = new KafkaProducer&lt;&gt;(properties);
+
+        kafkaProducer.initTransactions();
+
+        kafkaProducer.beginTransaction();
+
+        try {
+            // 2 发送数据
+            for (int i = 0; i &lt; 5; i++) {
+                kafkaProducer.send(new ProducerRecord&lt;&gt;(&quot;first&quot;, &quot;andanyoung&quot; + i));
+            }
+
+            int i = 1 / 0;
+
+            kafkaProducer.commitTransaction();
+        } catch (Exception e) {
+            kafkaProducer.abortTransaction();
+        } finally {
+            // 3 关闭资源
+            kafkaProducer.close();
+        }
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br></div></div><h2 id="_3-8-生产经验-数据有序"><a href="#_3-8-生产经验-数据有序" class="header-anchor">#</a> 3.8 生产经验——数据有序</h2> <p><img src="/assets/img/image-20230920232140130.7fe3ee78.png" alt="生产经验——数据有序"></p> <h2 id="_3-9-生产经验-数据乱序"><a href="#_3-9-生产经验-数据乱序" class="header-anchor">#</a> 3.9 生产经验——数据乱序</h2> <p>1）kafka 在 1.x 版本之前保证数据单分区有序，条件如下：</p> <p>max.in.flight.requests.per.connection=1（不需要考虑是否开启幂等性）。</p> <p>2）kafka 在 1.x 及以后版本保证数据单分区有序，条件如下：</p> <p>（1）未开启幂等性</p> <p>max.in.flight.requests.per.connection 需要设置为 1。</p> <p>（2）开启幂等性</p> <p>max.in.flight.requests.per.connection 需要设置小于等于 5。</p> <p>原因说明：因为在 kafka1.x 以后，启用幂等后，kafka 服务端会缓存 producer 发来的最近 5 个 request 的元数据， 故无论如何，都可以保证最近 5 个 request 的数据都是有序的。</p> <p><img src="/assets/img/image-20230920232401469.8afe6223.png" alt="生产经验——数据乱序"></p> <blockquote><p>max.in.flight.requests.per.connection: 该参数指定了生产者在收到服务器响应之前可以发送多少个消息。它的值越高，就会占用越多的内存，不过也会提升吞吐量。把它设为 1 可以保证消息是按照发送的顺序写入服务器的，即使发生了重试。</p></blockquote></div></div>  <div class="page-edit"><div class="edit-link"><a href="https://github.com/andanyang/vuepress-theme-vdoing/edit/master/docs/大数据/002.kafka/0002.kafka生产者.md" target="_blank" rel="noopener noreferrer">编辑</a> <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></div> <!----> <div class="last-updated"><span class="prefix">上次更新:</span> <span class="time">2024/03/11, 02:40:47</span></div></div> <div class="page-nav-wapper"><div class="page-nav-centre-wrap"><a href="/kafaka/introduction/" class="page-nav-centre page-nav-centre-prev"><div class="tooltip">kafka3.0入门</div></a> <a href="/kafka/broker/" class="page-nav-centre page-nav-centre-next"><div class="tooltip">kafka3.0 broker</div></a></div> <div class="page-nav"><p class="inner"><span class="prev">
+        ←
+        <a href="/kafaka/introduction/" class="prev">kafka3.0入门</a></span> <span class="next"><a href="/kafka/broker/">kafka3.0 broker</a>→
+      </span></p></div></div></div> <div class="article-list"><div class="article-title"><a href="/archives/" class="iconfont icon-bi">最近更新</a></div> <div class="article-wrapper"><dl><dd>01</dd> <dt><a href="/bigdata/spark/SparkStreaming_Driver_Executer/"><div>
+            spark中代码的执行位置（Driver or Executer）
+            <!----></div></a> <span class="date">12-12</span></dt></dl><dl><dd>02</dd> <dt><a href="/bigdata/spark/SparkStreaming/"><div>
+            大数据技术之 SparkStreaming
+            <!----></div></a> <span class="date">12-12</span></dt></dl><dl><dd>03</dd> <dt><a href="/bigdata/spark/sql/"><div>
+            Spark 核心编程之 RDD 累加器与广播变量
+            <!----></div></a> <span class="date">12-06</span></dt></dl> <dl><dd></dd> <dt><a href="/archives/" class="more">更多文章&gt;</a></dt></dl></div></div></main></div> <div class="footer"><div class="icons"><a href="mailto:1218853253@qq.com" title="发邮件" target="_blank" class="iconfont icon-youjian"></a><a href="https://github.com/andanyang" title="GitHub" target="_blank" class="iconfont icon-github"></a><a href="https://music.163.com/#/playlist?id=755597173" title="听音乐" target="_blank" class="iconfont icon-erji"></a></div> 
+  Theme by
+  <a href="https://github.com/xugaoyi/vuepress-theme-vdoing" target="_blank" title="本站主题">Vdoing</a> 
+    | Copyright © 2019-2024
+    <span>Young | <a href="https://github.com/andanyoung/young-blog/blob/master/LICENSE" target="_blank">MIT License</a> <br/> <a  href="https://beian.miit.gov.cn/" target="_blank">浙ICP备20002744号</a></span></div> <div class="buttons"><div title="返回顶部" class="button blur go-to-top iconfont icon-fanhuidingbu" style="display:none;"></div> <div title="去评论" class="button blur go-to-comment iconfont icon-pinglun" style="display:none;"></div> <div title="主题模式" class="button blur theme-mode-but iconfont icon-zhuti"><ul class="select-box" style="display:none;"><li class="iconfont icon-zidong">
+          跟随系统
+        </li><li class="iconfont icon-rijianmoshi">
+          浅色模式
+        </li><li class="iconfont icon-yejianmoshi">
+          深色模式
+        </li><li class="iconfont icon-yuedu">
+          阅读模式
+        </li></ul></div></div> <!----> <!----> <!----></div><div class="global-ui"><div></div></div></div>
+    <script src="/assets/js/app.e4caa6db.js" defer></script><script src="/assets/js/2.d1be14c5.js" defer></script><script src="/assets/js/39.3b3fde85.js" defer></script>
+  </body>
+</html>

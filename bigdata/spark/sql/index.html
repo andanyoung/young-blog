@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Spark 核心编程之 RDD 累加器与广播变量 | Young&#39;s blog</title>
+    <meta name="generator" content="VuePress 1.9.5">
+    <link rel="icon" href="/img/favicon.ico">
+    <meta name="description" content="Young丶java后端技术博客,专注后端学习与总结。擅长spring boot,JAVA基础总结,等方面的知识,关注spring,架构,elasticsearch,mysql领域.">
+    <meta name="keywords" content="前端博客,个人技术博客,前端,前端开发,前端框架,web前端,前端面试题,技术文档,学习,面试,JavaScript,js,ES6,TypeScript,vue,python,css3,html5,Node,git,github,markdown">
+    <meta name="baidu-site-verification" content="7F55weZDDc">
+    <meta name="theme-color" content="#11a8cd">
+    
+    <link rel="preload" href="/assets/css/0.styles.53c04193.css" as="style"><link rel="preload" href="/assets/js/app.e4caa6db.js" as="script"><link rel="preload" href="/assets/js/2.d1be14c5.js" as="script"><link rel="preload" href="/assets/js/20.79989fc4.js" as="script"><link rel="prefetch" href="/assets/js/10.20449a2b.js"><link rel="prefetch" href="/assets/js/100.f25e73b5.js"><link rel="prefetch" href="/assets/js/101.3180ba9d.js"><link rel="prefetch" href="/assets/js/102.fcd415ea.js"><link rel="prefetch" href="/assets/js/103.522869bb.js"><link rel="prefetch" href="/assets/js/104.5da1e4e4.js"><link rel="prefetch" href="/assets/js/105.e5a40fe8.js"><link rel="prefetch" href="/assets/js/106.627d6279.js"><link rel="prefetch" href="/assets/js/107.606beca1.js"><link rel="prefetch" href="/assets/js/108.100e1cb2.js"><link rel="prefetch" href="/assets/js/109.9765392e.js"><link rel="prefetch" href="/assets/js/11.da3512b5.js"><link rel="prefetch" href="/assets/js/110.b73cf0d9.js"><link rel="prefetch" href="/assets/js/111.3f77dd60.js"><link rel="prefetch" href="/assets/js/112.0c7d547d.js"><link rel="prefetch" href="/assets/js/113.1827c266.js"><link rel="prefetch" href="/assets/js/114.daf1d8a5.js"><link rel="prefetch" href="/assets/js/115.e7dca24d.js"><link rel="prefetch" href="/assets/js/116.11b303de.js"><link rel="prefetch" href="/assets/js/117.203cefba.js"><link rel="prefetch" href="/assets/js/118.61d8527b.js"><link rel="prefetch" href="/assets/js/119.1f959a37.js"><link rel="prefetch" href="/assets/js/12.11f18e06.js"><link rel="prefetch" href="/assets/js/120.c268b7aa.js"><link rel="prefetch" href="/assets/js/121.64318c96.js"><link rel="prefetch" href="/assets/js/122.cbddb70d.js"><link rel="prefetch" href="/assets/js/123.b49b84fb.js"><link rel="prefetch" href="/assets/js/124.392f030b.js"><link rel="prefetch" href="/assets/js/125.45f631c4.js"><link rel="prefetch" href="/assets/js/126.700cc575.js"><link rel="prefetch" href="/assets/js/127.d649cb2a.js"><link rel="prefetch" href="/assets/js/128.bc018411.js"><link rel="prefetch" href="/assets/js/129.d0a74611.js"><link rel="prefetch" href="/assets/js/13.1cb33dc8.js"><link rel="prefetch" href="/assets/js/130.45b1f75c.js"><link rel="prefetch" href="/assets/js/131.45ba93df.js"><link rel="prefetch" href="/assets/js/132.c58bbbd7.js"><link rel="prefetch" href="/assets/js/133.7f53922e.js"><link rel="prefetch" href="/assets/js/134.ddf0d780.js"><link rel="prefetch" href="/assets/js/135.ada3af13.js"><link rel="prefetch" href="/assets/js/136.4097c2be.js"><link rel="prefetch" href="/assets/js/137.fc910ac9.js"><link rel="prefetch" href="/assets/js/138.9628f460.js"><link rel="prefetch" href="/assets/js/139.3125ef74.js"><link rel="prefetch" href="/assets/js/14.1004ce43.js"><link rel="prefetch" href="/assets/js/140.bb53ac81.js"><link rel="prefetch" href="/assets/js/141.a002ac19.js"><link rel="prefetch" href="/assets/js/142.540d19e4.js"><link rel="prefetch" href="/assets/js/143.4cbccfca.js"><link rel="prefetch" href="/assets/js/144.8a217b6a.js"><link rel="prefetch" href="/assets/js/145.9c7bc0de.js"><link rel="prefetch" href="/assets/js/146.3dfd0773.js"><link rel="prefetch" href="/assets/js/147.bc0f0d42.js"><link rel="prefetch" href="/assets/js/148.e0cdc4d5.js"><link rel="prefetch" href="/assets/js/149.8486db6e.js"><link rel="prefetch" href="/assets/js/15.703e8784.js"><link rel="prefetch" href="/assets/js/150.5f3b7fb5.js"><link rel="prefetch" href="/assets/js/151.98a3f202.js"><link rel="prefetch" href="/assets/js/152.2940f2ba.js"><link rel="prefetch" href="/assets/js/153.75f3a085.js"><link rel="prefetch" href="/assets/js/154.fa2da83b.js"><link rel="prefetch" href="/assets/js/155.113be5c8.js"><link rel="prefetch" href="/assets/js/156.0667e7f5.js"><link rel="prefetch" href="/assets/js/157.0b3e5dfa.js"><link rel="prefetch" href="/assets/js/158.a338bdd7.js"><link rel="prefetch" href="/assets/js/159.33c9771c.js"><link rel="prefetch" href="/assets/js/16.71e3d898.js"><link rel="prefetch" href="/assets/js/160.e868c8b3.js"><link rel="prefetch" href="/assets/js/161.cf61955e.js"><link rel="prefetch" href="/assets/js/162.baee00ca.js"><link rel="prefetch" href="/assets/js/163.183cde82.js"><link rel="prefetch" href="/assets/js/164.c1eadef5.js"><link rel="prefetch" href="/assets/js/165.70ee8a24.js"><link rel="prefetch" href="/assets/js/166.8e185ff2.js"><link rel="prefetch" href="/assets/js/167.0881cf57.js"><link rel="prefetch" href="/assets/js/168.88caf424.js"><link rel="prefetch" href="/assets/js/169.e7e984ff.js"><link rel="prefetch" href="/assets/js/17.b0356f05.js"><link rel="prefetch" href="/assets/js/170.c7052d81.js"><link rel="prefetch" href="/assets/js/171.2ab773fd.js"><link rel="prefetch" href="/assets/js/172.0e39f858.js"><link rel="prefetch" href="/assets/js/173.76661218.js"><link rel="prefetch" href="/assets/js/174.0ac9f795.js"><link rel="prefetch" href="/assets/js/175.da30bba2.js"><link rel="prefetch" href="/assets/js/176.0f230688.js"><link rel="prefetch" href="/assets/js/177.040e0937.js"><link rel="prefetch" href="/assets/js/178.68852030.js"><link rel="prefetch" href="/assets/js/179.c998f0ca.js"><link rel="prefetch" href="/assets/js/18.2e77c8d1.js"><link rel="prefetch" href="/assets/js/180.4f6b395f.js"><link rel="prefetch" href="/assets/js/181.577a5325.js"><link rel="prefetch" href="/assets/js/182.6b43cbf2.js"><link rel="prefetch" href="/assets/js/183.cf9e9cca.js"><link rel="prefetch" href="/assets/js/184.f0e76def.js"><link rel="prefetch" href="/assets/js/185.2d3d8eea.js"><link rel="prefetch" href="/assets/js/186.4db71601.js"><link rel="prefetch" href="/assets/js/187.8b6a6829.js"><link rel="prefetch" href="/assets/js/188.4a0b8f41.js"><link rel="prefetch" href="/assets/js/189.0a28241b.js"><link rel="prefetch" href="/assets/js/19.51c97d4c.js"><link rel="prefetch" href="/assets/js/190.5001309c.js"><link rel="prefetch" href="/assets/js/191.42778cf1.js"><link rel="prefetch" href="/assets/js/192.fabd1cb0.js"><link rel="prefetch" href="/assets/js/193.cbc113b8.js"><link rel="prefetch" href="/assets/js/194.4cf24763.js"><link rel="prefetch" href="/assets/js/195.ea5d1afb.js"><link rel="prefetch" href="/assets/js/196.16115ce4.js"><link rel="prefetch" href="/assets/js/197.b90179d1.js"><link rel="prefetch" href="/assets/js/198.456ceb51.js"><link rel="prefetch" href="/assets/js/199.a28de97a.js"><link rel="prefetch" href="/assets/js/200.72102ac7.js"><link rel="prefetch" href="/assets/js/201.e2b3a297.js"><link rel="prefetch" href="/assets/js/202.d4283e12.js"><link rel="prefetch" href="/assets/js/203.6e5e6596.js"><link rel="prefetch" href="/assets/js/204.363863cf.js"><link rel="prefetch" href="/assets/js/205.d16c5a36.js"><link rel="prefetch" href="/assets/js/206.dc867263.js"><link rel="prefetch" href="/assets/js/207.acfeaaaa.js"><link rel="prefetch" href="/assets/js/208.22c49054.js"><link rel="prefetch" href="/assets/js/209.0f7c526b.js"><link rel="prefetch" href="/assets/js/21.1b619a3f.js"><link rel="prefetch" href="/assets/js/210.b247a678.js"><link rel="prefetch" href="/assets/js/211.fe8629a4.js"><link rel="prefetch" href="/assets/js/212.48b672e5.js"><link rel="prefetch" href="/assets/js/213.08f571a8.js"><link rel="prefetch" href="/assets/js/214.04da1824.js"><link rel="prefetch" href="/assets/js/215.f60b57f4.js"><link rel="prefetch" href="/assets/js/216.4383ceb6.js"><link rel="prefetch" href="/assets/js/217.3b1ce286.js"><link rel="prefetch" href="/assets/js/218.1534ef52.js"><link rel="prefetch" href="/assets/js/219.6901e38c.js"><link rel="prefetch" href="/assets/js/22.349d3a16.js"><link rel="prefetch" href="/assets/js/220.22e0c5ea.js"><link rel="prefetch" href="/assets/js/221.2e7a5a4f.js"><link rel="prefetch" href="/assets/js/222.76b63073.js"><link rel="prefetch" href="/assets/js/223.500a058f.js"><link rel="prefetch" href="/assets/js/224.7f7c1250.js"><link rel="prefetch" href="/assets/js/225.2f183cbe.js"><link rel="prefetch" href="/assets/js/23.712dd5ac.js"><link rel="prefetch" href="/assets/js/24.77ae5052.js"><link rel="prefetch" href="/assets/js/25.e95f81fb.js"><link rel="prefetch" href="/assets/js/26.82cdd880.js"><link rel="prefetch" href="/assets/js/27.427a5aec.js"><link rel="prefetch" href="/assets/js/28.e245952d.js"><link rel="prefetch" href="/assets/js/29.50596e31.js"><link rel="prefetch" href="/assets/js/3.4f4335cf.js"><link rel="prefetch" href="/assets/js/30.016e73a0.js"><link rel="prefetch" href="/assets/js/31.fb0b0b40.js"><link rel="prefetch" href="/assets/js/32.8e7d8efe.js"><link rel="prefetch" href="/assets/js/33.f05f242b.js"><link rel="prefetch" href="/assets/js/34.893b8c3e.js"><link rel="prefetch" href="/assets/js/35.f98d31b7.js"><link rel="prefetch" href="/assets/js/36.6a5744a0.js"><link rel="prefetch" href="/assets/js/37.67e8976d.js"><link rel="prefetch" href="/assets/js/38.2d8447e0.js"><link rel="prefetch" href="/assets/js/39.3b3fde85.js"><link rel="prefetch" href="/assets/js/4.93e1dc89.js"><link rel="prefetch" href="/assets/js/40.8cde36eb.js"><link rel="prefetch" href="/assets/js/41.9df0f821.js"><link rel="prefetch" href="/assets/js/42.c9f1a26b.js"><link rel="prefetch" href="/assets/js/43.fa088c07.js"><link rel="prefetch" href="/assets/js/44.121055e3.js"><link rel="prefetch" href="/assets/js/45.7995c3a0.js"><link rel="prefetch" href="/assets/js/46.17d53a2e.js"><link rel="prefetch" href="/assets/js/47.4a374966.js"><link rel="prefetch" href="/assets/js/48.733e5b6c.js"><link rel="prefetch" href="/assets/js/49.0fb92742.js"><link rel="prefetch" href="/assets/js/5.f52855e6.js"><link rel="prefetch" href="/assets/js/50.50fc5031.js"><link rel="prefetch" href="/assets/js/51.69d8d52a.js"><link rel="prefetch" href="/assets/js/52.d84cedc3.js"><link rel="prefetch" href="/assets/js/53.a64ddaf4.js"><link rel="prefetch" href="/assets/js/54.15e09103.js"><link rel="prefetch" href="/assets/js/55.0f7e8fd5.js"><link rel="prefetch" href="/assets/js/56.6cb5bf13.js"><link rel="prefetch" href="/assets/js/57.d90d9da6.js"><link rel="prefetch" href="/assets/js/58.2c03a905.js"><link rel="prefetch" href="/assets/js/59.02cf613a.js"><link rel="prefetch" href="/assets/js/6.0ff35647.js"><link rel="prefetch" href="/assets/js/60.bb6d2b2f.js"><link rel="prefetch" href="/assets/js/61.ef2abfd3.js"><link rel="prefetch" href="/assets/js/62.b09e5f81.js"><link rel="prefetch" href="/assets/js/63.6ca85ec7.js"><link rel="prefetch" href="/assets/js/64.77eab656.js"><link rel="prefetch" href="/assets/js/65.65b00883.js"><link rel="prefetch" href="/assets/js/66.040b5d23.js"><link rel="prefetch" href="/assets/js/67.23318ab1.js"><link rel="prefetch" href="/assets/js/68.5c29433f.js"><link rel="prefetch" href="/assets/js/69.90978695.js"><link rel="prefetch" href="/assets/js/7.463451e9.js"><link rel="prefetch" href="/assets/js/70.0c585fbd.js"><link rel="prefetch" href="/assets/js/71.120e4ae5.js"><link rel="prefetch" href="/assets/js/72.53bf1e3a.js"><link rel="prefetch" href="/assets/js/73.282f5b35.js"><link rel="prefetch" href="/assets/js/74.4f1cb67d.js"><link rel="prefetch" href="/assets/js/75.f5d3ea1e.js"><link rel="prefetch" href="/assets/js/76.fb173587.js"><link rel="prefetch" href="/assets/js/77.8064b022.js"><link rel="prefetch" href="/assets/js/78.d26f8075.js"><link rel="prefetch" href="/assets/js/79.6cff2fa5.js"><link rel="prefetch" href="/assets/js/8.d5f74857.js"><link rel="prefetch" href="/assets/js/80.29d746c7.js"><link rel="prefetch" href="/assets/js/81.c0a214a2.js"><link rel="prefetch" href="/assets/js/82.f0c93ca2.js"><link rel="prefetch" href="/assets/js/83.db6f55e1.js"><link rel="prefetch" href="/assets/js/84.b0a7a28c.js"><link rel="prefetch" href="/assets/js/85.db7376d4.js"><link rel="prefetch" href="/assets/js/86.96ec3402.js"><link rel="prefetch" href="/assets/js/87.ae41a109.js"><link rel="prefetch" href="/assets/js/88.d83c21c8.js"><link rel="prefetch" href="/assets/js/89.33868490.js"><link rel="prefetch" href="/assets/js/9.2680f96d.js"><link rel="prefetch" href="/assets/js/90.ed48459a.js"><link rel="prefetch" href="/assets/js/91.e1ee23ba.js"><link rel="prefetch" href="/assets/js/92.8b354527.js"><link rel="prefetch" href="/assets/js/93.0682d2e4.js"><link rel="prefetch" href="/assets/js/94.105580aa.js"><link rel="prefetch" href="/assets/js/95.d378d658.js"><link rel="prefetch" href="/assets/js/96.a6460598.js"><link rel="prefetch" href="/assets/js/97.a4cc955f.js"><link rel="prefetch" href="/assets/js/98.9a600d4f.js"><link rel="prefetch" href="/assets/js/99.45007523.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.53c04193.css">
+  </head>
+  <body class="theme-mode-light">
+    <div id="app" data-server-rendered="true"><div class="theme-container sidebar-open have-rightmenu"><header class="navbar blur"><div title="目录" class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/img/logo.png" alt="Young's blog" class="logo"> <span class="site-name can-hide">Young's blog</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><a href="/Spring/" class="nav-link">Spring</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="前端" class="dropdown-title"><a href="/web/" class="link-title">前端</a> <span class="title" style="display:none;">前端</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>前端文章1</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/pages/8143cc480faf9a11/" class="nav-link">JavaScript</a></li></ul></li><li class="dropdown-item"><h4>学习笔记</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/note/javascript/" class="nav-link">《JavaScript教程》</a></li><li class="dropdown-subitem"><a href="/note/js/" class="nav-link">《JavaScript高级程序设计》</a></li><li class="dropdown-subitem"><a href="/note/es6/" class="nav-link">《ES6 教程》</a></li><li class="dropdown-subitem"><a href="/note/vue/" class="nav-link">《Vue》</a></li><li class="dropdown-subitem"><a href="/note/react/" class="nav-link">《React》</a></li><li class="dropdown-subitem"><a href="/note/typescript-axios/" class="nav-link">《TypeScript 从零实现 axios》</a></li><li class="dropdown-subitem"><a href="/note/git/" class="nav-link">《Git》</a></li><li class="dropdown-subitem"><a href="/pages/51afd6/" class="nav-link">TypeScript</a></li><li class="dropdown-subitem"><a href="/pages/4643cd/" class="nav-link">JS设计模式总结</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="页面" class="dropdown-title"><a href="/ui/" class="link-title">页面</a> <span class="title" style="display:none;">页面</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/8309a5b876fc95e3/" class="nav-link">HTML</a></li><li class="dropdown-item"><!----> <a href="/pages/0a83b083bdf257cb/" class="nav-link">CSS</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="技术" class="dropdown-title"><a href="/technology/" class="link-title">技术</a> <span class="title" style="display:none;">技术</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/9a7ee40fc232253e/" class="nav-link">技术文档</a></li><li class="dropdown-item"><!----> <a href="/pages/4c778760be26d8b3/" class="nav-link">GitHub技巧</a></li><li class="dropdown-item"><!----> <a href="/pages/117708e0af7f0bd9/" class="nav-link">Nodejs</a></li><li class="dropdown-item"><!----> <a href="/pages/41f87d890d0a02af/" class="nav-link">博客搭建</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="更多" class="dropdown-title"><a href="/more/" class="link-title">更多</a> <span class="title" style="display:none;">更多</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/f2a556/" class="nav-link">学习</a></li><li class="dropdown-item"><!----> <a href="/pages/aea6571b7a8bae86/" class="nav-link">面试</a></li><li class="dropdown-item"><!----> <a href="/pages/2d615df9a36a98ed/" class="nav-link">心情杂货</a></li><li class="dropdown-item"><!----> <a href="/pages/baaa02/" class="nav-link">实用技巧</a></li><li class="dropdown-item"><!----> <a href="/friends/" class="nav-link">友情链接</a></li></ul></div></div><div class="nav-item"><a href="/about/" class="nav-link">关于</a></div><div class="nav-item"><a href="/pages/beb6c0bd8a66cea6/" class="nav-link">收藏</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="索引" class="dropdown-title"><a href="/archives/" class="link-title">索引</a> <span class="title" style="display:none;">索引</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/" class="nav-link">分类</a></li><li class="dropdown-item"><!----> <a href="/tags/" class="nav-link">标签</a></li><li class="dropdown-item"><!----> <a href="/archives/" class="nav-link">归档</a></li></ul></div></div> <a href="https://github.com/andanyang/vuepress-theme-vdoing" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <div class="sidebar-hover-trigger"></div> <aside class="sidebar" style="display:none;"><div class="blogger"><img src="/img/logo.png"> <div class="blogger-info"><h3>Young</h3> <span></span></div></div> <nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><a href="/Spring/" class="nav-link">Spring</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="前端" class="dropdown-title"><a href="/web/" class="link-title">前端</a> <span class="title" style="display:none;">前端</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>前端文章1</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/pages/8143cc480faf9a11/" class="nav-link">JavaScript</a></li></ul></li><li class="dropdown-item"><h4>学习笔记</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/note/javascript/" class="nav-link">《JavaScript教程》</a></li><li class="dropdown-subitem"><a href="/note/js/" class="nav-link">《JavaScript高级程序设计》</a></li><li class="dropdown-subitem"><a href="/note/es6/" class="nav-link">《ES6 教程》</a></li><li class="dropdown-subitem"><a href="/note/vue/" class="nav-link">《Vue》</a></li><li class="dropdown-subitem"><a href="/note/react/" class="nav-link">《React》</a></li><li class="dropdown-subitem"><a href="/note/typescript-axios/" class="nav-link">《TypeScript 从零实现 axios》</a></li><li class="dropdown-subitem"><a href="/note/git/" class="nav-link">《Git》</a></li><li class="dropdown-subitem"><a href="/pages/51afd6/" class="nav-link">TypeScript</a></li><li class="dropdown-subitem"><a href="/pages/4643cd/" class="nav-link">JS设计模式总结</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="页面" class="dropdown-title"><a href="/ui/" class="link-title">页面</a> <span class="title" style="display:none;">页面</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/8309a5b876fc95e3/" class="nav-link">HTML</a></li><li class="dropdown-item"><!----> <a href="/pages/0a83b083bdf257cb/" class="nav-link">CSS</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="技术" class="dropdown-title"><a href="/technology/" class="link-title">技术</a> <span class="title" style="display:none;">技术</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/9a7ee40fc232253e/" class="nav-link">技术文档</a></li><li class="dropdown-item"><!----> <a href="/pages/4c778760be26d8b3/" class="nav-link">GitHub技巧</a></li><li class="dropdown-item"><!----> <a href="/pages/117708e0af7f0bd9/" class="nav-link">Nodejs</a></li><li class="dropdown-item"><!----> <a href="/pages/41f87d890d0a02af/" class="nav-link">博客搭建</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="更多" class="dropdown-title"><a href="/more/" class="link-title">更多</a> <span class="title" style="display:none;">更多</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/f2a556/" class="nav-link">学习</a></li><li class="dropdown-item"><!----> <a href="/pages/aea6571b7a8bae86/" class="nav-link">面试</a></li><li class="dropdown-item"><!----> <a href="/pages/2d615df9a36a98ed/" class="nav-link">心情杂货</a></li><li class="dropdown-item"><!----> <a href="/pages/baaa02/" class="nav-link">实用技巧</a></li><li class="dropdown-item"><!----> <a href="/friends/" class="nav-link">友情链接</a></li></ul></div></div><div class="nav-item"><a href="/about/" class="nav-link">关于</a></div><div class="nav-item"><a href="/pages/beb6c0bd8a66cea6/" class="nav-link">收藏</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="索引" class="dropdown-title"><a href="/archives/" class="link-title">索引</a> <span class="title" style="display:none;">索引</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/" class="nav-link">分类</a></li><li class="dropdown-item"><!----> <a href="/tags/" class="nav-link">标签</a></li><li class="dropdown-item"><!----> <a href="/archives/" class="nav-link">归档</a></li></ul></div></div> <a href="https://github.com/andanyang/vuepress-theme-vdoing" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Hadoop</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>kafka</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Flume</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>hive</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>scala</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>spark</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><section class="sidebar-group collapsable is-sub-group depth-1"><p class="sidebar-heading"><span>spark core</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable is-sub-group depth-1"><p class="sidebar-heading open"><span>spark sql</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/bigdata/spark/sql/" aria-current="page" class="active sidebar-link">Spark 核心编程之 RDD 累加器与广播变量</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level2"><a href="/bigdata/spark/sql/#_1-1-sparksql-是什么" class="sidebar-link">1.1 SparkSQL 是什么</a></li><li class="sidebar-sub-header level2"><a href="/bigdata/spark/sql/#_1-2-hive-and-sparksql" class="sidebar-link">1.2 Hive and SparkSQL</a></li><li class="sidebar-sub-header level2"><a href="/bigdata/spark/sql/#_1-3-sparksql-特点" class="sidebar-link">1.3 SparkSQL 特点</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/bigdata/spark/sql/#_1-3-1-易整合" class="sidebar-link">1.3.1 易整合</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/bigdata/spark/sql/#_1-3-2-统一的数据访问" class="sidebar-link">1.3.2 统一的数据访问</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/bigdata/spark/sql/#_1-3-3-兼容-hive" class="sidebar-link">1.3.3 兼容 Hive</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/spark/sql/#_1-3-4-标准数据连接" class="sidebar-link">1.3.4 标准数据连接</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/bigdata/spark/sql/#_1-4-dataframe-是什么" class="sidebar-link">1.4 DataFrame 是什么</a></li><li class="sidebar-sub-header level2"><a href="/bigdata/spark/sql/#_1-5-dataset-是什么" class="sidebar-link">1.5 DataSet 是什么</a></li><li class="sidebar-sub-header level2"><a href="/bigdata/spark/sql/#_2-1-新的起点" class="sidebar-link">2.1 新的起点</a></li><li class="sidebar-sub-header level2"><a href="/bigdata/spark/sql/#_2-2-dataframe" class="sidebar-link">2.2 DataFrame</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/bigdata/spark/sql/#_2-2-1-创建-dataframe" class="sidebar-link">2.2.1 创建 DataFrame</a></li><li class="sidebar-sub-header level4"><a href="/bigdata/spark/sql/#_1-从-spark-数据源进行创建" class="sidebar-link">1) 从 Spark 数据源进行创建</a></li><li class="sidebar-sub-header level4"><a href="/bigdata/spark/sql/#_2-从-rdd-进行转换" class="sidebar-link">2) 从 RDD 进行转换</a></li><li class="sidebar-sub-header level4"><a href="/bigdata/spark/sql/#_3-从-hive-table-进行查询返回" class="sidebar-link">3) 从 Hive Table 进行查询返回</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/spark/sql/#_2-2-2-sql-语法" class="sidebar-link">2.2.2 SQL 语法</a></li><li class="sidebar-sub-header level4"><a href="/bigdata/spark/sql/#_1-读取-json-文件创建-dataframe" class="sidebar-link">1) 读取 JSON 文件创建 DataFrame</a></li><li class="sidebar-sub-header level4"><a href="/bigdata/spark/sql/#_2-对-dataframe-创建一个临时表" class="sidebar-link">2) 对 DataFrame 创建一个临时表</a></li><li class="sidebar-sub-header level4"><a href="/bigdata/spark/sql/#_3-通过-sql-语句实现查询全表" class="sidebar-link">3) 通过 SQL 语句实现查询全表</a></li><li class="sidebar-sub-header level4"><a href="/bigdata/spark/sql/#_4-结果展示" class="sidebar-link">4) 结果展示</a></li><li class="sidebar-sub-header level4"><a href="/bigdata/spark/sql/#_5-对于-dataframe-创建一个全局表" class="sidebar-link">5) 对于 DataFrame 创建一个全局表</a></li><li class="sidebar-sub-header level4"><a href="/bigdata/spark/sql/#_6-通过-sql-语句实现查询全表" class="sidebar-link">6) 通过 SQL 语句实现查询全表</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/spark/sql/#_2-2-3-dsl-语法" class="sidebar-link">2.2.3 DSL 语法</a></li><li class="sidebar-sub-header level4"><a href="/bigdata/spark/sql/#_1-创建一个-dataframe" class="sidebar-link">1) 创建一个 DataFrame</a></li><li class="sidebar-sub-header level4"><a href="/bigdata/spark/sql/#_2-查看-dataframe-的-schema-信息" class="sidebar-link">2) 查看 DataFrame 的 Schema 信息</a></li><li class="sidebar-sub-header level4"><a href="/bigdata/spark/sql/#_3-只查看-username-列数据" class="sidebar-link">3) 只查看&quot;username&quot;列数据，</a></li><li class="sidebar-sub-header level4"><a href="/bigdata/spark/sql/#_4-查看-username-列数据以及-age-1-数据" class="sidebar-link">4) 查看&quot;username&quot;列数据以及&quot;age+1&quot;数据</a></li><li class="sidebar-sub-header level4"><a href="/bigdata/spark/sql/#_5-查看-age-大于-30-的数据" class="sidebar-link">5) 查看&quot;age&quot;大于&quot;30&quot;的数据</a></li><li class="sidebar-sub-header level4"><a href="/bigdata/spark/sql/#_6-按照-age-分组-查看数据条数" class="sidebar-link">6) 按照&quot;age&quot;分组，查看数据条数</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/spark/sql/#_2-2-4-rdd-转换为-dataframe" class="sidebar-link">2.2.4 RDD 转换为 DataFrame</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/spark/sql/#_2-2-5-dataframe-转换为-rdd" class="sidebar-link">2.2.5 DataFrame 转换为 RDD</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/bigdata/spark/sql/#_2-3-dataset" class="sidebar-link">2.3 DataSet</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/bigdata/spark/sql/#_2-3-1-创建-dataset" class="sidebar-link">2.3.1 创建 DataSet</a></li><li class="sidebar-sub-header level4"><a href="/bigdata/spark/sql/#_1-使用样例类序列创建-dataset" class="sidebar-link">1） 使用样例类序列创建 DataSet</a></li><li class="sidebar-sub-header level4"><a href="/bigdata/spark/sql/#_2-使用基本类型的序列创建-dataset" class="sidebar-link">2） 使用基本类型的序列创建 DataSet</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/spark/sql/#_2-3-2-rdd-转换为-dataset" class="sidebar-link">2.3.2 RDD 转换为 DataSet</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/spark/sql/#_2-3-3-dataset-转换为-rdd" class="sidebar-link">2.3.3 DataSet 转换为 RDD</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/bigdata/spark/sql/#_2-4-dataframe-和-dataset-转换" class="sidebar-link">2.4 DataFrame 和 DataSet 转换</a></li><li class="sidebar-sub-header level2"><a href="/bigdata/spark/sql/#_2-5-rdd、dataframe、dataset-三者的关系" class="sidebar-link">2.5 RDD、DataFrame、DataSet 三者的关系</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/bigdata/spark/sql/#_2-5-1-三者的共性" class="sidebar-link">2.5.1 三者的共性</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/spark/sql/#_2-5-2-三者的区别" class="sidebar-link">2.5.2 三者的区别</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/spark/sql/#_2-5-3-三者的互相转换" class="sidebar-link">2.5.3 三者的互相转换</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/bigdata/spark/sql/#_2-6-idea-开发-sparksql" class="sidebar-link">2.6 IDEA 开发 SparkSQL</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/bigdata/spark/sql/#_2-6-1-添加依赖" class="sidebar-link">2.6.1 添加依赖</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/spark/sql/#_2-6-2-代码实现" class="sidebar-link">2.6.2 代码实现</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/bigdata/spark/sql/#_2-7-用户自定义函数" class="sidebar-link">2.7 用户自定义函数</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/bigdata/spark/sql/#_2-7-1-udf" class="sidebar-link">2.7.1 UDF</a></li><li class="sidebar-sub-header level4"><a href="/bigdata/spark/sql/#_1-创建-dataframe" class="sidebar-link">1) 创建 DataFrame</a></li><li class="sidebar-sub-header level4"><a href="/bigdata/spark/sql/#_2-注册-udf" class="sidebar-link">2) 注册 UDF</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/spark/sql/#_3-创建临时表" class="sidebar-link">3) 创建临时表</a></li><li class="sidebar-sub-header level4"><a href="/bigdata/spark/sql/#_4-应用-udf" class="sidebar-link">4) 应用 UDF</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/spark/sql/#_2-7-2-udaf" class="sidebar-link">2.7.2 UDAF</a></li><li class="sidebar-sub-header level4"><a href="/bigdata/spark/sql/#_1-实现方式-rdd" class="sidebar-link">1) 实现方式 - RDD</a></li><li class="sidebar-sub-header level4"><a href="/bigdata/spark/sql/#_2-实现方式-累加器" class="sidebar-link">2) 实现方式 - 累加器</a></li><li class="sidebar-sub-header level4"><a href="/bigdata/spark/sql/#_3-实现方式-udaf-弱类型" class="sidebar-link">3) 实现方式 - UDAF - 弱类型</a></li><li class="sidebar-sub-header level4"><a href="/bigdata/spark/sql/#_4-实现方式-udaf-强类型" class="sidebar-link">4) 实现方式 - UDAF - 强类型</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/bigdata/spark/sql/#_2-8-数据的加载和保存" class="sidebar-link">2.8 数据的加载和保存</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/bigdata/spark/sql/#_2-8-1-通用的加载和保存方式" class="sidebar-link">2.8.1 通用的加载和保存方式</a></li><li class="sidebar-sub-header level4"><a href="/bigdata/spark/sql/#_1-加载数据" class="sidebar-link">1.加载数据</a></li><li class="sidebar-sub-header level4"><a href="/bigdata/spark/sql/#_2-保存数据" class="sidebar-link">2) 保存数据</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/spark/sql/#_2-8-2-parquet" class="sidebar-link">2.8.2 Parquet</a></li><li class="sidebar-sub-header level4"><a href="/bigdata/spark/sql/#_1-加载数据-2" class="sidebar-link">1) 加载数据</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/spark/sql/#_2-保存数据-2" class="sidebar-link">2) 保存数据</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/spark/sql/#_2-8-3-json" class="sidebar-link">2.8.3 JSON</a></li><li class="sidebar-sub-header level4"><a href="/bigdata/spark/sql/#_1-导入隐式转换" class="sidebar-link">1）导入隐式转换</a></li><li class="sidebar-sub-header level4"><a href="/bigdata/spark/sql/#_2-加载-json-文件" class="sidebar-link">2）加载 JSON 文件</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/spark/sql/#_3-创建临时表-2" class="sidebar-link">3）创建临时表</a></li><li class="sidebar-sub-header level4"><a href="/bigdata/spark/sql/#_4-数据查询" class="sidebar-link">4）数据查询</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/spark/sql/#_2-8-4-csv" class="sidebar-link">2.8.4 CSV</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/spark/sql/#_2-8-5-mysql" class="sidebar-link">2.8.5 MySQL</a></li><li class="sidebar-sub-header level4"><a href="/bigdata/spark/sql/#_1-导入依赖" class="sidebar-link">1）导入依赖</a></li><li class="sidebar-sub-header level4"><a href="/bigdata/spark/sql/#_2-读取数据" class="sidebar-link">2）读取数据</a></li><li class="sidebar-sub-header level4"><a href="/bigdata/spark/sql/#_3-写入数据" class="sidebar-link">3）写入数据</a></li><li class="sidebar-sub-header level3"><a href="/bigdata/spark/sql/#_2-8-6-hive" class="sidebar-link">2.8.6 Hive</a></li><li class="sidebar-sub-header level4"><a href="/bigdata/spark/sql/#_1-内嵌的-hive" class="sidebar-link">1）内嵌的 HIVE</a></li><li class="sidebar-sub-header level4"><a href="/bigdata/spark/sql/#_3-运行-spark-sql-cli" class="sidebar-link">3）运行 Spark SQL CLI</a></li><li class="sidebar-sub-header level4"><a href="/bigdata/spark/sql/#_4-运行-spark-beeline" class="sidebar-link">4）运行 Spark beeline</a></li><li class="sidebar-sub-header level4"><a href="/bigdata/spark/sql/#_5-代码操作-hive" class="sidebar-link">5）代码操作 Hive</a></li></ul></li></ul></li><li><a href="/bigdata/spark/SparkStreaming/" class="sidebar-link">大数据技术之 SparkStreaming</a></li><li><a href="/bigdata/spark/SparkStreaming_Driver_Executer/" class="sidebar-link">spark中代码的执行位置（Driver or Executer）</a></li></ul></section></li></ul></section></li></ul> </aside> <div><main class="page"><div class="theme-vdoing-wrapper "><div class="articleInfo-wrap" data-v-06225672><div class="articleInfo" data-v-06225672><ul class="breadcrumbs" data-v-06225672><li data-v-06225672><a href="/" title="首页" class="iconfont icon-home router-link-active" data-v-06225672></a></li> <li data-v-06225672><a href="/categories/?category=%E5%A4%A7%E6%95%B0%E6%8D%AE" title="分类" data-v-06225672>大数据</a></li><li data-v-06225672><a href="/categories/?category=spark" title="分类" data-v-06225672>spark</a></li><li data-v-06225672><a href="/categories/?category=spark%20sql" title="分类" data-v-06225672>spark sql</a></li></ul> <div class="info" data-v-06225672><div title="作者" class="author iconfont icon-touxiang" data-v-06225672><a href="https://github.com/andanyoung" target="_blank" title="作者" class="beLink" data-v-06225672>andanyang</a></div> <div title="创建时间" class="date iconfont icon-riqi" data-v-06225672><a href="javascript:;" data-v-06225672>2023-12-06</a></div> <!----></div></div></div> <!----> <div class="content-wrapper"><div class="right-menu-wrapper"><div class="right-menu-margin"><div class="right-menu-title">目录</div> <div class="right-menu-content"></div></div></div> <h1><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAABH1JREFUSA3tVl1oHFUUPmdmd2ltklqbpJDiNnXFmgbFktho7YMPNiJSSZM0+CAYSkUELVhM6YuwIPpgoOKDqOBDC0XE2CQoNtQXBUFTTcCi+Wlh1V2TQExsUzcltd3M9Tt3ZjZzZ2fT+OJTL8yeM+eee757fmeJbq//KQL8X3DUSFOcfr7cRsRtxNQMWueeVzOkaITIGqQHNg5y8+jNW9ldM7A6nTpAjuolUikAwq7CE3WcM2RRDz+XGVgN3FptU/aUSlvq9Pa3iZ1+sgAqJyyAFqkipd9dqiwHF3P65YycLWc/6sqGrvoEoIp6DOFaX5h6+dnfjkWprwqsPk0dUGq5vySwDImC10KxFHgGL1SWoc92O3eVht09qdXNH11I2SsTsJYqMWzihqGMi+A+Garf3BAuuLI5oGlULyNfyB/HYNujwktOfRrMr5t77NmevqaUopx0grnKAyvVpmwUDB4x6FPXuGvYLTDwWsejwgtgkYKPqRJg8SV6xaiZ3ZTppGneS4yfH5/66fZSDHv+QZci/+h5c5UHtpy67JUqGppM0sh0Nc1dW6/N1W5Yoqat8/TU/VnadmdeW2PLLSyh0cvxBs3KbqTmwYPpxN4do/mzE8nEpvX/UMu2Wbp74zUAK5q6WkHns7V0eWkdPbPzd3rxkTGybadYySumVzhcaJFbs5UrEkQ/+CK8gF5dnh/6ciIZ73gwQ927L1IitoxKLXYP3SjYdOrHHfTZhRRlFyrorafPk20B3HPD1y2G3qKZME5Jcf3t/HUC13/8tSd++vqFveMUTwAUxSUFI1QekR1+bIze3D9MF2aq6cPvG72CgnldWCFqyRw3lwH8ZMerjTD9ElRO7Gv44wNpC90aASqGfVlz/Rx17srQ57/UU26hkhQqUB7dBR71WmzQhHUnblGmVOEw0jhbV1n9OlXUDCIRGaNV5Jp43N516fN7JmnTHdfp7Hgy0luO4aMhtkLL8Bi3bUWYvzh5Mn1dTxrL6QmGuRhGL/TiTTxRoEdTszSaq9GR0NGA3KdkOz3hqSV3MIDhQ5IVX/Ivx3umBti2es2h4eZby7x8br1rkf7Mo90AqC8aQ3sJeNzqFRu+vSANAQe3PL7l0HGOAdwDCeZYvNKeoZp1Qfs6Aipndh86HmFRi0LAnEO47wsqM6cdfjh3jBPUzhZy7nvlUfFsamED1VQt6aISHVymXZ/B2aCtIG8AI8xfobj2d3en1wWVhOeHELKmLQ1s211s88comkv4UCwWyF787mJdYXtNfhKAXVqnKTq8QZvGAGGOfaTo5pGZ/PwbUCr5+DPr/1J92JNHr9aOl/F3iI5+O1nfybsGxoimvZ3ViWSluDITw3P37mypheDIPY0tw7+O/5ApbkYw+zpfaUVu32Pi98+defdUhEpZkRFq0aqyNh9FuL9hpYbEm6iwi0z2REd09ZmyENEbuhjDWzKvZXTqKYaBIr3tt5kuPtQBZFvEUwHt60vfCNu41XsksH9Ij1BMMz1Y0OOunHNShFIP5868g5zeXmuLwL9T4b6Q2+KejgAAAABJRU5ErkJggg==">Spark 核心编程之 RDD 累加器与广播变量<!----></h1>  <div class="theme-vdoing-content content__default"><h1 id="第1章-sparksql-概述"><a href="#第1章-sparksql-概述" class="header-anchor">#</a> 第1章 SparkSQL 概述</h1> <h2 id="_1-1-sparksql-是什么"><a href="#_1-1-sparksql-是什么" class="header-anchor">#</a> 1.1 SparkSQL 是什么</h2> <p><img src="/assets/img/image-20231206235236271.7e82695a.png" alt="image-20231206235236271"></p> <p>Spark SQL 是 Spark 用于结构化数据(structured data)处理的 Spark 模块。</p> <h2 id="_1-2-hive-and-sparksql"><a href="#_1-2-hive-and-sparksql" class="header-anchor">#</a> 1.2 Hive and SparkSQL</h2> <p>SparkSQL 的前身是 Shark，给熟悉 RDBMS 但又不理解 MapReduce 的技术人员提供快速上手的工具。</p> <p>Hive 是早期唯一运行在 Hadoop 上的 SQL-on-Hadoop 工具。但是 MapReduce 计算过程 中大量的中间磁盘落地过程消耗了大量的 I/O，降低的运行效率，为了提高 SQL-on-Hadoop 的效率，大量的 SQL-on-Hadoop 工具开始产生，其中表现较为突出的是：</p> <ul><li>Drill</li> <li>Impala</li> <li>Shark</li></ul> <p>其中 Shark 是伯克利实验室 Spark 生态环境的组件之一，是基于 Hive 所开发的工具，它修改了下图所示的右下角的内存管理、物理计划、执行三个模块，并使之能运行在 Spark 引擎 上。</p> <p><img src="/assets/img/image-20231206235550289.7fde6742.png" alt="image-20231206235550289"></p> <p>Shark 的出现，使得 SQL-on-Hadoop 的性能比 Hive 有了 10-100 倍的提高。</p> <p><img src="/assets/img/image-20231206235718519.937fd19f.png" alt="image-20231206235718519"></p> <p>但是，随着 Spark 的发展，对于野心勃勃的 Spark 团队来说，Shark 对于 Hive 的太多依赖（如采用 Hive 的语法解析器、查询优化器等等），制约了 Spark 的 One Stack Rule Them All 的既定方针，制约了 Spark 各个组件的相互集成，所以提出了 SparkSQL 项目。SparkSQL 抛弃原有 Shark 的代码，汲取了 Shark 的一些优点，如内存列存储（In-Memory Columnar  Storage）、Hive兼容性等，重新开发了SparkSQL代码；由于摆脱了对Hive的依赖性，SparkSQL 无论在数据兼容、性能优化、组件扩展方面都得到了极大的方便，真可谓“退一步，海阔天空”。</p> <p>➢ 数据兼容方面 SparkSQL 不但兼容 Hive，还可以从 RDD、parquet 文件、JSON 文件中获取数据，未来版本甚至支持获取 RDBMS 数据以及 cassandra 等 NOSQL 数据；</p> <p>➢ 性能优化方面 除了采取 In-Memory Columnar Storage、byte-code generation 等优化技术外、将会引进 Cost Model 对查询进行动态评估、获取最佳物理计划等等；</p> <p>➢ 组件扩展方面 无论是 SQL 的语法解析器、分析器还是优化器都可以重新定义，进行扩展。</p> <p>2014 年 6 月 1 日 Shark 项目和 SparkSQL 项目的主持人 Reynold Xin 宣布：停止对 Shark 的 开发，团队将所有资源放 SparkSQL 项目上，至此，Shark 的发展画上了句话，但也因此发 展出两个支线：SparkSQL 和 Hive on Spark。</p> <p><img src="/assets/img/image-20231207000005781.55ac8fd6.png" alt="image-20231207000005781"></p> <p>其中 SparkSQL 作为 Spark 生态的一员继续发展，而不再受限于 Hive，只是兼容 Hive；而 Hive on Spark 是一个 Hive 的发展计划，该计划将 Spark 作为 Hive 的底层引擎之一，也就是 说，Hive 将不再受限于一个引擎，可以采用 Map-Reduce、Tez、Spark 等引擎。</p> <p>对于开发人员来讲，SparkSQL 可以简化 RDD 的开发，提高开发效率，且执行效率非 常快，所以实际工作中，基本上采用的就是 SparkSQL。Spark SQL 为了简化 RDD 的开发， 提高开发效率，提供了 2 个编程抽象，类似 Spark Core 中的 RDD</p> <ul><li>DataFrame</li> <li>DataSet</li></ul> <h2 id="_1-3-sparksql-特点"><a href="#_1-3-sparksql-特点" class="header-anchor">#</a> 1.3 SparkSQL 特点</h2> <h3 id="_1-3-1-易整合"><a href="#_1-3-1-易整合" class="header-anchor">#</a> 1.3.1 易整合</h3> <p>无缝的整合了 SQL 查询和 Spark 编程</p> <p><img src="/assets/img/image-20231207000206610.628063a1.png" alt="image-20231207000206610"></p> <h2 id="_1-3-2-统一的数据访问"><a href="#_1-3-2-统一的数据访问" class="header-anchor">#</a> 1.3.2 统一的数据访问</h2> <p>使用相同的方式连接不同的数据源</p> <p><img src="/assets/img/image-20231207000235561.d1249c7c.png" alt="image-20231207000235561"></p> <h3 id="_1-3-3-兼容-hive"><a href="#_1-3-3-兼容-hive" class="header-anchor">#</a> 1.3.3 兼容 Hive</h3> <p>在已有的仓库上直接运行 SQL 或者 HiveQL</p> <p><img src="/assets/img/image-20231207000306793.8f1992d8.png" alt="image-20231207000306793"></p> <h3 id="_1-3-4-标准数据连接"><a href="#_1-3-4-标准数据连接" class="header-anchor">#</a> 1.3.4 标准数据连接</h3> <p><img src="/assets/img/image-20231207000327838.fdce0e64.png" alt="image-20231207000327838"></p> <h2 id="_1-4-dataframe-是什么"><a href="#_1-4-dataframe-是什么" class="header-anchor">#</a> 1.4 DataFrame 是什么</h2> <p>在 Spark 中，DataFrame 是一种以 RDD 为基础的分布式数据集，<strong>类似于传统数据库中的二维表格</strong>。DataFrame 与 RDD 的主要区别在于，前者带有 schema 元信息，即 DataFrame 所表示的二维表数据集的<strong>每一列都带有名称和类型</strong>。这使得 Spark SQL 得以洞察更多的结构信息，从而对藏于 DataFrame 背后的数据源以及作用于 DataFrame 之上的变换进行了针对性的优化，最终达到大幅提升运行时效率的目标。反观 RDD，由于无从得知所存数据元素的具体内部结构，Spark Core 只能在 stage 层面进行简单、通用的流水线优化。</p> <p>同时，与 Hive 类似，DataFrame 也支持嵌套数据类型（struct、array 和 map）。从 API  易用性的角度上看，DataFrame API 提供的是一套高层的关系操作，比函数式的 RDD API 要 更加友好，门槛更低。</p> <p><img src="/assets/img/spark-dataFrame+RDDs.b6919896.png" alt="img"></p> <p>上图直观地体现了 DataFrame 和 RDD 的区别。</p> <p>左侧的 RDD[Person]虽然以 Person 为类型参数，但 Spark 框架本身不了解 Person 类的内部结构。而右侧的 DataFrame 却提供了详细的结构信息，使得 Spark SQL 可以清楚地知道该数据集中包含哪些列，每列的名称和类型各是什么。</p> <p>DataFrame 是为数据提供了 Schema 的视图。可以把它当做数据库中的一张表来对待 DataFrame 也是懒执行的，但性能上比 RDD 要高，主要原因：<strong>优化的执行计划</strong>，即查询计划通过 Spark catalyst optimiser 进行优化。比如下面一个例子:</p> <p><img src="/assets/img/image-20231207000847362.b25e0f9e.png" alt="image-20231207000847362"></p> <p>为了说明查询优化，我们来看上图展示的人口数据分析的示例。图中构造了两个 DataFrame，将它们 join 之后又做了一次 filter 操作。如果原封不动地执行这个执行计划，最终的执行效率是不高的。因为 join 是一个代价较大的操作，也可能会产生一个较大的数据集。如果我们能将 filter 下推到 join 下方，先对 DataFrame 进行过滤，再 join 过滤后的较小的结果集，便可以有效缩短执行时间。而 Spark SQL 的查询优化器正是这样做的。简而言之， 逻辑查询计划优化就是一个利用基于关系代数的等价变换，将高成本的操作替换为低成本操 作的过程。</p> <p><img src="/assets/img/image-20231207001100417.22e769b3.png" alt="image-20231207001100417"></p> <h2 id="_1-5-dataset-是什么"><a href="#_1-5-dataset-是什么" class="header-anchor">#</a> 1.5 DataSet 是什么</h2> <p>DataSet 是分布式数据集合。DataSet 是 Spark 1.6 中添加的一个新抽象，是 DataFrame 的一个扩展。它提供了 RDD 的优势（强类型，使用强大的 lambda 函数的能力）以及 Spark  SQL 优化执行引擎的优点。DataSet 也可以使用功能性的转换（操作 map，flatMap，filter 等等）。</p> <p>➢ DataSet 是 DataFrame API 的一个扩展，是 SparkSQL 最新的数据抽象</p> <p>➢ 用户友好的 API 风格，既具有类型安全检查也具有 DataFrame 的查询优化特性；</p> <p>➢ 用样例类来对 DataSet 中定义数据的结构信息，样例类中每个属性的名称直接映射到 DataSet 中的字段名称；</p> <p>➢ DataSet 是强类型的。比如可以有 <code>DataSet[Car]</code>，<code>DataSet[Person]</code>。</p> <p>➢ DataFrame 是 DataSet 的特列，<code>DataFrame=DataSet[Row]</code> ，所以可以通过 as 方法将 DataFrame 转换为 DataSet。Row 是一个类型，跟 Car、Person 这些的类型一样，所有的表结构信息都用 Row 来表示。获取数据时需要指定顺序</p> <h1 id="第2章-sparksql-核心编程"><a href="#第2章-sparksql-核心编程" class="header-anchor">#</a> 第2章 SparkSQL 核心编程</h1> <p>本课件重点学习如何使用 Spark SQL 所提供的 DataFrame 和 DataSet 模型进行编程.， 以及了解它们之间的关系和转换，<strong>关于具体的 SQL 书写不是我们的重点。</strong></p> <h2 id="_2-1-新的起点"><a href="#_2-1-新的起点" class="header-anchor">#</a> 2.1 新的起点</h2> <p>Spark Core 中，如果想要执行应用程序，需要首先构建上下文环境对象 <strong>SparkContext</strong>， Spark SQL 其实可以理解为对 Spark Core 的一种封装，不仅仅在模型上进行了封装，上下文环境对象也进行了封装。</p> <p>在老的版本中，SparkSQL 提供两种 SQL 查询起始点：一个叫 SQLContext，用于 Spark 自己提供的 SQL 查询；一个叫 HiveContext，用于连接 Hive 的查询。</p> <p><strong>SparkSession</strong> 是 Spark 最新的 SQL 查询起始点，实质上是 SQLContext 和 HiveContext 的组合，所以在 SQLContex 和 HiveContext 上可用的 API 在 SparkSession 上同样是可以使用 的。SparkSession 内部封装了 SparkContext，所以计算实际上是由 sparkContext 完成的。当我们使用 spark-shell 的时候, spark 框架会自动的创建一个名称叫做 spark 的 SparkSession 对象, 就像我们以前可以自动获取到一个 sc 来表示 SparkContext 对象一样</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>./spark-shell
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p><img src="/assets/img/image-20231211220300472.42b4c6dc.png" alt="image-20231211220300472"></p> <h2 id="_2-2-dataframe"><a href="#_2-2-dataframe" class="header-anchor">#</a> 2.2 DataFrame</h2> <p>Spark SQL 的 DataFrame API 允许我们使用 DataFrame 而不用必须去注册临时表或者生成 SQL 表达式。DataFrame API 既有 transformation 操作也有 action 操作。</p> <h3 id="_2-2-1-创建-dataframe"><a href="#_2-2-1-创建-dataframe" class="header-anchor">#</a> 2.2.1 创建 DataFrame</h3> <p>在 Spark SQL 中 SparkSession 是创建 DataFrame 和执行 SQL 的入口，创建 DataFrame 有三种方式：通过 Spark 的数据源进行创建；从一个存在的 RDD 进行转换；还可以从 Hive  Table 进行查询返回。</p> <h4 id="_1-从-spark-数据源进行创建"><a href="#_1-从-spark-数据源进行创建" class="header-anchor">#</a> 1) 从 Spark 数据源进行创建</h4> <p>➢ 查看 Spark 支持创建文件的数据源格式</p> <p><img src="/assets/img/image-20231211220434814.ec85f73a.png" alt="image-20231211220434814"></p> <p>➢ 在 spark 的 bin/data 目录中创建 user.json 文件</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>{&quot;username&quot;:&quot;zhangsan&quot;,&quot;age&quot;:20}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>➢ 读取 json 文件创建 DataFrame</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>scala&gt; val df = spark.read.json(&quot;data/user.json&quot;)
+df: org.apache.spark.sql.DataFrame = [age: bigint， username: string]
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><blockquote><p>注意：如果从内存中获取数据，spark 可以知道数据类型具体是什么。如果是数字，默认作 为 Int 处理；但是从文件中读取的数字，不能确定是什么类型，所以用 bigint 接收，可以和 Long 类型转换，但是和 Int 不能进行转换</p></blockquote> <p>➢ 展示结果</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>+---+--------+
+|age|username|
++---+--------+
+| 20|zhangsan|
++---+--------+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><h4 id="_2-从-rdd-进行转换"><a href="#_2-从-rdd-进行转换" class="header-anchor">#</a> 2) 从 RDD 进行转换</h4> <p>在后续章节中讨论</p> <h4 id="_3-从-hive-table-进行查询返回"><a href="#_3-从-hive-table-进行查询返回" class="header-anchor">#</a> 3) 从 Hive Table 进行查询返回</h4> <p>在后续章节中讨论</p> <h3 id="_2-2-2-sql-语法"><a href="#_2-2-2-sql-语法" class="header-anchor">#</a> 2.2.2 SQL 语法</h3> <p>SQL 语法风格是指我们查询数据的时候使用 SQL 语句来查询，这种风格的查询必须要有临时视图或者全局视图来辅助</p> <h4 id="_1-读取-json-文件创建-dataframe"><a href="#_1-读取-json-文件创建-dataframe" class="header-anchor">#</a> 1) 读取 JSON 文件创建 DataFrame</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>scala&gt; val df = spark.read.json(&quot;data/user.json&quot;)
+df: org.apache.spark.sql.DataFrame = [age: bigint， username: string]
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><h4 id="_2-对-dataframe-创建一个临时表"><a href="#_2-对-dataframe-创建一个临时表" class="header-anchor">#</a> 2) 对 DataFrame 创建一个临时表</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>scala&gt; df.createOrReplaceTempView(&quot;people&quot;)
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h4 id="_3-通过-sql-语句实现查询全表"><a href="#_3-通过-sql-语句实现查询全表" class="header-anchor">#</a> 3) 通过 SQL 语句实现查询全表</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>scala&gt; val sqlDF = spark.sql(&quot;SELECT * FROM people&quot;)
+sqlDF: org.apache.spark.sql.DataFrame = [age: bigint， name: string]
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><h4 id="_4-结果展示"><a href="#_4-结果展示" class="header-anchor">#</a> 4) 结果展示</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>scala&gt; sqlDF.show
++---+--------+
+|age|username|
++---+--------+
+| 20|zhangsan|
+| 30| lisi|
+| 40| wangwu|
++---+--------+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><blockquote><p>注意：普通临时表是 Session 范围内的，如果想应用范围内有效，可以使用全局临时表。使用全局临时表时需要全路径访问，如：global_temp.people</p></blockquote> <h4 id="_5-对于-dataframe-创建一个全局表"><a href="#_5-对于-dataframe-创建一个全局表" class="header-anchor">#</a> 5) 对于 DataFrame 创建一个全局表</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>scala&gt; df.createGlobalTempView(&quot;people&quot;)
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h4 id="_6-通过-sql-语句实现查询全表"><a href="#_6-通过-sql-语句实现查询全表" class="header-anchor">#</a> 6) 通过 SQL 语句实现查询全表</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>scala&gt; spark.sql(&quot;SELECT * FROM global_temp.people&quot;).show()
++---+--------+
+|age|username|
++---+--------+
+| 20|zhangsan|
+| 30| lisi   |
+| 40| wangwu |
++---+--------+
+
+scala&gt; spark.newSession().sql(&quot;SELECT * FROM global_temp.people&quot;).show()
++---+--------+
+|age|username|
++---+--------+
+| 20|zhangsan|
+| 30| lisi   |
+| 40| wangwu |
++---+--------+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br></div></div><h3 id="_2-2-3-dsl-语法"><a href="#_2-2-3-dsl-语法" class="header-anchor">#</a> 2.2.3 DSL 语法</h3> <p>DataFrame 提供一个特定领域语言(domain-specific language, DSL)去管理结构化的数据。 可以在 Scala, Java, Python 和 R 中使用 DSL，使用 DSL 语法风格不必去创建临时视图了</p> <h4 id="_1-创建一个-dataframe"><a href="#_1-创建一个-dataframe" class="header-anchor">#</a> 1) 创建一个 DataFrame</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>scala&gt; val df = spark.read.json(&quot;data/user.json&quot;)
+df: org.apache.spark.sql.DataFrame = [age: bigint， name: string]
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><h4 id="_2-查看-dataframe-的-schema-信息"><a href="#_2-查看-dataframe-的-schema-信息" class="header-anchor">#</a> 2) 查看 DataFrame 的 Schema 信息</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>scala&gt; df.printSchema
+root
+|-- age: Long (nullable = true)
+|-- username: string (nullable = true)
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><h4 id="_3-只查看-username-列数据"><a href="#_3-只查看-username-列数据" class="header-anchor">#</a> 3) 只查看&quot;username&quot;列数据，</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>scala&gt; df.select(&quot;username&quot;).show()
++--------+
+|username|
++--------+
+|zhangsan|
+| lisi|
+| wangwu|
++--------+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><h4 id="_4-查看-username-列数据以及-age-1-数据"><a href="#_4-查看-username-列数据以及-age-1-数据" class="header-anchor">#</a> 4) 查看&quot;username&quot;列数据以及&quot;age+1&quot;数据</h4> <blockquote><p>注意:涉及到运算的时候, 每列都必须使用$, 或者采用引号表达式：单引号+字段名</p></blockquote> <div class="language- line-numbers-mode"><pre class="language-text"><code>scala&gt; df.select($&quot;username&quot;,$&quot;age&quot; + 1).show
+scala&gt; df.select('username, 'age + 1).show()
+scala&gt; df.select('username, 'age + 1 as &quot;newage&quot;).show()
++--------+---------+
+|username|(age + 1)|
++--------+---------+
+|zhangsan| 21|
+| lisi| 31|
+| wangwu| 41|
++--------+---------+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div></div><h4 id="_5-查看-age-大于-30-的数据"><a href="#_5-查看-age-大于-30-的数据" class="header-anchor">#</a> 5) 查看&quot;age&quot;大于&quot;30&quot;的数据</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>scala&gt; df.filter($&quot;age&quot;&gt;30).show
++---+---------+
+|age| username|
++---+---------+
+| 40| wangwu|
++---+---------+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><h4 id="_6-按照-age-分组-查看数据条数"><a href="#_6-按照-age-分组-查看数据条数" class="header-anchor">#</a> 6) 按照&quot;age&quot;分组，查看数据条数</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>scala&gt; df.groupBy(&quot;age&quot;).count.show
++---+-----+
+|age|count|
++---+-----+
+| 20| 1|
+| 30| 1|
+| 40| 1|
++---+-----+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><h3 id="_2-2-4-rdd-转换为-dataframe"><a href="#_2-2-4-rdd-转换为-dataframe" class="header-anchor">#</a> 2.2.4 RDD 转换为 DataFrame</h3> <p>在 IDEA 中开发程序时，如果需要 RDD 与 DF 或者 DS 之间互相操作，那么需要引入 <mark>import spark.implicits._</mark></p> <p>这里的 spark 不是 Scala 中的包名，而是创建的 sparkSession 对象的变量名称，所以必 须先创建 SparkSession 对象再导入。这里的 spark 对象不能使用 var 声明，因为 Scala 只支持 val 修饰的对象的引入。</p> <p>spark-shell 中无需导入，自动完成此操作。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>scala&gt; val idRDD = sc.textFile(&quot;data/id.txt&quot;)
+scala&gt; idRDD.toDF(&quot;id&quot;).show
++---+
+| id|
++---+
+| 1|
+| 2|
+| 3|
+| 4|
++---+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div></div><p><strong>实际开发中，一般通过样例类将 RDD 转换为 DataFrame</strong></p> <div class="language- line-numbers-mode"><pre class="language-text"><code>scala&gt; case class User(name:String, age:Int)
+defined class User
+scala&gt; sc.makeRDD(List((&quot;zhangsan&quot;,30), (&quot;lisi&quot;,40))).map(t=&gt;User(t._1, 
+t._2)).toDF.show
++--------+---+
+| name|age   |
++--------+---+
+|zhangsan| 30|
+| lisi   | 40|
++--------+---+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div></div><h3 id="_2-2-5-dataframe-转换为-rdd"><a href="#_2-2-5-dataframe-转换为-rdd" class="header-anchor">#</a> 2.2.5 DataFrame 转换为 RDD</h3> <p>DataFrame 其实就是对 RDD 的封装，所以可以直接获取内部的 RDD</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>scala&gt; val df = sc.makeRDD(List((&quot;zhangsan&quot;,30), (&quot;lisi&quot;,40))).map(t=&gt;User(t._1, t._2)).toDF
+df: org.apache.spark.sql.DataFrame = [name: string, age: int]
+scala&gt; val rdd = df.rdd
+rdd: org.apache.spark.rdd.RDD[org.apache.spark.sql.Row] = MapPartitionsRDD[46] 
+at rdd at &lt;console&gt;:25
+scala&gt; val array = rdd.collect
+array: Array[org.apache.spark.sql.Row] = Array([zhangsan,30], [lisi,40])
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><blockquote><p>注意：此时得到的 RDD 存储类型为 Row</p></blockquote> <div class="language- line-numbers-mode"><pre class="language-text"><code>cala&gt; array(0)
+res28: org.apache.spark.sql.Row = [zhangsan,30]
+scala&gt; array(0)(0)
+res29: Any = zhangsan
+scala&gt; array(0).getAs[String](&quot;name&quot;)
+res30: String = zhangsan
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><h2 id="_2-3-dataset"><a href="#_2-3-dataset" class="header-anchor">#</a> 2.3 DataSet</h2> <p>DataSet 是具有<mark><strong>强类型</strong></mark>的数据集合，需要提供对应的类型信息。</p> <h3 id="_2-3-1-创建-dataset"><a href="#_2-3-1-创建-dataset" class="header-anchor">#</a> 2.3.1 创建 DataSet</h3> <h4 id="_1-使用样例类序列创建-dataset"><a href="#_1-使用样例类序列创建-dataset" class="header-anchor">#</a> 1） 使用样例类序列创建 DataSet</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>scala&gt; case class Person(name: String, age: Long)
+defined class Person
+scala&gt; val caseClassDS = Seq(Person(&quot;zhangsan&quot;,2)).toDS()
+caseClassDS: org.apache.spark.sql.Dataset[Person] = [name: string, age: Long]
+scala&gt; caseClassDS.show
++---------+---+
+| name   |age |
++---------+---+
+| zhangsan| 2 |
++---------+---+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div></div><h4 id="_2-使用基本类型的序列创建-dataset"><a href="#_2-使用基本类型的序列创建-dataset" class="header-anchor">#</a> 2） 使用基本类型的序列创建 DataSet</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>scala&gt; val ds = Seq(1,2,3,4,5).toDS
+ds: org.apache.spark.sql.Dataset[Int] = [value: int]
+scala&gt; ds.show
++-----+
+|value|
++-----+
+| 1|
+| 2|
+| 3|
+| 4|
+| 5|
++-----+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div></div><blockquote><p>注意：在实际使用的时候，很少用到把序列转换成DataSet，更多的是通过RDD来得到DataSet</p></blockquote> <h3 id="_2-3-2-rdd-转换为-dataset"><a href="#_2-3-2-rdd-转换为-dataset" class="header-anchor">#</a> 2.3.2 RDD 转换为 DataSet</h3> <p>SparkSQL 能够自动将包含有 case 类的 RDD 转换成 DataSet，case 类定义了 table 的结构，Case 类属性通过反射变成了表的列名。Case 类可以包含诸如 Seq 或者 Array 等复杂的结构。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>scala&gt; case class User(name:String, age:Int)
+defined class User
+scala&gt; sc.makeRDD(List((&quot;zhangsan&quot;,30), (&quot;lisi&quot;,49))).map(t=&gt;User(t._1, t._2)).toDS
+res11: org.apache.spark.sql.Dataset[User] = [name: string, age: int]
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><h3 id="_2-3-3-dataset-转换为-rdd"><a href="#_2-3-3-dataset-转换为-rdd" class="header-anchor">#</a> 2.3.3 DataSet 转换为 RDD</h3> <p>DataSet 其实也是对 RDD 的封装，所以可以直接获取内部的 RDD</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>scala&gt; case class User(name:String, age:Int)
+defined class User
+
+scala&gt; sc.makeRDD(List((&quot;zhangsan&quot;,30), (&quot;lisi&quot;,49))).map(t=&gt;User(t._1, 
+t._2)).toDS
+res11: org.apache.spark.sql.Dataset[User] = [name: string, age: int]
+
+scala&gt; val rdd = res11.rdd
+rdd: org.apache.spark.rdd.RDD[User] = MapPartitionsRDD[51] at rdd at 
+&lt;console&gt;:25
+
+scala&gt; rdd.collect
+res12: Array[User] = Array(User(zhangsan,30), User(lisi,49))
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><h2 id="_2-4-dataframe-和-dataset-转换"><a href="#_2-4-dataframe-和-dataset-转换" class="header-anchor">#</a> 2.4 DataFrame 和 DataSet 转换</h2> <p>DataFrame 其实是 DataSet 的特例，所以它们之间是可以互相转换的。</p> <p>➢ DataFrame 转换为 DataSet</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>scala&gt; case class User(name:String, age:Int)
+defined class User
+
+scala&gt; val df = sc.makeRDD(List((&quot;zhangsan&quot;,30), 
+(&quot;lisi&quot;,49))).toDF(&quot;name&quot;,&quot;age&quot;)
+df: org.apache.spark.sql.DataFrame = [name: string, age: int]
+
+scala&gt; val ds = df.as[User]
+ds: org.apache.spark.sql.Dataset[User] = [name: string, age: int]
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><p>➢ DataSet 转换为 DataFrame</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>scala&gt; val ds = df.as[User]
+ds: org.apache.spark.sql.Dataset[User] = [name: string, age: int]
+
+scala&gt; val df = ds.toDF
+df: org.apache.spark.sql.DataFrame = [name: string, age: int]
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><h2 id="_2-5-rdd、dataframe、dataset-三者的关系"><a href="#_2-5-rdd、dataframe、dataset-三者的关系" class="header-anchor">#</a> 2.5 RDD、DataFrame、DataSet 三者的关系</h2> <p>在 SparkSQL 中 Spark 为我们提供了两个新的抽象，分别是 DataFrame 和 DataSet。他们和 RDD 有什么区别呢？首先从版本的产生上来看：</p> <p>➢ Spark1.0 =&gt; RDD</p> <p>➢ Spark1.3 =&gt; DataFrame</p> <p>➢ Spark1.6 =&gt; Dataset</p> <p>如果同样的数据都给到这三个数据结构，他们分别计算之后，都会给出相同的结果。不同是的他们的执行效率和执行方式。在后期的 Spark 版本中，DataSet 有可能会逐步取代 RDD 和 DataFrame 成为唯一的 API 接口。</p> <h3 id="_2-5-1-三者的共性"><a href="#_2-5-1-三者的共性" class="header-anchor">#</a> 2.5.1 三者的共性</h3> <p>➢ RDD、DataFrame、DataSet 全都是 spark 平台下的分布式弹性数据集，为处理超大型数据提供便利;</p> <p>➢ 三者都有惰性机制，在进行创建、转换，如 map 方法时，不会立即执行，只有在遇到 Action 如 foreach 时，三者才会开始遍历运算;</p> <p>➢ 三者有许多共同的函数，如 filter，排序等;</p> <p>➢ 在对 DataFrame 和 Dataset 进行操作许多操作都需要这个包:import spark.implicits._（在 创建好 SparkSession 对象后尽量直接导入）</p> <p>➢ 三者都会根据 Spark 的内存情况自动缓存运算，这样即使数据量很大，也不用担心会内存溢出</p> <p>➢ 三者都有 partition 的概念</p> <p>➢ DataFrame 和 DataSet 均可使用模式匹配获取各个字段的值和类型</p> <h3 id="_2-5-2-三者的区别"><a href="#_2-5-2-三者的区别" class="header-anchor">#</a> 2.5.2 三者的区别</h3> <ol><li><p>RDD</p> <p>➢ RDD 一般和 spark mllib 同时使用</p> <p>➢ RDD 不支持 sparksql 操作</p></li></ol> <ol start="2"><li><p>DataFrame</p> <p>➢ 与 RDD 和 Dataset 不同，DataFrame 每一行的类型固定为 Row，每一列的值没法直接访问，只有通过解析才能获取各个字段的值</p> <p>➢ DataFrame 与 DataSet 一般不与 spark mllib 同时使用</p> <p>➢ DataFrame 与 DataSet 均支持 SparkSQL 的操作，比如 select，groupby 之类，还能注册临时表/视窗，进行 sql 语句操作</p> <p>➢ DataFrame 与 DataSet 支持一些特别方便的保存方式，比如保存成 csv，可以带上表头，这样每一列的字段名一目了然(后面专门讲解)</p></li> <li><p>DataSet</p> <p>➢ Dataset 和 DataFrame 拥有完全相同的成员函数，区别只是每一行的数据类型不同。 DataFrame 其实就是 DataSet 的一个特例 type DataFrame = Dataset[Row]</p> <p>➢ DataFrame 也可以叫 Dataset[Row],每一行的类型是 Row，不解析，每一行究竟有哪些字段，各个字段又是什么类型都无从得知，只能用上面提到的 getAS 方法或者共性中的第七条提到的模式匹配拿出特定字段。而 Dataset 中，每一行是什么类型是不一定的，在自定义了 case class 之后可以很自由的获得每一行的信息</p></li></ol> <h3 id="_2-5-3-三者的互相转换"><a href="#_2-5-3-三者的互相转换" class="header-anchor">#</a> 2.5.3 三者的互相转换</h3> <p><img src="/assets/img/image-20231211222718262.984a48cd.png" alt="image-20231211222718262"></p> <h2 id="_2-6-idea-开发-sparksql"><a href="#_2-6-idea-开发-sparksql" class="header-anchor">#</a> 2.6 IDEA 开发 SparkSQL</h2> <p>实际开发中，都是使用 IDEA 进行开发的。</p> <h3 id="_2-6-1-添加依赖"><a href="#_2-6-1-添加依赖" class="header-anchor">#</a> 2.6.1 添加依赖</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>		&lt;dependency&gt;
+            &lt;groupId&gt;org.apache.spark&lt;/groupId&gt;
+            &lt;artifactId&gt;spark-core_2.13&lt;/artifactId&gt;
+            &lt;version&gt;3.5.0&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.slf4j&lt;/groupId&gt;
+            &lt;artifactId&gt;slf4j-simple&lt;/artifactId&gt;
+            &lt;version&gt;1.7.32&lt;/version&gt;
+            &lt;scope&gt;compile&lt;/scope&gt;
+        &lt;/dependency&gt;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br></div></div><h3 id="_2-6-2-代码实现"><a href="#_2-6-2-代码实现" class="header-anchor">#</a> 2.6.2 代码实现</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>object Spark01_SparkSQL_Basic {
+
+    def main(args: Array[String]): Unit = {
+
+        //创建上下文环境配置对象
+        val sparkConf = new SparkConf().setMaster(&quot;local[*]&quot;).setAppName(&quot;sparkSQL&quot;)
+        //创建 SparkSession 对象
+        val spark = SparkSession.builder().config(sparkConf).getOrCreate()
+        //RDD=&gt;DataFrame=&gt;DataSet 转换需要引入隐式转换规则，否则无法转换
+		//spark 不是包名，是上下文环境对象名
+        import spark.implicits._
+
+
+        // TODO 执行逻辑操作
+
+        // TODO DataFrame
+        //val df: DataFrame = spark.read.json(&quot;datas/user.json&quot;)
+        //df.show()
+
+        // DataFrame =&gt; SQL
+//        df.createOrReplaceTempView(&quot;user&quot;)
+//
+//        spark.sql(&quot;select * from user&quot;).show
+//        spark.sql(&quot;select age, username from user&quot;).show
+//        spark.sql(&quot;select avg(age) from user&quot;).show
+
+        // DataFrame =&gt; DSL
+        // 在使用DataFrame时，如果涉及到转换操作，需要引入转换规则
+
+        //df.select(&quot;age&quot;, &quot;username&quot;).show
+        //df.select($&quot;age&quot; + 1).show
+        //df.select('age + 1).show
+
+        // TODO DataSet
+        // DataFrame其实是特定泛型的DataSet
+        //val seq = Seq(1,2,3,4)
+        //val ds: Dataset[Int] = seq.toDS()
+        //ds.show()
+
+        // RDD &lt;=&gt; DataFrame
+        val rdd = spark.sparkContext.makeRDD(List((1, &quot;zhangsan&quot;, 30), (2, &quot;lisi&quot;, 40)))
+        val df: DataFrame = rdd.toDF(&quot;id&quot;, &quot;name&quot;, &quot;age&quot;)
+        val rowRDD: RDD[Row] = df.rdd
+
+        // DataFrame &lt;=&gt; DataSet
+        val ds: Dataset[User] = df.as[User]
+        val df1: DataFrame = ds.toDF()
+
+        // RDD &lt;=&gt; DataSet
+        val ds1: Dataset[User] = rdd.map {
+            case (id, name, age) =&gt; {
+                User(id, name, age)
+            }
+        }.toDS()
+        val userRDD: RDD[User] = ds1.rdd
+
+
+        // TODO 关闭环境
+        spark.close()
+    }
+    case class User( id:Int, name:String, age:Int )
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br></div></div><h2 id="_2-7-用户自定义函数"><a href="#_2-7-用户自定义函数" class="header-anchor">#</a> 2.7 用户自定义函数</h2> <p>用户可以通过 <strong>spark.udf</strong> 功能添加自定义函数，实现自定义功能。</p> <h3 id="_2-7-1-udf"><a href="#_2-7-1-udf" class="header-anchor">#</a> 2.7.1 UDF</h3> <h4 id="_1-创建-dataframe"><a href="#_1-创建-dataframe" class="header-anchor">#</a> 1) 创建 DataFrame</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>scala&gt; val df = spark.read.json(&quot;data/user.json&quot;)
+df: org.apache.spark.sql.DataFrame = [age: bigint， username: string]
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><h4 id="_2-注册-udf"><a href="#_2-注册-udf" class="header-anchor">#</a> 2) 注册 UDF</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>scala&gt; spark.udf.register(&quot;addName&quot;,(x:String)=&gt; &quot;Name:&quot;+x)
+res9: org.apache.spark.sql.expressions.UserDefinedFunction = 
+UserDefinedFunction(&lt;function1&gt;,StringType,Some(List(StringType)))
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><h3 id="_3-创建临时表"><a href="#_3-创建临时表" class="header-anchor">#</a> 3) 创建临时表</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>scala&gt; df.createOrReplaceTempView(&quot;people&quot;)
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h4 id="_4-应用-udf"><a href="#_4-应用-udf" class="header-anchor">#</a> 4) 应用 UDF</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>scala&gt; spark.sql(&quot;Select addName(name),age from people&quot;).show()
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h3 id="_2-7-2-udaf"><a href="#_2-7-2-udaf" class="header-anchor">#</a> 2.7.2 UDAF</h3> <p>强类型的 Dataset 和弱类型的 DataFrame 都提供了相关的聚合函数， 如 count()，countDistinct()，avg()，max()，min()。除此之外，用户可以设定自己的自定义聚合函数。通过继承 UserDefinedAggregateFunction 来实现用户自定义弱类型聚合函数。从 Spark3.0 版本后，UserDefinedAggregateFunction 已经不推荐使用了。可以统一采用强类型聚合函数 <strong>Aggregator</strong></p> <p><strong>需求：计算平均工资</strong></p> <p>一个需求可以采用很多种不同的方法实现需求</p> <h4 id="_1-实现方式-rdd"><a href="#_1-实现方式-rdd" class="header-anchor">#</a> 1) 实现方式 - RDD</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>val conf: SparkConf = new SparkConf().setAppName(&quot;app&quot;).setMaster(&quot;local[*]&quot;)
+val sc: SparkContext = new SparkContext(conf)
+val res: (Int, Int) = sc.makeRDD(List((&quot;zhangsan&quot;, 20), (&quot;lisi&quot;, 30), (&quot;wangw&quot;, 
+40))).map {
+ case (name, age) =&gt; {
+ (age, 1)
+ }
+}.reduce {
+ (t1, t2) =&gt; {
+ 	(t1._1 + t2._1, t1._2 + t2._2)
+ }
+}
+println(res._1/res._2)
+// 关闭连接
+sc.stop()
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br></div></div><h4 id="_2-实现方式-累加器"><a href="#_2-实现方式-累加器" class="header-anchor">#</a> 2) 实现方式 - 累加器</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>  class MyAC extends AccumulatorV2[Int, Int] {
+    var sum: Int = 0
+    var count: Int = 0
+
+    override def isZero: Boolean = {
+      return sum == 0 &amp;&amp; count == 0
+    }
+
+    override def copy(): AccumulatorV2[Int, Int] = {
+      val newMyAc = new MyAC
+      newMyAc.sum = this.sum
+      newMyAc.count = this.count
+      newMyAc
+    }
+
+    override def reset(): Unit = {
+      sum = 0
+      count = 0
+    }
+
+    override def add(v: Int): Unit = {
+      sum += v
+      count += 1
+    }
+
+    override def merge(other: AccumulatorV2[Int, Int]): Unit = {
+      other match {
+        case o: MyAC =&gt; {
+          sum += o.sum
+          count += o.count
+        }
+        case _ =&gt;
+      }
+    }
+
+    override def value: Int = sum / count
+  }
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br></div></div><h4 id="_3-实现方式-udaf-弱类型"><a href="#_3-实现方式-udaf-弱类型" class="header-anchor">#</a> 3) 实现方式 - UDAF - 弱类型</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>object Spark_SparkSQL_UDAF {
+
+    def main(args: Array[String]): Unit = {
+
+        // TODO 创建SparkSQL的运行环境
+        val sparkConf = new SparkConf().setMaster(&quot;local[*]&quot;).setAppName(&quot;sparkSQL&quot;)
+        val spark = SparkSession.builder().config(sparkConf).getOrCreate()
+
+        val df = spark.read.json(&quot;datas/user.json&quot;)
+        df.createOrReplaceTempView(&quot;user&quot;)
+
+        spark.udf.register(&quot;ageAvg&quot;, new MyAvgUDAF())
+
+        spark.sql(&quot;select ageAvg(age) from user&quot;).show
+
+
+        // TODO 关闭环境
+        spark.close()
+    }
+    /*
+     定义类继承 UserDefinedAggregateFunction，并重写其中方法
+     自定义聚合函数类：计算年龄的平均值
+     1. 继承UserDefinedAggregateFunction
+     2. 重写方法(8)
+     */
+    class MyAvgUDAF extends UserDefinedAggregateFunction{
+        // 输入数据的结构 : Int
+        override def inputSchema: StructType = {
+            StructType(
+                Array(
+                    StructField(&quot;age&quot;, LongType)
+                )
+            )
+        }
+        // 缓冲区数据的结构 : Buffer
+        override def bufferSchema: StructType = {
+            StructType(
+                Array(
+                    StructField(&quot;total&quot;, LongType),
+                    StructField(&quot;count&quot;, LongType)
+                )
+            )
+        }
+
+        // 函数计算结果的数据类型：Out
+        override def dataType: DataType = LongType
+
+        // 函数的稳定性
+        override def deterministic: Boolean = true
+
+        // 缓冲区初始化
+        override def initialize(buffer: MutableAggregationBuffer): Unit = {
+            //buffer(0) = 0L
+            //buffer(1) = 0L
+
+            buffer.update(0, 0L)
+            buffer.update(1, 0L)
+        }
+
+        // 根据输入的值更新缓冲区数据
+        override def update(buffer: MutableAggregationBuffer, input: Row): Unit = {
+            buffer.update(0, buffer.getLong(0)+input.getLong(0))
+            buffer.update(1, buffer.getLong(1)+1)
+        }
+
+        // 缓冲区数据合并
+        override def merge(buffer1: MutableAggregationBuffer, buffer2: Row): Unit = {
+            buffer1.update(0, buffer1.getLong(0) + buffer2.getLong(0))
+            buffer1.update(1, buffer1.getLong(1) + buffer2.getLong(1))
+        }
+
+        // 计算平均值
+        override def evaluate(buffer: Row): Any = {
+            buffer.getLong(0)/buffer.getLong(1)
+        }
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br></div></div><h4 id="_4-实现方式-udaf-强类型"><a href="#_4-实现方式-udaf-强类型" class="header-anchor">#</a> 4) 实现方式 - UDAF - 强类型</h4> <blockquote><p>Spark3.0 版本可以采用强类型的 Aggregator 方式代替 UserDefinedAggregateFunction</p></blockquote> <div class="language- line-numbers-mode"><pre class="language-text"><code>object Spark03_SparkSQL_UDAF1 {
+
+    def main(args: Array[String]): Unit = {
+
+        // TODO 创建SparkSQL的运行环境
+        val sparkConf = new SparkConf().setMaster(&quot;local[*]&quot;).setAppName(&quot;sparkSQL&quot;)
+        val spark = SparkSession.builder().config(sparkConf).getOrCreate()
+
+        val df = spark.read.json(&quot;datas/user.json&quot;)
+        df.createOrReplaceTempView(&quot;user&quot;)
+
+        spark.udf.register(&quot;ageAvg&quot;, functions.udaf(new MyAvgUDAF()))
+
+        spark.sql(&quot;select ageAvg(age) from user&quot;).show
+
+
+        // TODO 关闭环境
+        spark.close()
+    }
+    /*
+     自定义聚合函数类：计算年龄的平均值
+     1. 继承org.apache.spark.sql.expressions.Aggregator, 定义泛型
+         IN : 输入的数据类型 Long
+         BUF : 缓冲区的数据类型 Buff
+         OUT : 输出的数据类型 Long
+     2. 重写方法(6)
+     */
+    case class Buff( var total:Long, var count:Long )
+    class MyAvgUDAF extends Aggregator[Long, Buff, Long]{
+        // z &amp; zero : 初始值或零值
+        // 缓冲区的初始化
+        override def zero: Buff = {
+            Buff(0L,0L)
+        }
+
+        // 根据输入的数据更新缓冲区的数据
+        override def reduce(buff: Buff, in: Long): Buff = {
+            buff.total = buff.total + in
+            buff.count = buff.count + 1
+            buff
+        }
+
+        // 合并缓冲区
+        override def merge(buff1: Buff, buff2: Buff): Buff = {
+            buff1.total = buff1.total + buff2.total
+            buff1.count = buff1.count + buff2.count
+            buff1
+        }
+
+        //计算结果
+        override def finish(buff: Buff): Long = {
+            buff.total / buff.count
+        }
+
+        // 缓冲区的编码操作
+        override def bufferEncoder: Encoder[Buff] = Encoders.product
+
+        // 输出的编码操作
+        override def outputEncoder: Encoder[Long] = Encoders.scalaLong
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br></div></div><h2 id="_2-8-数据的加载和保存"><a href="#_2-8-数据的加载和保存" class="header-anchor">#</a> 2.8 数据的加载和保存</h2> <h3 id="_2-8-1-通用的加载和保存方式"><a href="#_2-8-1-通用的加载和保存方式" class="header-anchor">#</a> 2.8.1 通用的加载和保存方式</h3> <p>SparkSQL 提供了通用的保存数据和数据加载的方式。这里的通用指的是使用相同的 API，根据不同的参数读取和保存不同格式的数据，SparkSQL 默认读取和保存的文件格式 为 parquet</p> <h4 id="_1-加载数据"><a href="#_1-加载数据" class="header-anchor">#</a> 1.加载数据</h4> <p><strong>spark.read.load</strong> 是加载数据的通用方法</p> <p><img src="/assets/img/image-20231211220300472.42b4c6dc.png" alt="image-20231211220300472"></p> <p>如果读取不同格式的数据，可以对不同的数据格式进行设定</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>scala&gt; spark.read.format(&quot;…&quot;)[.option(&quot;…&quot;)].load(&quot;…&quot;)
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>➢ format(&quot;…&quot;)：指定加载的数据类型，包括&quot;csv&quot;、&quot;jdbc&quot;、&quot;json&quot;、&quot;orc&quot;、&quot;parquet&quot;和 &quot;textFile&quot;。</p> <p>➢ load(&quot;…&quot;)：在&quot;csv&quot;、&quot;jdbc&quot;、&quot;json&quot;、&quot;orc&quot;、&quot;parquet&quot;和&quot;textFile&quot;格式下需要传入加载 数据的路径。</p> <p>➢ option(&quot;…&quot;)：在&quot;jdbc&quot;格式下需要传入 JDBC 相应参数，url、user、password 和 dbtable</p> <p>我们前面都是使用 read API 先把文件加载到 DataFrame 然后再查询，其实，我们也可以直 接在文件上进行查询: <strong>文件格式.<code>文件路径</code></strong></p> <div class="language- line-numbers-mode"><pre class="language-text"><code>scala&gt;spark.sql(&quot;select * from json.`/opt/module/data/user.json`&quot;).show
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h4 id="_2-保存数据"><a href="#_2-保存数据" class="header-anchor">#</a> 2) 保存数据</h4> <p><strong>df.write.save</strong> 是保存数据的通用方法</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>scala&gt;df.write.
+csv jdbc json orc parquet textFile… …
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><p>如果保存不同格式的数据，可以对不同的数据格式进行设定</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>scala&gt;df.write.format(&quot;…&quot;)[.option(&quot;…&quot;)].save(&quot;…&quot;)
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>➢ format(&quot;…&quot;)：指定保存的数据类型，包括&quot;csv&quot;、&quot;jdbc&quot;、&quot;json&quot;、&quot;orc&quot;、&quot;parquet&quot;和 &quot;textFile&quot;。</p> <p>➢ save (&quot;…&quot;)：在&quot;csv&quot;、&quot;orc&quot;、&quot;parquet&quot;和&quot;textFile&quot;格式下需要传入保存数据的路径。</p> <p>➢ option(&quot;…&quot;)：在&quot;jdbc&quot;格式下需要传入 JDBC 相应参数，url、user、password 和 dbtable</p> <p>保存操作可以使用 SaveMode, 用来指明如何处理数据，使用 mode()方法来设置。 有一点很重要: 这些 SaveMode 都是没有加锁的, 也不是原子操作。</p> <p>SaveMode 是一个枚举类，其中的常量包括：</p> <p><img src="/assets/img/image-20231211230001672.ca4e7cb0.png" alt="image-20231211230001672"></p> <div class="language- line-numbers-mode"><pre class="language-text"><code>df.write.mode(&quot;append&quot;).json(&quot;/opt/module/data/output&quot;)
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h3 id="_2-8-2-parquet"><a href="#_2-8-2-parquet" class="header-anchor">#</a> 2.8.2 Parquet</h3> <p>Spark SQL 的默认数据源为 <strong>Parquet</strong> 格式。Parquet 是一种能够有效存储嵌套数据的列式存储格式。 数据源为 Parquet 文件时，Spark SQL 可以方便的执行所有的操作，不需要使用 format。 修改配置项 <strong>spark.sql.sources.default</strong>，可修改默认数据源格式。</p> <h4 id="_1-加载数据-2"><a href="#_1-加载数据-2" class="header-anchor">#</a> 1) 加载数据</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>scala&gt; val df = spark.read.load(&quot;examples/src/main/resources/users.parquet&quot;)
+scala&gt; df.show
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><h3 id="_2-保存数据-2"><a href="#_2-保存数据-2" class="header-anchor">#</a> 2) 保存数据</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>cala&gt; var df = spark.read.json(&quot;/opt/module/data/input/people.json&quot;)
+//保存为 parquet 格式
+scala&gt; df.write.mode(&quot;append&quot;).save(&quot;/opt/module/data/output&quot;)
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><h3 id="_2-8-3-json"><a href="#_2-8-3-json" class="header-anchor">#</a> 2.8.3 JSON</h3> <p>Spark SQL 能够自动推测 JSON 数据集的结构，并将它加载为一个 Dataset[Row]. 可以通过 SparkSession.read.json()去加载 JSON 文件。</p> <blockquote><p>注意：Spark 读取的 JSON 文件不是传统的 JSON 文件，每一行都应该是一个 JSON 串</p></blockquote> <p>格式如下：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>{&quot;name&quot;:&quot;Michael&quot;}
+{&quot;name&quot;:&quot;Andy&quot;， &quot;age&quot;:30}
+[{&quot;name&quot;:&quot;Justin&quot;， &quot;age&quot;:19},{&quot;name&quot;:&quot;Justin&quot;， &quot;age&quot;:19}]
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><h4 id="_1-导入隐式转换"><a href="#_1-导入隐式转换" class="header-anchor">#</a> 1）导入隐式转换</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>import spark.implicits._
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h4 id="_2-加载-json-文件"><a href="#_2-加载-json-文件" class="header-anchor">#</a> 2）加载 JSON 文件</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>val path = &quot;/opt/module/spark-local/people.json&quot;
+val peopleDF = spark.read.json(path)
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><h3 id="_3-创建临时表-2"><a href="#_3-创建临时表-2" class="header-anchor">#</a> 3）创建临时表</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>peopleDF.createOrReplaceTempView(&quot;people&quot;)
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h4 id="_4-数据查询"><a href="#_4-数据查询" class="header-anchor">#</a> 4）数据查询</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>val teenagerNamesDF = spark.sql(&quot;SELECT name FROM people WHERE age BETWEEN 13 AND 19&quot;)
+teenagerNamesDF.show()
++------+
+| name |
++------+
+|Justin|
++------+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><h3 id="_2-8-4-csv"><a href="#_2-8-4-csv" class="header-anchor">#</a> 2.8.4 CSV</h3> <p>Spark SQL 可以配置 CSV 文件的列表信息，读取 CSV 文件,CSV 文件的第一行设置为数据列</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>spark.read.format(&quot;csv&quot;).option(&quot;sep&quot;, &quot;;&quot;).option(&quot;inferSchema&quot;, &quot;true&quot;).option(&quot;header&quot;, &quot;true&quot;).load(&quot;data/user.csv&quot;)
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h3 id="_2-8-5-mysql"><a href="#_2-8-5-mysql" class="header-anchor">#</a> 2.8.5 MySQL</h3> <p>Spark SQL 可以通过 JDBC 从关系型数据库中读取数据的方式创建 DataFrame，通过对 DataFrame 一系列的计算后，还可以将数据再写回关系型数据库中。如果使用 spark-shell 操作，可在启动 shell 时指定相关的数据库驱动路径或者将相关的数据库驱动放到 spark 的类路径下。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>bin/spark-shell --jars mysql-connector-java-5.1.27-bin.jar
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>我们这里只演示在 Idea 中通过 JDBC 对 Mysql 进行操作</p> <h4 id="_1-导入依赖"><a href="#_1-导入依赖" class="header-anchor">#</a> 1）导入依赖</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>&lt;dependency&gt;
+ &lt;groupId&gt;mysql&lt;/groupId&gt;
+ &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+ &lt;version&gt;5.1.27&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><h4 id="_2-读取数据"><a href="#_2-读取数据" class="header-anchor">#</a> 2）读取数据</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>val conf: SparkConf = new SparkConf().setMaster(&quot;local[*]&quot;).setAppName(&quot;SparkSQL&quot;)
+
+//创建 SparkSession 对象
+val spark: SparkSession = SparkSession.builder().config(conf).getOrCreate()
+import spark.implicits._
+
+//方式 1：通用的 load 方法读取
+spark.read.format(&quot;jdbc&quot;)
+ .option(&quot;url&quot;, &quot;jdbc:mysql://linux1:3306/spark-sql&quot;)
+ .option(&quot;driver&quot;, &quot;com.mysql.jdbc.Driver&quot;)
+  .option(&quot;user&quot;, &quot;root&quot;)
+ .option(&quot;password&quot;, &quot;123123&quot;)
+ .option(&quot;dbtable&quot;, &quot;user&quot;)
+ .load().show
+ 
+//方式 2:通用的 load 方法读取 参数另一种形式
+spark.read.format(&quot;jdbc&quot;)
+ .options(Map(&quot;url&quot;-&gt;&quot;jdbc:mysql://linux1:3306/spark-sql?user=root&amp;password=
+123123&quot;,
+ &quot;dbtable&quot;-&gt;&quot;user&quot;,&quot;driver&quot;-&gt;&quot;com.mysql.jdbc.Driver&quot;)).load().show
+ 
+//方式 3:使用 jdbc 方法读取
+val props: Properties = new Properties()
+props.setProperty(&quot;user&quot;, &quot;root&quot;)
+props.setProperty(&quot;password&quot;, &quot;123123&quot;)
+val df: DataFrame = spark.read.jdbc(&quot;jdbc:mysql://linux1:3306/spark-sql&quot;, &quot;user&quot;, props)
+df.show
+
+//释放资源
+spark.stop()
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br></div></div><h4 id="_3-写入数据"><a href="#_3-写入数据" class="header-anchor">#</a> 3）写入数据</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>case class User2(name: String, age: Long)
+。。。
+val conf: SparkConf = new 
+SparkConf().setMaster(&quot;local[*]&quot;).setAppName(&quot;SparkSQL&quot;)
+
+//创建 SparkSession 对象
+val spark: SparkSession = SparkSession.builder().config(conf).getOrCreate()
+import spark.implicits._
+val rdd: RDD[User2] = spark.sparkContext.makeRDD(List(User2(&quot;lisi&quot;, 20), 
+User2(&quot;zs&quot;, 30)))
+val ds: Dataset[User2] = rdd.toDS
+
+//方式 1：通用的方式 format 指定写出类型
+ds.write
+ .format(&quot;jdbc&quot;)
+ .option(&quot;url&quot;, &quot;jdbc:mysql://linux1:3306/spark-sql&quot;)
+ .option(&quot;user&quot;, &quot;root&quot;)
+ .option(&quot;password&quot;, &quot;123123&quot;)
+ .option(&quot;dbtable&quot;, &quot;user&quot;)
+ .mode(SaveMode.Append)
+ .save()
+ 
+//方式 2：通过 jdbc 方法
+val props: Properties = new Properties()
+props.setProperty(&quot;user&quot;, &quot;root&quot;)
+props.setProperty(&quot;password&quot;, &quot;123123&quot;)
+ds.write.mode(SaveMode.Append).jdbc(&quot;jdbc:mysql://linux1:3306/spark-sql&quot;, 
+&quot;user&quot;, props)
+//释放资源
+spark.stop()
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br></div></div><h3 id="_2-8-6-hive"><a href="#_2-8-6-hive" class="header-anchor">#</a> 2.8.6 Hive</h3> <p>Apache Hive 是 Hadoop 上的 SQL 引擎，Spark SQL 编译时可以包含 Hive 支持，也可以不包含。包含 Hive 支持的 Spark SQL 可以支持 Hive 表访问、UDF (用户自定义函数)以及 Hive 查询语言(HiveQL/HQL)等。需要强调的一点是，如果要在 Spark SQL 中包含 Hive 的库，并不需要事先安装 Hive。一般来说，最好还是在编译 Spark SQL 时引入 Hive 支持，这样就可以使用这些特性了。如果你下载的是二进制版本的 Spark，它应该已经在编 译时添加了 Hive 支持。</p> <p>若要把 Spark SQL 连接到一个部署好的 Hive 上，你必须把 hive-site.xml 复制到 Spark 的配置文件目录中($SPARK_HOME/conf)。即使没有部署好 Hive，Spark SQL 也可以 运行。 需要注意的是，如果你没有部署好 Hive，Spark SQL 会在当前的工作目录中创建出 自己的 Hive 元数据仓库，叫作 metastore_db。此外，如果你尝试使用 HiveQL 中的 CREATE TABLE (并非 CREATE EXTERNAL TABLE)语句来创建表，这些表会被放在你默 认的文件系统中的 /user/hive/warehouse 目录中(如果你的 classpath 中有配好的 hdfs-site.xml，默认的文件系统就是 HDFS，否则就是本地文件系统)。 spark-shell 默认是 Hive 支持的；代码中是默认不支持的，需要手动指定（加一个参数即可）。</p> <h4 id="_1-内嵌的-hive"><a href="#_1-内嵌的-hive" class="header-anchor">#</a> 1）内嵌的 HIVE</h4> <p>如果使用 Spark 内嵌的 Hive, 则什么都不用做, 直接使用即可.
+Hive 的元数据存储在 derby 中, 默认仓库地址:$SPARK_HOME/spark-warehouse</p> <blockquote><p>spark-shell</p></blockquote> <div class="language- line-numbers-mode"><pre class="language-text"><code>scala&gt; spark.sql(&quot;show tables&quot;).show
+。。。
++--------+---------+-----------+
+|database|tableName|isTemporary|
++--------+---------+-----------+
++--------+---------+-----------+
+scala&gt; spark.sql(&quot;create table aa(id int)&quot;)
+。。。
+scala&gt; spark.sql(&quot;show tables&quot;).show
++--------+---------+-----------+
+|database|tableName|isTemporary|
++--------+---------+-----------+
+| default| aa| false|
++--------+---------+-----------+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div></div><p>向表加载本地数据</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>scala&gt; spark.sql(&quot;load data local inpath 'input/ids.txt' into table aa&quot;)
+。。。
+scala&gt; spark.sql(&quot;select * from aa&quot;).show
++---+
+| id|
++---+
+| 1|
+| 2|
+| 3|
+| 4|
++---+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br></div></div><blockquote><p>在实际使用中, 几乎没有任何人会使用内置的 Hive</p></blockquote> <p>2）外部的 HIVE</p> <p>如果想连接外部已经部署好的 Hive，需要通过以下几个步骤：</p> <p>➢ Spark 要接管 Hive 需要把 hive-site.xml 拷贝到 conf/目录下</p> <p>➢ 把 Mysql 的驱动 copy 到 jars/目录下</p> <p>➢ 如果访问不到 hdfs，则需要把 core-site.xml 和 hdfs-site.xml 拷贝到 conf/目录下</p> <p>➢ 重启 spark-shell</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>scala&gt; spark.sql(&quot;show tables&quot;).show
+23/04/25 22:05:14 WARN ObjectStore: Failed to get database global_temp, returning 
+NoSuchObjectException
++--------+--------------------+-----------+
+|database| tableName|isTemporary|
++--------+--------------------+-----------+
+| default| emp| false|
+| default|hive_hbase_emp_table| false|
+| default| relevance_hbase_emp| false|
+| default| staff_hive| false|
+| default| ttt| false|
+| default| user_visit_action| false|
++--------+--------------------+-----------+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><h4 id="_3-运行-spark-sql-cli"><a href="#_3-运行-spark-sql-cli" class="header-anchor">#</a> 3）运行 Spark SQL CLI</h4> <p>Spark SQL CLI 可以很方便的在本地运行 Hive 元数据服务以及从命令行执行查询任务。在 Spark 目录下执行如下命令启动 Spark SQL CLI，直接执行 SQL 语句，类似一 Hive 窗口</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>bin/spark-sql
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h4 id="_4-运行-spark-beeline"><a href="#_4-运行-spark-beeline" class="header-anchor">#</a> 4）运行 Spark beeline</h4> <p>Spark Thrift Server 是 Spark 社区基于 HiveServer2 实现的一个 Thrift 服务。旨在无缝兼容
+HiveServer2。因为 Spark Thrift Server 的接口和协议都和 HiveServer2 完全一致，因此我们部
+署好 Spark Thrift Server 后，可以直接使用 hive 的 beeline 访问 Spark Thrift Server 执行相关
+语句。Spark Thrift Server 的目的也只是取代 HiveServer2，因此它依旧可以和 Hive Metastore
+进行交互，获取到 hive 的元数据。
+如果想连接 Thrift Server，需要通过以下几个步骤：</p> <p>➢ Spark 要接管 Hive 需要把 hive-site.xml 拷贝到 conf/目录下</p> <p>➢ 把 Mysql 的驱动 copy 到 jars/目录下</p> <p>➢ 如果访问不到 hdfs，则需要把 core-site.xml 和 hdfs-site.xml 拷贝到 conf/目录下</p> <p>➢ 启动 Thrift Server</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>sbin/start-thriftserver.sh
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>➢ 使用 beeline 连接 Thrift Server</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>bin/beeline -u jdbc:hive2://linux1:10000 -n root
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p><img src="/assets/img/image-20231211231338332.097ef225.png" alt="image-20231211231338332"></p> <h4 id="_5-代码操作-hive"><a href="#_5-代码操作-hive" class="header-anchor">#</a> 5）代码操作 Hive</h4> <p>1）导入依赖</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>&lt;dependency&gt;
+ &lt;groupId&gt;org.apache.spark&lt;/groupId&gt;
+ &lt;artifactId&gt;spark-hive_2.12&lt;/artifactId&gt;
+ &lt;version&gt;3.0.0&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+ &lt;groupId&gt;org.apache.hive&lt;/groupId&gt;
+ &lt;artifactId&gt;hive-exec&lt;/artifactId&gt;
+ &lt;version&gt;1.2.1&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+ &lt;groupId&gt;mysql&lt;/groupId&gt;
+ &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+ &lt;version&gt;5.1.27&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br></div></div><p>2）将 hive-site.xml 文件拷贝到项目的 resources 目录中，代码实现</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>//创建 SparkSession
+val spark: SparkSession = SparkSession
+ .builder()
+ .enableHiveSupport()
+ .master(&quot;local[*]&quot;)
+ .appName(&quot;sql&quot;)
+ .getOrCreate()
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><blockquote><p>注意：在开发工具中创建数据库默认是在本地仓库，通过参数修改数据库仓库的地址:</p></blockquote> <div class="language- line-numbers-mode"><pre class="language-text"><code>config(&quot;spark.sql.warehouse.dir&quot;, &quot;hdfs://linux1:8020/user/hive/warehouse&quot;)
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>如果在执行操作时，出现如下错误：</p> <p><img src="/assets/img/image-20231211231458428.5b788913.png" alt="image-20231211231458428"></p> <p>可以代码最前面增加如下代码解决：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>System.setProperty(&quot;HADOOP_USER_NAME&quot;, &quot;root&quot;)
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>此处的 root 改为你们自己的 hadoop 用户名</p></div></div>  <div class="page-edit"><div class="edit-link"><a href="https://github.com/andanyang/vuepress-theme-vdoing/edit/master/docs/大数据/006.spark/0062.spark sql/1001.sparksql.md" target="_blank" rel="noopener noreferrer">编辑</a> <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></div> <!----> <div class="last-updated"><span class="prefix">上次更新:</span> <span class="time">2024/03/11, 02:40:47</span></div></div> <div class="page-nav-wapper"><div class="page-nav-centre-wrap"><a href="/bigdata/spark/core_RDD_3/" class="page-nav-centre page-nav-centre-prev"><div class="tooltip">Spark 核心编程之 RDD 累加器与广播变量</div></a> <a href="/bigdata/spark/SparkStreaming/" class="page-nav-centre page-nav-centre-next"><div class="tooltip">大数据技术之 SparkStreaming</div></a></div> <div class="page-nav"><p class="inner"><span class="prev">
+        ←
+        <a href="/bigdata/spark/core_RDD_3/" class="prev">Spark 核心编程之 RDD 累加器与广播变量</a></span> <span class="next"><a href="/bigdata/spark/SparkStreaming/">大数据技术之 SparkStreaming</a>→
+      </span></p></div></div></div> <div class="article-list"><div class="article-title"><a href="/archives/" class="iconfont icon-bi">最近更新</a></div> <div class="article-wrapper"><dl><dd>01</dd> <dt><a href="/bigdata/spark/SparkStreaming_Driver_Executer/"><div>
+            spark中代码的执行位置（Driver or Executer）
+            <!----></div></a> <span class="date">12-12</span></dt></dl><dl><dd>02</dd> <dt><a href="/bigdata/spark/SparkStreaming/"><div>
+            大数据技术之 SparkStreaming
+            <!----></div></a> <span class="date">12-12</span></dt></dl><dl><dd>03</dd> <dt><a href="/bigdata/spark/core_RDD_3/"><div>
+            Spark 核心编程之 RDD 累加器与广播变量
+            <!----></div></a> <span class="date">12-05</span></dt></dl> <dl><dd></dd> <dt><a href="/archives/" class="more">更多文章&gt;</a></dt></dl></div></div></main></div> <div class="footer"><div class="icons"><a href="mailto:1218853253@qq.com" title="发邮件" target="_blank" class="iconfont icon-youjian"></a><a href="https://github.com/andanyang" title="GitHub" target="_blank" class="iconfont icon-github"></a><a href="https://music.163.com/#/playlist?id=755597173" title="听音乐" target="_blank" class="iconfont icon-erji"></a></div> 
+  Theme by
+  <a href="https://github.com/xugaoyi/vuepress-theme-vdoing" target="_blank" title="本站主题">Vdoing</a> 
+    | Copyright © 2019-2024
+    <span>Young | <a href="https://github.com/andanyoung/young-blog/blob/master/LICENSE" target="_blank">MIT License</a> <br/> <a  href="https://beian.miit.gov.cn/" target="_blank">浙ICP备20002744号</a></span></div> <div class="buttons"><div title="返回顶部" class="button blur go-to-top iconfont icon-fanhuidingbu" style="display:none;"></div> <div title="去评论" class="button blur go-to-comment iconfont icon-pinglun" style="display:none;"></div> <div title="主题模式" class="button blur theme-mode-but iconfont icon-zhuti"><ul class="select-box" style="display:none;"><li class="iconfont icon-zidong">
+          跟随系统
+        </li><li class="iconfont icon-rijianmoshi">
+          浅色模式
+        </li><li class="iconfont icon-yejianmoshi">
+          深色模式
+        </li><li class="iconfont icon-yuedu">
+          阅读模式
+        </li></ul></div></div> <!----> <!----> <!----></div><div class="global-ui"><div></div></div></div>
+    <script src="/assets/js/app.e4caa6db.js" defer></script><script src="/assets/js/2.d1be14c5.js" defer></script><script src="/assets/js/20.79989fc4.js" defer></script>
+  </body>
+</html>
